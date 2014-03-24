@@ -1,0 +1,228 @@
+\documentclass[journal]{IEEEtran}
+
+\usepackage{paralist}
+\hyphenation{op-tical net-works semi-conduc-tor}
+
+
+\begin{document}
+
+\title{Security of the Internet of Things in the Home}
+\author{Edward~Seabrook }
+
+\maketitle
+
+
+\begin{abstract}
+As the number of devices, and types of devices in the modern home grows, so
+does the possibility for attack. The Internet of Things generation network
+technology must be designed with security and privacy considerations in mind
+from the start. In this paper, a thorough review of the protocold stack,
+security consideration and prevention mechanisms is given. 
+\end{abstract}
+
+\begin{IEEEkeywords}
+Internet of Things, Security, IETF.
+\end{IEEEkeywords}
+
+\IEEEpeerreviewmaketitle
+
+\section{Introduction}
+\IEEEPARstart{T}{he} ``Internet of Things'' (IoT) has become somewhat of a
+buzzword recently; the term is thrown around liberally, but there is no single
+accepted definition of the concept. The earliest use of the term was by Kevin
+Ashton in 1999, and was used to describe the use of RFID tags and the internet
+in monitoring the supply chain at Procter \& Gamble. 
+
+A few years later, in 2005, the ITU published a report titled “The Internet of
+Things”, which discussed how RFID would be used to give objects from the real
+world a presence on the Internet. The report added a new dimension to the
+internet, suggesting that in the future connectivity would be available at
+``anytime'', ``any place'' and to ``anything''.
+
+More recent definitions of the IoT have shied away from limiting themselves to
+RFID, favouring more feature rich protocols, such as 802.14.5. The one core
+theme that all definitions agree on, is that as the IoT enters the mainstream,
+the number of devices connected to the Internet will increase at a phenomenal
+rate — Gartner estimates that by 2020, there will be more than 26 billion
+devices connected to the Internet. 
+
+In this paper, the IoT is taken to refer to the massive increase in
+connectivity that we have already started to see as the mid 2010s approaches.
+This conjunction of the traditional internet, and the emerging IoT, may be
+referred to as ``the Internet of Everything''; it is important not to neglect
+the increasing presence of more traditional devices on the Internet. 
+
+As we enter this increasingly connected age, security becomes a serious
+concern. With more devices, and more types of device, the number of attack
+surfaces grows. The first generation Internet took a lax approach to security,
+focusing first on achieving functionality. This has lead to a an internet that
+is insecure by default; only recently have larger websites began using
+encrypted sessions (through the use of TLS) to secure communications with their
+users. 
+
+There has been a large amount of attention recently placed on the IoT in a
+business, or industrial, context. Discussions of wireless sensor networks (WSN)
+used to monitor manufacture and agriculture, to ensure optimal production
+capacity; or proposals of complex policy management frameworks, are common
+place. Interesting work has also been done in the area of vehicle networks; at
+Def Con 21, a horrifying demonstration showed how it is possible to take
+control of a modern automobile. There are clearly important security issues in
+these areas, especially with respect to critical infrastructure, however, this
+paper chooses to focus on the deployment in home networks. 
+
+Home networks offer a unique challenge — they lack funding for expensive
+network equipment, typically acquiring devices from a variety of vendors; they
+very rarely have access to a competent, professional systems administrator; and
+they contain an increasing range of very personal devices and appliances
+\cite{ACM_ModHome}. As such, the security requirements tend to be high, while
+the difficulty of configuring the network to assure such a level of security
+must be very low. 
+
+
+\section{Technologies}
+In the early days of the internet, there was a wide range of competing
+standards: DECnet, TCP/IP, AppleTalk, OSI and many others.  Eventually TCP/IP
+came out on top and is now universally used worldwide. Similarly, there are
+many competing technology stacks for the IoT. Each have their own advantages
+and disadvantages, and inspiration is distributed horizontally. 
+
+As with the internet, it is convenient to think about the internet of things in
+terms of the 7 layer OSI model\footnote{Although the TCP/IP model won the
+battle, the numberings from the OSI model are still commonly used in industry}.
+The TCP/IP model is built around a narrow waist of IP (either IPv4 or IPv6),
+with multiple choices of protocol sitting above and below the IP layer. 
+
+\subsection{Layer 1 -- The Physical Layer}
+The physical layer defines the physical medium being used for the transmission
+of messages. Traditional networks made use of wired connections for this
+purpose, however, due to the expense and inconvenience, we have seen a
+transition away from wired networks to wireless, radio based technologies. 
+
+\subsubsection{IEEE 802.11}
+The standard that defines WiFi, and is probably the most
+familiar wireless networking protocol to home users. The latest standard for
+WiFi is 802.11ac, however, its recent approval means it is yet to be widely
+deployed; 802.11n is probably the most widely used revision. 
+
+802.11 is widely used in the home as a wireless alternative to ethernet: on
+laptops, mobile phones and tablets. For devices with mains connectivity, where
+cost is not a major factor, and high bandwidth is required, WiFi may be a
+sensible choice.  However, high power usage makes it unsuitable for the
+constrained devices of the IoT. 
+
+In terms of security, WiFi has has a shaky past. The first security protocol
+for WiFi, Wired Equivalency Protocol (WEP) had some serious issues that
+rendered it completely insecure. And another extension, WiFi Protected
+Setup (WPS) also contained a serious vulnerability. As far as we know, the
+current security standard for WiFi, WiFi Protected Access II (WPA2) is
+secure. 
+
+\subsubsection{Bluetooth}
+is a wireless communications technology used in Personal Area
+Networks (PANs). It operates in the Industrial, Scientific and Industrial (ISM)
+band, and is used primarily for connecting mobile phones to headsets. Bluetooth
+has a lower bandwidth and energy usage than WiFi, so is more suitable for
+connecting constrained devices than WiFi. 
+
+The security used in Bluetooth uses Linear Feedback Shift Registers (LFSRs) to
+generate a pseudorandom keystream, so may well have serious security
+weaknesses.
+
+\subsubsection{RFID}
+Much of the early work on the IoT focused on Radio-frequency Identification
+(RFID). There are two basic types of RFID "tag": active tags, which are powered
+by the reader; and passive tags, which have their own power source. The main
+benefit of RFID is that the passive tags can be created very cheaply -- the
+cheapest tags cost somewhere around 0.05USD. 
+
+\subsubsection{802.4.15}
+is probably the most interesting PHY layer technology for the IoT. It has very
+low energy usage, but also a very low bandwidth. 
+
+\subsection{Layer 2 - The Link Layer}
+The link layer is used to determine who communicates, when. Many of the protocols mentioned in layer 1 have link layer or MAC layer mechanisms specified in the 
+
+\begin{itemize}
+\item ZigBee
+\item WirelessHart
+\item 802.4.15e
+\end{itemize}
+
+\subsection{Layer 3 - The Network Layer}
+The network layer is the narrow waist of the TCP/IP stack. IPv6 is the
+preferred protocol for use in to the future.
+
+\begin{itemize}
+\item IPv4 / IPv6
+\item 6LoWPAN
+\end{itemize}
+
+\subsection{Layer 4 - The Transport Layer}
+The transport layer runs on top of the network layer and provides multiplexing
+for applications; optionally it also provides retransmission controls etc in
+the form of TCP. 
+
+A variety of factors mean that TCP is not suitible for the Internet of things,
+instead we chose to use UDP, and handle the link reliability in a higher layer.
+
+\subsection{Layer 7 - The Application Layer}
+The observant reader will notice that we have skipped layers 5 and 6. This is
+because they are not part of the TCP/IP model, but simply bloat in the design
+by committee OSI model.
+
+
+\section{Security Risks}
+The internet is, for many, no longer a luxury, but a lifeline. Many of our
+everyday tasks have been greatly simplified by the internet. The IoT will only
+exaggerate this effect, increasing our reliance on technology. The devices that
+make up the IoT that reside in our homes are likely to collect huge amounts of
+sensitive information -- it i is paramount that we avoid anything happening to
+this data, as the consequences could be significant. 
+
+
+\section{Prevention and Mitigation}
+So now we know the protocols, and the risks. Explain how the risk can be
+prevented.
+
+
+\section{Future Work}
+What things are still open research problems. 
+
+
+\section{Conclusion}
+A summary and evaluation of the findings presented in the paper.
+
+
+
+\section*{Acknowledgment}
+
+The authors would like to thank...
+
+
+% references section
+
+% can use a bibliography generated by BibTeX as a .bbl file
+% BibTeX documentation can be easily obtained at:
+% http://www.ctan.org/tex-archive/biblio/bibtex/contrib/doc/
+% The IEEEtran BibTeX style support page is at:
+% http://www.michaelshell.org/tex/ieeetran/bibtex/
+%\bibliographystyle{IEEEtran}
+% argument is your BibTeX string definitions and bibliography database(s)
+%\bibliography{IEEEabrv,../bib/paper}
+%
+% <OR> manually copy in the resultant .bbl file
+% set second argument of \begin to the number of references
+% (used to reserve space for the reference number labels box)
+\begin{thebibliography}{1}
+
+\bibitem{ACM_ModHome}
+Denning, T., Kohno, T., \& Levy, H. M. (2013). Computer Security and the Modern Home. Communications of the ACM, 56(1), 94. 
+
+
+\end{thebibliography}
+
+
+%\vfill
+
+% that's all folks
+\end{document}
