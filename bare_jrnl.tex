@@ -92,11 +92,12 @@ battle, the numberings from the OSI model are still commonly used in industry}.
 The TCP/IP model is built around a narrow waist of IP (either IPv4 or IPv6),
 with multiple choices of protocol sitting above and below the IP layer. 
 
-\subsection{Layer 1 -- The Physical Layer}
+\subsection{Layers 1 \& 2 -- The Physical and Data Link Layers}
 The physical layer defines the physical medium being used for the transmission
 of messages. Traditional networks made use of wired connections for this
 purpose, however, due to the expense and inconvenience, we have seen a
-transition away from wired networks to wireless, radio based technologies. 
+transition away from wired networks to wireless, radio based technologies. The
+link layer is used to determine who communicates, when.
 
 \subsubsection{IEEE 802.11}
 The standard that defines WiFi, and is probably the most
@@ -118,11 +119,12 @@ current security standard for WiFi, WiFi Protected Access II (WPA2) is
 secure. 
 
 \subsubsection{Bluetooth}
-is a wireless communications technology used in Personal Area
-Networks (PANs). It operates in the Industrial, Scientific and Industrial (ISM)
-band, and is used primarily for connecting mobile phones to headsets. Bluetooth
-has a lower bandwidth and energy usage than WiFi, so is more suitable for
-connecting constrained devices than WiFi. 
+is a wireless communications technology used in Personal Area Networks (PANs).
+It operates in the Industrial, Scientific and Industrial (ISM) band, and is
+used primarily for connecting mobile phones to headsets. Bluetooth has a lower
+bandwidth and energy usage than WiFi, so is more suitable for connecting
+constrained devices than WiFi. Unlike WiFi, Bluetooth also defines the higher
+levels for communication. 
 
 The security used in Bluetooth uses Linear Feedback Shift Registers (LFSRs) to
 generate a pseudorandom keystream, so may well have serious security
@@ -141,50 +143,83 @@ low energy usage, but also a very low bandwidth. The very low energy
 requirements makes 802.4.15 ideal for WSNs where the battery cannot be replaced
 regularly. 
 
-\subsection{Layer 2 - The Link Layer}
-The link layer is used to determine who communicates, when. Many of the
-protocols mentioned in layer 1 have link layer or MAC layer mechanisms
-specified in the standards documents for the PHY layer. 
-
-\subsubsection{ZigBee}
-
-
-\subsubsection{WirelessHart}
-
-
-\subsubsection{802.4.15e}
-
-
 
 \subsection{Layer 3 - The Network Layer}
-The network layer is the narrow waist of the TCP/IP stack. IPv6 is the
-preferred protocol for use in to the future.
+The network layer is the narrow waist of the TCP/IP stack. On the traditional
+internet IPv6 is the preferred protocol for use in to the future.
 
-\begin{itemize}
-\item IPv4 / IPv6
-\item 6LoWPAN
-\end{itemize}
+\subsubsection{IP}
+The Internet Protocol (IP) has two major versions: IPv4 and IPv6. Although most
+networks at present still make use of IPv4, we have now run out of IPv4
+addresses, so in the future we will be forced to use IPv6.
+
+IP is an important protocol as it is used almost universally by machines
+connected to the Internet. An IP network does not need to know about the higher
+level protocols to carry IP traffic, an IP packet is also no concerned about
+the lower levels that are carrying it. 
+
+\subsubsection{6LoWPAN}
+Unfortunately IP as a protocol was not designed with highly constrained
+embedded devices in mind, as a result, it can be too resource intensive to run
+on many "things". 6LoWPAN is a protocol that is designed to work around this
+problem, by providing a bare bones version of IPv6. It includes features such
+as header compression and packet fragmentation.  
+
+\subsubsection{ZigBee}
+ZigBee is a set of protocols that runs over 802.15.4. It is designed to be a
+low cost option for wireless networks that require low power usage, and have no
+bandwidth requirements. ZigBee defines the network layer, the application layer
+and the high level concept of a ZigBee device object (ZDO). 
+
+\subsubsection{WirelessHART}
+WirelessHART is also built on top of 802.14.5, it is designed to be used for
+industrial automation. 
 
 \subsection{Layer 4 - The Transport Layer}
 The transport layer runs on top of the network layer and provides multiplexing
-for applications; optionally it also provides retransmission controls etc in
+for applications; optionally it also provides retransmission controls in
 the form of TCP. 
 
-A variety of factors mean that TCP is not suitible for the Internet of things,
-instead we chose to use UDP, and handle the link reliability in a higher layer.
+A variety of factors mean that TCP is not suitable for the low power lossy
+networks (LLNs) of the IoT, instead we choose to use UDP, handling link
+reliability in a higher layer.
 
 \subsection{Layer 7 - The Application Layer}
-The observant reader will notice that we have skipped layers 5 and 6. This is
-because they are not part of the TCP/IP model, but simply bloat in the design
-by committee OSI model.
+The application layer is probably the widest layer, since any application can
+define it's own application layer if it wishes. There are many familiar
+application layer protocols that we use on a daily basis, there include SSH,
+FTP, SMTP, and DNS. 
 
+\subsubsection{HTTP} 
+With the advent of the World Wide Web (W3), it has been observed that HTTP has
+become the de facto standard for all applications. The concept of a RESTful
+webservice is widely applied.  
+
+\subsubsection{CoAP}
+HTTP was never designed to be a light weight protocol; instead the focus on
+human readability is one of the things that is likely to have contributed to
+the massive success it has had. For constrained devices, HTTP is simply too
+bandwidth, and thus power, intensive. The Constrained Applications Protocol
+(CoAP) is designed as a compatible subset of HTTP. It is not a naive
+compression of HTTP, but rather a completely new protocol with a stateless
+one-to-one mapping to (and from) HTTP. 
+
+\subsection{Overall Architecture}
+At present it seems likely that an IP based Internet of Things will become a
+reality very soon. If this is the case, then the architecture detailed in
+\cite{Palattella2013} is a good candidate as a standards protocol stack. This
+architecture uses 802.15.4 as the PHY and MAC layers; 6LoWPAN as the network
+layer; UDP for the transport layer; and CoAP as the Application layer. This
+architecture is a good choice because it offers excellent compatibility, and
+thus connectivity, to the traditional Inernet, while avoiding impacting the
+performance of the IoT with heavy, power intensive protocols. 
 
 \section{Security Risks}
 The internet is, for many, no longer a luxury, but a lifeline. Many of our
 everyday tasks have been greatly simplified by the internet. The IoT will only
 exaggerate this effect, increasing our reliance on technology. The devices that
 make up the IoT that reside in our homes are likely to collect huge amounts of
-sensitive information -- it i is paramount that we avoid anything happening to
+sensitive information -- it is paramount that we avoid anything happening to
 this data, as the consequences could be significant. 
 
 
@@ -226,6 +261,9 @@ The authors would like to thank...
 \bibitem{ACM_ModHome}
 Denning, T., Kohno, T., \& Levy, H. M. (2013). Computer Security and the Modern Home. Communications of the ACM, 56(1), 94. 
 
+
+\bibitem{Palattella2013}
+Palattella, M. R., Accettura, N., Vilajosana, X., Watteyne, T., Grieco, L. A., Boggia, G., \& Dohler, M. (2013). Standardized Protocol Stack for the Internet of (Important) Things. IEEE Communications Surveys \& Tutorials, 15(3), 1389–1406. 
 
 \end{thebibliography}
 
