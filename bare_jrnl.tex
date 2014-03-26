@@ -214,7 +214,7 @@ architecture is a good choice because it offers excellent compatibility, and
 thus connectivity, to the traditional Inernet, while avoiding impacting the
 performance of the IoT with heavy, power intensive protocols. 
 
-\section{Security Risks}
+\section{Security Goals}
 The internet is, for many, no longer a luxury, but a lifeline. Many of our
 everyday tasks have been greatly simplified by the internet. The IoT will only
 exaggerate this effect, increasing our reliance on technology. The devices that
@@ -222,14 +222,87 @@ make up the IoT that reside in our homes are likely to collect huge amounts of
 sensitive information -- it is paramount that we avoid anything happening to
 this data, as the consequences could be significant. 
 
+As we transition from an Internet containing only virtual entities to an
+Internet consisting of real world objects as well, the damages that will be
+possible through attack or data leak will increase. There are a number of
+security and privacy goals that must be met for users to be able to place trust
+in the Internet of Things.
+
+\subsection{Confidentiality}
+A confidential message should only be readable by its intended recipients.
+Mechanisms are needed to ensure that attackers are not able to intercept and
+understand any messages that are transmitted. The level of confidentiality
+required varies depending on the use case: for example, a temperature sensor in
+a public place probably doesn't convey any information that an attacker
+couldn't collect for themselves; whereas a medical sensor for a potentially
+embarrassing medical condition will probably have quite high confidentiality
+requirements. Wireless communication is particularly susceptible to
+interception, this should not reduce the confidentiality of the messages.  
+
+\subsection{Integrity}
+Integrity is the concept that a message should be exactly the same when it is
+received as it was when it was sent. Mechanisms are required to ensure that a
+message does not change during transmission, if the message does change in
+transit, it should be either automatically corrected, or discarded. A message
+could be altered accidentally, through some error in the transmission process,
+or it could be altered maliciously by an attacker. As the IoT will likely rely
+mainly on wireless communications, both malicious and accidental changes are likely. 
+
+\subsection{Availability}
+Availability refers to the ability to make use of a service when it is needed.
+On the regular Internet we are familiar with Denial of Service (DoS) attacks,
+which render websites or networks completely unusable. The same kind of attacks
+would be possible both against, and from the thing of the internet of things.
+In early 2014, Proofpoint found that many low power devices, including one
+smart refrigerator were being used to send spam \cite{Proofpoint2014}, a
+Distributed DoS attack could be launched in a similar fashion.  
+
+\subsection{Non-repudiation}
+Non-repudiation mechanisms ensure that if an action was performed by somebody,
+then it is impossible for them to claim that they had not performed the action.
+(Right now I can't think of any reason this would actually be needed in the
+IoT) 
+
+\subsection{Authenticity}
+Authenticity is assuring that a message has been sent by the party that it
+claims to have been sent by. In the IoT protocols should provide a way of
+preventing attackers, for example, from pretending to be sensor nodes, and
+submitting bogus readings, that could lead to undesired actions.  
+
+\subsection{Authorization}
+Authorization is ensuring that the party sending a command is actually allowed
+to make the request that they have made. Presently, we often see WiFi routers
+and other embedded devices that ship with well known standard default usernames
+and password. This makes it very easy for an attacker to guess the login
+credentials. If things do not change, then we are likely to see the same
+phenomenon in the IoT. 
+
+
+\section{Security Threats}
+It is difficult to develop a strategy of prevention and mitigation without
+first understanding some of the potential attacks that should be defended
+against. I may merge this section back into the one above, it makes a lot of sense to... 
+
+There is a good list here \cite{Ning2013}
+
 
 \section{Prevention and Mitigation}
 So now we know the protocols, and the risks. Explain how the risk can be
 prevented.
 
+\begin{itemize}
+\item DTLS
+\item per hop encryption algorithms
+\end{itemize}
+
 
 \section{Future Work}
 What things are still open research problems. 
+
+\begin{itemize}
+\item How do we force vendors to ship devices with secure password?
+\item How do we educate users?
+\end{itemize}
 
 
 \section{Conclusion}
@@ -263,7 +336,14 @@ Denning, T., Kohno, T., \& Levy, H. M. (2013). Computer Security and the Modern 
 
 
 \bibitem{Palattella2013}
-Palattella, M. R., Accettura, N., Vilajosana, X., Watteyne, T., Grieco, L. A., Boggia, G., \& Dohler, M. (2013). Standardized Protocol Stack for the Internet of (Important) Things. IEEE Communications Surveys \& Tutorials, 15(3), 1389–1406. 
+Palattella, M. R., Accettura, N., Vilajosana, X., Watteyne, T., Grieco, L. A., Boggia, G., \& Dohler, M. (2013). Standardized Protocol Stack for the Internet of (Important) Things. IEEE Communications Surveys \& Tutorials, 15(3), 1389–1406.ng2013 
+
+\bibitem{Ning2013}
+Ning, H., Liu, H., \& Yang, L. T. (2013). Cyberentity Security in the Internet of Things. Computer, 46(4), 46–53. 
+
+\bibitem{Proofpoint2014}
+http://www.proofpoint.com/about-us/press-releases/01162014.php
+
 
 \end{thebibliography}
 
