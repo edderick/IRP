@@ -1,7 +1,8 @@
-\documentclass[11pt,journal,compsoc]{IEEEtran}
+\documentclass[12pt,journal,compsoc]{IEEEtran}
 %\documentclass[journal]{IEEEtran}
 
 \usepackage{paralist}
+\usepackage[stable]{footmisc}
 \hyphenation{op-tical net-works semi-conduc-tor}
 
 
@@ -32,10 +33,10 @@ Internet of Things, Security, IETF.
 buzzword recently; the term is thrown around liberally, but there is no single
 accepted definition of the concept. The earliest use of the term was by Kevin
 Ashton in 1999, and was used to describe the use of RFID tags and the internet
-in monitoring the supply chain at Procter \& Gamble. 
+in monitoring the supply chain at Procter \& Gamble \cite{Ashton2009}. 
 
-A few years later, in 2005, the ITU published a report titled “The Internet of
-Things”, which discussed how RFID would be used to give objects from the real
+A few years later, in 2005, the ITU published a report titled ``The Internet of
+Things'' \cite{ITU_IoT}, which discussed how RFID would be used to give objects from the real
 world a presence on the Internet. The report added a new dimension to the
 internet, suggesting that in the future connectivity would be available at
 ``anytime'', ``any place'' and to ``anything''.
@@ -45,7 +46,7 @@ RFID, favouring more feature rich protocols, such as 802.14.5. The one core
 theme that all definitions agree on, is that as the IoT enters the mainstream,
 the number of devices connected to the Internet will increase at a phenomenal
 rate — Gartner estimates that by 2020, there will be more than 26 billion
-devices connected to the Internet. 
+devices connected to the Internet \cite{Gartner2014}. 
 
 In this paper, the IoT is taken to refer to the massive increase in
 connectivity that we have already started to see as the mid 2010s approaches.
@@ -67,9 +68,10 @@ used to monitor manufacture and agriculture, to ensure optimal production
 capacity; or proposals of complex policy management frameworks, are common
 place. Interesting work has also been done in the area of vehicle networks; at
 Def Con 21, a horrifying demonstration showed how it is possible to take
-control of a modern automobile. There are clearly important security issues in
-these areas, especially with respect to critical infrastructure, however, this
-paper chooses to focus on the deployment in home networks. 
+control of a modern automobile \cite{Illera2014}. There are clearly important
+security issues in these areas, especially with respect to critical
+infrastructure, however, this paper chooses to focus on the deployment in home
+networks. 
 
 Home networks offer a unique challenge — they lack funding for expensive
 network equipment, typically acquiring devices from a variety of vendors; they
@@ -93,7 +95,8 @@ battle, the numberings from the OSI model are still commonly used in industry}.
 The TCP/IP model is built around a narrow waist of IP (either IPv4 or IPv6),
 with multiple choices of protocol sitting above and below the IP layer. 
 
-\subsection{Layers 1 \& 2 -- The Physical and Data Link Layers}
+\subsection{Layers 1 \& 2 -- The Physical and Link Layers}
+\label{layer_1_2}
 The physical layer defines the physical medium being used for the transmission
 of messages. Traditional networks made use of wired connections for this
 purpose, however, due to the expense and inconvenience, we have seen a
@@ -120,7 +123,7 @@ current security standard for WiFi, WiFi Protected Access II (WPA2) is
 secure. 
 
 \subsubsection{Bluetooth}
-is a wireless communications technology used in Personal Area Networks (PANs).
+Bluetooth is a wireless communications technology used in Personal Area Networks (PANs).
 It operates in the Industrial, Scientific and Industrial (ISM) band, and is
 used primarily for connecting mobile phones to headsets. Bluetooth has a lower
 bandwidth and energy usage than WiFi, so is more suitable for connecting
@@ -139,11 +142,22 @@ benefit of RFID is that the passive tags can be created very cheaply -- the
 cheapest tags cost somewhere around 0.05USD. 
 
 \subsubsection{802.4.15}
-is probably the most interesting PHY layer technology for the IoT. It has very
+802.4.15 is probably the most interesting PHY layer technology for the IoT. It has very
 low energy usage, but also a very low bandwidth. The very low energy
 requirements makes 802.4.15 ideal for WSNs where the battery cannot be replaced
 regularly. 
 
+\subsubsection{Mobile Standards}
+There are also many standards that are used in the cellular mobile
+telecommunications industry. Most notably, this includes 3G and 4G/LTE. In
+developing countries where previous generation network infrastructure was never
+deployed, we are already seeing consumers who are jumping straight to mobile
+technologies without ever using cable/broadband based internet
+\cite{Kritzinger2013}. For many `things', mobile broadband may be the most
+effective way of providing connectivity.  
+
+WiMAX is another mobile technology that could have impact in the internet of
+things. WiMAX falls between 3G and WiFi in terms of range and speed.  
 
 \subsection{Layer 3 - The Network Layer}
 The network layer is the narrow waist of the TCP/IP stack. On the traditional
@@ -204,6 +218,13 @@ bandwidth, and thus power, intensive. The Constrained Applications Protocol
 (CoAP) is designed as a compatible subset of HTTP. It is not a naive
 compression of HTTP, but rather a completely new protocol with a stateless
 one-to-one mapping to (and from) HTTP. 
+
+\subsubsection{EXI}
+Efficient XML Interchange (EXI) is a binary format based on XML, that aims to
+reduce the overheads needed for transmitting and parsing XML documents. XML is
+a widely used document format on the internet, but due to its human readable
+verbosity, it is not ideal for embedded devices where small overheads can make
+processing impossible. 
 
 \subsection{Overall Architecture}
 At present it seems likely that an IP based Internet of Things will become a
@@ -279,21 +300,74 @@ credentials. If things do not change, then we are likely to see the same
 phenomenon in the IoT. 
 
 
-\section{Security Threats}
+\section{Security Threats \footnote{I may merge this section back into the one above} }
 It is difficult to develop a strategy of prevention and mitigation without
 first understanding some of the potential attacks that should be defended
-against. I may merge this section back into the one above, it makes a lot of sense to... 
+against.  
 
-There is a good list here \cite{Ning2013}
+H. Ning et al \cite{Ning2013} divide the types of attack into the following
+four broad categories:
+
+\subsection{Gathering}
+Gathering attacks involve collecting information by eavesdropping on
+communications channels, or gaining access to storage areas. As a result of the
+Snowden leaks in 2013, it was revealed that the US government has been
+collecting metadata on the communications of civilians around the world -- as
+response the Guardian published an article detailing how much can be inferred
+from metadata alone \cite{Guardian2013}. 
+
+Gathering attacks are a breach of confidentiality. 
+
+\subsection{Imitation}
+Pretending to be someone (or something) you are not, in order to gain access to
+a resource that you are not authorised to gain access to. A classic attack is
+MAC address spoofing which can be used to perform a variety of attacks. Replay
+attacks are also a form of imitation that must be defended against. 
+
+\subsection{Blocking}
+Blocking refers to reducing the availability of a service. Blocking can be
+achieved at almost any layer of the network. At the physical layer, radio
+frequencies can be jammed; at the application layer, resources can be consumed
+unnecessarily by an attacker.  
+
+\subsection{Privacy}
+Privacy attacks seek to deprive victims of their privacy\footnote{I'm not sure
+how this differs from Gathering.}.
 
 
 \section{Prevention and Mitigation}
-So now we know the protocols, and the risks. Explain how the risk can be
-prevented.
+With such a large number of potential attacks, all with the ability to do huge
+amounts of damage, we need mechanisms and policies in place to reduce the
+amount of damage that can be done by an attacker. 
+
+\subsection{Legal Frameworks}
+Legal frameworks should not be overlooked as an effective measure against cyber
+criminals. It is commonly accepted that perfect security does not exists
+\cite{ThereMustBeA}, implementers of secure products of any reasonable
+complexity, are almost certain to make some mistakes. This lack of undeniable
+security leads us to require laws to act as a safety net, deterring criminals
+from committing computer crimes, and compensating victims attacks. An overview
+of some of the relevant law can be found in \cite{Weber2010}. 
+
+It may also be helpful to put in place regulations to force hardware and
+software vendors to ship products in a secure default state, and to place
+strong recommendations on the minimum levels of testing required. 
+
+\subsection{Hop-by-hop Encryption}
+Hop-by-hop encryption is the encipherment of messages between two nodes on the
+communication path. All of the  protocols mentioned in Section \ref{layer_1_2}, offer
+some level of encryption on their link. 
+
+\begin{itemize}
+\item Bluetooth: E0 Encryption Algorithm
+\end{itemize}
+
+\subsection{End-to-end Encryption}
+The inherent problem with hop-by-hop encryption is that each node on the path between the sender and receiver.   
 
 \begin{itemize}
 \item DTLS
-\item per hop encryption algorithms
+\item IPSec
 \end{itemize}
 
 
@@ -303,6 +377,7 @@ What things are still open research problems.
 \begin{itemize}
 \item How do we force vendors to ship devices with secure password?
 \item How do we educate users?
+\item Will we be able to outsource security?
 \end{itemize}
 
 
@@ -312,8 +387,8 @@ A summary and evaluation of the findings presented in the paper.
 
 
 \section*{Acknowledgment}
-
-The authors would like to thank...
+The authors would like to thank Edward Snowden, because he has an excellent
+first name, and perfect initials.
 
 
 % references section
@@ -332,9 +407,23 @@ The authors would like to thank...
 % (used to reserve space for the reference number labels box)
 \begin{thebibliography}{1}
 
+\bibitem{Ashton2009}
+Ashton, K. (2009). That `Internet of Things' Thing. http://www.rfidjournal.com/articles/view?4986
+
+\bibitem{ITU_IoT}
+ITU. (2005). ITU Internet Reports: The Internet of Things
+
+\bibitem{Gartner2014}
+Gartner. (2014). Gartner Says the Internet of Things Will Transform the Data Center. http://www.gartner.com/newsroom/id/2684915
+
+\bibitem{Illera2014}
+Illera, A. G., Vidal, J. V. (2013) Def Con 21: Dude WTF in My Car?  
+
 \bibitem{ACM_ModHome}
 Denning, T., Kohno, T., \& Levy, H. M. (2013). Computer Security and the Modern Home. Communications of the ACM, 56(1), 94. 
 
+\bibitem{Guardian2013}
+Guardian. (2013). A Guardian guide to your metadata. http://www.theguardian.com/technology/interactive/2013/jun/12/what-is-metadata-nsa-surveillance
 
 \bibitem{Palattella2013}
 Palattella, M. R., Accettura, N., Vilajosana, X., Watteyne, T., Grieco, L. A., Boggia, G., \& Dohler, M. (2013). Standardized Protocol Stack for the Internet of (Important) Things. IEEE Communications Surveys \& Tutorials, 15(3), 1389–1406.ng2013 
@@ -343,8 +432,16 @@ Palattella, M. R., Accettura, N., Vilajosana, X., Watteyne, T., Grieco, L. A., B
 Ning, H., Liu, H., \& Yang, L. T. (2013). Cyberentity Security in the Internet of Things. Computer, 46(4), 46–53. 
 
 \bibitem{Proofpoint2014}
-http://www.proofpoint.com/about-us/press-releases/01162014.php
+Proofpoint. (2014). Proofpoint Uncovers Internet of Things (IoT) Cyberattack. http://www.proofpoint.com/about-us/press-releases/01162014.php
 
+\bibitem{ThereMustBeA}
+Bruce Schneier; TODO: Find where he said it.
+
+\bibitem{Weber2010}
+Weber, R. H. (2010). Internet of Things – New security and privacy challenges. Computer Law \& Security Review, 26(1), 23–30. 
+
+\bibitem{Kritzinger2013}
+Kritzinger, E., \& Solms, S. (Basie) von. (2013). Home User Security- from Thick Security-oriented Home Users to Thin Security- oriented Home Users. In Science and Information Conference (SAI), 2013 (pp. 340–345). London.
 
 \end{thebibliography}
 
