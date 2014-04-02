@@ -227,14 +227,31 @@ verbosity, it is not ideal for embedded devices where small overheads can make
 processing impossible. 
 
 \subsection{Overall Architecture}
-At present it seems likely that an IP based Internet of Things will become a
-reality very soon. If this is the case, then the architecture detailed in
-\cite{Palattella2013} is a good candidate as a standards protocol stack. This
-architecture uses 802.15.4 as the PHY and MAC layers; 6LoWPAN as the network
-layer; UDP for the transport layer; and CoAP as the Application layer. This
-architecture is a good choice because it offers excellent compatibility, and
-thus connectivity, to the traditional Inernet, while avoiding impacting the
-performance of the IoT with heavy, power intensive protocols. 
+At present, the academic and standards communities are confident that an IP
+based IoT will become a reality very soon. If this is the case, then the
+architecture detailed in \cite{Palattella2013} is a good candidate as a
+standards protocol stack. This architecture uses 802.15.4 as the PHY and MAC
+layers; 6LoWPAN as the network layer; UDP for the transport layer; and CoAP as
+the Application layer. This architecture is a good choice because it offers
+excellent compatibility, and thus connectivity, to the traditional Internet,
+while avoiding impacting the performance of the IoT with heavy, power intensive
+protocols. 
+
+In contrast, many of the "smart" devices available to consumers do not follow
+this architecture. At the most basic end of this scale, we see home automation
+kits based on 433Hz radios, running proprietary protocols, connecting to base
+stations or mobile phones. One example of this is LightWaveRF. The most
+mainstream devices tend to use WiFi. LG and Whirlpool are both manufacturing
+appliances with WiFi connectivity. Nest, a popular manufacturer of smart
+thermostats support both WiFi and 802.15.4 on their devices.  These
+commercially available devices typically lack the high degree of
+interconnectivity required for the internet of things, and as such, in this
+paper, we shall avoid in depth discussion of this class of device.  
+
+There also appears to be a small community of hobbyist home automation fanatics
+making use of Arduino, RaspberryPi and ZigBee. Although this is more similar to
+the IoT vision, in this paper we treat it more as a stepping stone than and end
+goal, and refrain from analysis of the security issues.
 
 \section{Security Goals}
 The internet is, for many, no longer a luxury, but a lifeline. Many of our
