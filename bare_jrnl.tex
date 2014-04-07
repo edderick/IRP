@@ -15,11 +15,11 @@
 
 
 \begin{abstract}
-As the number of devices, and types of devices in the modern home grows, so
-does the possibility for attack. The Internet of Things generation network
-technology must be designed with security and privacy considerations in mind
-from the start. In this paper, a thorough review of the protocold stack,
-security consideration and prevention mechanisms is given. 
+As the number and types of devices in the modern home grows, so does the
+possibility for attack. The Internet of Things generation network technology
+must be designed with security and privacy considerations in mind from the
+start. In this paper, a thorough review of the protocold stack, security
+consideration and prevention mechanisms is given. 
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -29,128 +29,137 @@ Internet of Things, Security, IETF.
 \IEEEpeerreviewmaketitle
 
 \section{Introduction}
-\IEEEPARstart{T}{he} ``Internet of Things'' (IoT) has become somewhat of a
-buzzword recently; the term is thrown around liberally, but there is no single
-accepted definition of the concept. The earliest use of the term was by Kevin
-Ashton in 1999, and was used to describe the use of RFID tags and the internet
-in monitoring the supply chain at Procter \& Gamble \cite{Ashton2009}. 
+\IEEEPARstart{T}{he} ``Internet of Things'' (IoT) has become a common buzzword
+recently; the term is thrown around liberally, but there is no single accepted
+definition of the concept. The earliest use of the expression was by Kevin
+Ashton in 1999, to describe the use of RFID tags and the Internet in monitoring
+the supply chain at Procter \& Gamble \cite{Ashton2009}. 
 
 A few years later, in 2005, the ITU published a report titled ``The Internet of
-Things'' \cite{ITU_IoT}, which discussed how RFID would be used to give objects from the real
-world a presence on the Internet. The report added a new dimension to the
-internet, suggesting that in the future connectivity would be available at
-``anytime'', ``any place'' and to ``anything''.
+Things'' \cite{ITU_IoT}, which discussed how RFID could be used to give objects
+from the real world a presence on the Internet. The report added a new
+dimension to the Internet, suggesting that in the future connectivity would be
+available at ``anytime'', at ``any place'', and to ``anything''.
 
 More recent definitions of the IoT have shied away from limiting themselves to
-RFID, favouring more feature rich protocols, such as 802.14.5. The one core
-theme that all definitions agree on, is that as the IoT enters the mainstream,
-the number of devices connected to the Internet will increase at a phenomenal
-rate — Gartner estimates that by 2020, there will be more than 26 billion
+RFID, favouring more feature rich protocols, such as 802.14.5 and Bluetooth Low
+Energy (BLE). The one core theme that all definitions agree on, is that as the
+IoT enters the mainstream, the number of devices connected to the Internet will
+will skyrocket -- Gartner predicts that by 2020, there will be over 26 billion
 devices connected to the Internet \cite{Gartner2014}. 
 
 In this paper, the IoT is taken to refer to the massive increase in
-connectivity that we have already started to see as the mid 2010s approaches.
-This conjunction of the traditional internet, and the emerging IoT, may be
-referred to as ``the Internet of Everything''; it is important not to neglect
-the increasing presence of more traditional devices on the Internet. 
+connectivity that we have already started to see in the past few years. This
+conjunction of the traditional internet, and the emerging IoT, has been
+referred to as ``the Internet of Everything'' \cite{CiscoEverything}; it is
+important not to neglect the increasing presence of more traditional devices on
+the Internet. 
 
 As we enter this increasingly connected age, security becomes a serious
-concern. With more devices, and more types of device, the number of attack
-surfaces grows. The first generation Internet took a lax approach to security,
-focusing first on achieving functionality. This has lead to a an internet that
-is insecure by default; only recently have larger websites began using
-encrypted sessions (through the use of TLS) to secure communications with their
-users. 
+concern. With more devices, falling into a wider range of device classes, the
+number of attack surfaces grows. The first generation Internet took a lax
+approach to security, focusing first on achieving functionality. This has lead
+to an Internet (specifically the World Wide Web) that is insecure by default;
+only recently have larger websites begun to use encrypted sessions (through the
+use of TLS) to secure communications with their users. 
 
 There has been a large amount of attention recently placed on the IoT in a
-business, or industrial, context. Discussions of wireless sensor networks (WSN)
-used to monitor manufacture and agriculture, to ensure optimal production
-capacity; or proposals of complex policy management frameworks, are common
-place. Interesting work has also been done in the area of vehicle networks; at
-Def Con 21, a horrifying demonstration showed how it is possible to take
-control of a modern automobile \cite{Illera2014}. There are clearly important
-security issues in these areas, especially with respect to critical
-infrastructure, however, this paper chooses to focus on the deployment in home
-networks. 
+business and industrial context. Discussions of wireless sensor networks (WSN)
+used to monitor manufacturing and agriculture, ensuring optimal production
+capacity, along with proposals of complex policy management frameworks, are
+common place. Interesting work has also been done in the area of vehicle
+networks: at Def Con 21, a horrifying demonstration showed it is possible to
+take control of a modern automobile \cite{Illera2014} putting the passengers in
+serious danger.  There are clearly important security issues in these areas,
+especially with respect to critical infrastructure. However, this paper chooses
+to focus on the deployment of the IoT in a residential setting. 
 
-Home networks offer a unique challenge — they lack funding for expensive
+Home networks offer a unique challenge —- they lack funding for expensive
 network equipment, typically acquiring devices from a variety of vendors; they
-very rarely have access to a competent, professional systems administrator; and
-they contain an increasing range of very personal devices and appliances
-\cite{ACM_ModHome}. As such, the security requirements tend to be high, while
-the difficulty of configuring the network to assure such a level of security
+rarely have access to a competent, professional systems administrator; and they
+contain an increasing range of very personal devices and appliances
+\cite{ACM_ModHome}. As such, security requirements are high, while the
+difficulty of configuring the network to ensure an acceptable level of security
 must be very low. 
 
 
 \section{Technologies}
-In the early days of the internet, there was a wide range of competing
-standards: DECnet, TCP/IP, AppleTalk, OSI and many others.  Eventually TCP/IP
-came out on top and is now universally used worldwide. Similarly, there are
-many competing technology stacks for the IoT. Each have their own advantages
-and disadvantages, and inspiration is distributed horizontally. 
+In the early days of the Internet, there was a wide range of competing
+standards: DECnet, TCP/IP, AppleTalk, OSI and many others. Eventually TCP/IP
+came out on top and now is a common standard used around the world. Similarly,
+there are many competing technology stacks for the IoT. There are advantages
+and disadvantages to each potential architecture, but very few exists within a
+vacuum -- each draws inspiration from the others. 
 
-As with the internet, it is convenient to think about the internet of things in
-terms of the 7 layer OSI model\footnote{Although the TCP/IP model won the
-battle, the numberings from the OSI model are still commonly used in industry}.
-The TCP/IP model is built around a narrow waist of IP (either IPv4 or IPv6),
-with multiple choices of protocol sitting above and below the IP layer. 
+As with the Internet, it is convenient to think about the IoT in terms of the 7
+layer OSI model\footnote{Although the TCP/IP model won the battle, the
+numberings from the OSI model are still commonly used in industry}.  The TCP/IP
+model is built around a narrow waist of IP (either IPv4 or IPv6), with multiple
+choices of protocol sitting above and below the IP layer. This has been a key
+feature to the success of TCP/IP as it allows applications to be agnostic of
+the lower layers, and the lower layers, in turn, agnostics of the applications
+running above them. 
 
 \subsection{Layers 1 \& 2 -- The Physical and Link Layers}
 \label{layer_1_2}
-The physical layer defines the physical medium being used for the transmission
-of messages. Traditional networks made use of wired connections for this
-purpose, however, due to the expense and inconvenience, we have seen a
-transition away from wired networks to wireless, radio based technologies. The
-link layer is used to determine who communicates, when.
+The physical layer (PHY) defines the physical medium used for the transmission
+of messages. Traditional networks made use of wired connections (such as
+Ethernet) for this purpose. However, due to the expense and inconvenience, we
+have seen a transition away from wired networks to wireless, radio based
+technologies. The link layer is used to control access to the PHY layer by
+devices wishing to communicate.
 
-\subsubsection{IEEE 802.11}
-The standard that defines WiFi, and is probably the most
-familiar wireless networking protocol to home users. The latest standard for
-WiFi is 802.11ac, however, its recent approval means it is yet to be widely
-deployed; 802.11n is probably the most widely used revision. 
+\subsubsection{WiFi}
+IEEE 802.11 is the set of specifications defining WiFi. WiFi is probably the
+most familiar wireless networking protocol to home users. The latest standard
+for WiFi is 802.11ac, although due to the long life cycle of Customer Premises
+Equipment (CPE), it is yet to be widely deployed; 802.11n is probably the
+most widely used revision. 
 
-802.11 is widely used in the home as a wireless alternative to ethernet: on
-laptops, mobile phones and tablets. For devices with mains connectivity, where
-cost is not a major factor, and high bandwidth is required, WiFi may be a
-sensible choice.  However, high power usage makes it unsuitable for the
-constrained devices of the IoT. 
-
-In terms of security, WiFi has has a shaky past. The first security protocol
-for WiFi, Wired Equivalency Protocol (WEP) had some serious issues that
-rendered it completely insecure. And another extension, WiFi Protected
-Setup (WPS) also contained a serious vulnerability. As far as we know, the
-current security standard for WiFi, WiFi Protected Access II (WPA2) is
-secure. 
+WiFi is common as a wireless alternative to Ethernet, used on laptops, mobile
+phones and tablets. For devices with mains connectivity or large batteries;
+where cost is not a major factor, and high bandwidth is required, WiFi may be a
+sensible choice. However, the high power usage makes it unsuitable for
+constrained devices in the IoT.
 
 \subsubsection{Bluetooth}
-Bluetooth is a wireless communications technology used in Personal Area Networks (PANs).
-It operates in the Industrial, Scientific and Industrial (ISM) band, and is
-used primarily for connecting mobile phones to headsets. Bluetooth has a lower
+Bluetooth is a wireless communication technology used in Personal Area Networks
+(PANs), intended as a wireless replacement for RS-232 serial cables. It
+operates in the Industrial, Scientific and Industrial (ISM) band, and is used
+primarily for connecting mobile phones to headsets. Bluetooth has a lower
 bandwidth and energy usage than WiFi, so is more suitable for connecting
 constrained devices than WiFi. Unlike WiFi, Bluetooth also defines the higher
 levels for communication. 
 
-The security used in Bluetooth uses Linear Feedback Shift Registers (LFSRs) to
-generate a pseudorandom keystream, so may well have serious security
-weaknesses.
+\subsubsection{Bluetooth Low Energy}
+While Bluetooth was designed with power requirements in mind, it is not
+suitable for ultra-low power devices. Bluetooth Low Energy (BLE), originally
+named Wibree and currently marketed as Bluetooth Smart, is a non-backwards
+compatible protocol designed to require far less power than the Bluetooth
+Classic. 
+
+One of the main advantages of BLE is that is can share the same antenna as
+Bluetooth Classic, making it cheap for hardware manufactures to implement. We
+have already seen a number of smart phones, most notably the Apple iPhone 4S.
 
 \subsubsection{RFID}
 Much of the early work on the IoT focused on Radio-frequency Identification
 (RFID). There are two basic types of RFID "tag": active tags, which are powered
 by the reader; and passive tags, which have their own power source. The main
 benefit of RFID is that the passive tags can be created very cheaply -- the
-cheapest tags cost somewhere around 0.05USD. 
+cheapest tags cost somewhere around \$0.05. More expensive active RFID tags can
+have similar functionality to the other PHY layer standards. 
 
-\subsubsection{802.4.15}
-802.4.15 is probably the most interesting PHY layer technology for the IoT. It has very
-low energy usage, but also a very low bandwidth. The very low energy
-requirements makes 802.4.15 ideal for WSNs where the battery cannot be replaced
-regularly. 
+\subsubsection{IEEE 802.4.15}
+IEEE 802.4.15 is among the most interesting PHY layer technologies for the IoT. It
+has very low energy usage, but also a very low bandwidth. The very low energy
+requirements makes 802.4.15 ideal for Wireless Sensor Networks (WSNs) where
+batteries cannot be replaced regularly. 
 
 \subsubsection{Mobile Standards}
 There are also many standards that are used in the cellular mobile
-telecommunications industry. Most notably, this includes 3G and 4G/LTE. In
-developing countries where previous generation network infrastructure was never
+telecommunications industry -- most notably: 3G and 4G/LTE. In developing
+countries where previous generation network infrastructure has not been
 deployed, we are already seeing consumers who are jumping straight to mobile
 technologies without ever using cable/broadband based internet
 \cite{Kritzinger2013}. For many `things', mobile broadband may be the most
@@ -161,12 +170,12 @@ things. WiMAX falls between 3G and WiFi in terms of range and speed.
 
 \subsection{Layer 3 - The Network Layer}
 The network layer is the narrow waist of the TCP/IP stack. On the traditional
-internet IPv6 is the preferred protocol for use in to the future.
+Internet IPv6 is the preferred protocol for use in to the future.
 
 \subsubsection{IP}
 The Internet Protocol (IP) has two major versions: IPv4 and IPv6. Although most
-networks at present still make use of IPv4, we have now run out of IPv4
-addresses, so in the future we will be forced to use IPv6.
+networks at present still use IPv4, we have now run out of IPv4 addresses, so
+in the future we will be forced to use IPv6.
 
 IP is an important protocol as it is used almost universally by machines
 connected to the Internet. An IP network does not need to know about the higher
@@ -178,10 +187,11 @@ Unfortunately IP as a protocol was not designed with highly constrained
 embedded devices in mind, as a result, it can be too resource intensive to run
 on many "things". 6LoWPAN is a protocol that is designed to work around this
 problem, by providing a bare bones version of IPv6. It includes features such
-as header compression and packet fragmentation.  
+as header compression and packet fragmentation. 6LoWPAN can be statelessly
+translated into IPv6 in an inexpensive bridge or gateway. 
 
 \subsubsection{ZigBee}
-ZigBee is a set of protocols that runs over 802.15.4. It is designed to be a
+ZigBee is a set of protocols that run over 802.15.4. It is designed to be a
 low cost option for wireless networks that require low power usage, and have no
 bandwidth requirements. ZigBee defines the network layer, the application layer
 and the high level concept of a ZigBee device object (ZDO). 
@@ -227,6 +237,9 @@ verbosity, it is not ideal for embedded devices where small overheads can make
 processing impossible. 
 
 \subsection{Overall Architecture}
+It is very difficult at this point in time to identify which protocol stack, if
+any, will become the standard for the IoT. 
+
 At present, the academic and standards communities are confident that an IP
 based IoT will become a reality very soon. If this is the case, then the
 architecture detailed in \cite{Palattella2013} is a good candidate as a
@@ -375,6 +388,21 @@ Hop-by-hop encryption is the encipherment of messages between two nodes on the
 communication path. All of the  protocols mentioned in Section \ref{layer_1_2}, offer
 some level of encryption on their link. 
 
+\subsubsection{WiFi Security}
+In terms of security, WiFi has has a shaky past. The first security protocol
+for WiFi, Wired Equivalency Protocol (WEP) had serious issues leaving it
+completely insecure\footnote{{\tt aircrack-ng} can crack WEP keys in a
+matter of seconds.}. Another extension, WiFi Protected Setup (WPS) also
+contained a serious vulnerability\footnote{{\tt reaver-wps} can be retrieve
+WPS PINs in under 24 hours.}. As far as we know, the current security
+standard for WiFi, WiFi Protected Access II (WPA2) is secure, when used
+with a suitably long preshared key (PSK). 
+
+\subsubsection{Bluetooth Security}
+The security used in Bluetooth uses Linear Feedback Shift Registers (LFSRs) to
+generate a pseudorandom keystream, so may well have serious security
+weaknesses.
+
 \begin{itemize}
 \item Bluetooth: E0 Encryption Algorithm
 \end{itemize}
@@ -432,6 +460,9 @@ ITU. (2005). ITU Internet Reports: The Internet of Things
 
 \bibitem{Gartner2014}
 Gartner. (2014). Gartner Says the Internet of Things Will Transform the Data Center. http://www.gartner.com/newsroom/id/2684915
+
+\bibitem{CiscoEverything}
+http://www.cisco.com/web/about/ac79/innov/IoE.html
 
 \bibitem{Illera2014}
 Illera, A. G., Vidal, J. V. (2013) Def Con 21: Dude WTF in My Car?  
