@@ -183,15 +183,15 @@ level protocols to carry IP traffic, an IP packet is also no concerned about
 the lower levels that are carrying it. 
 
 \subsubsection{6LoWPAN}
-Unfortunately IP as a protocol was not designed with highly constrained
-embedded devices in mind, as a result, it can be too resource intensive to run
-on many "things". 6LoWPAN is a protocol that is designed to work around this
-problem, by providing a bare bones version of IPv6. It includes features such
-as header compression and packet fragmentation. 6LoWPAN can be statelessly
-translated into IPv6 in an inexpensive bridge or gateway. 
+Unfortunately IP was not designed with constrained devices in mind, as a
+result, it is too resource intensive to run on many "things". 6LoWPAN is a
+protocol that is designed to work around this problem by providing a
+minimalistic subset of IPv6. It includes features such as header compression
+and packet fragmentation. 6LoWPAN can be statelessly translated into IPv6 via
+an inexpensive bridge or gateway. 
 
 \subsubsection{ZigBee}
-ZigBee is a set of protocols that run over 802.15.4. It is designed to be a
+ZigBee is a set of protocols that run over IEEE 802.15.4. It is designed to be a
 low cost option for wireless networks that require low power usage, and have no
 bandwidth requirements. ZigBee defines the network layer, the application layer
 and the high level concept of a ZigBee device object (ZDO). 
@@ -202,32 +202,29 @@ industrial automation.
 
 \subsection{Layer 4 - The Transport Layer}
 The transport layer runs on top of the network layer and provides multiplexing
-for applications; optionally it also provides retransmission controls in
-the form of TCP. 
-
-A variety of factors mean that TCP is not suitable for the low power lossy
-networks (LLNs) of the IoT, instead we choose to use UDP, handling link
-reliability in a higher layer.
+for applications; optionally it also provides retransmission controls in the
+form of TCP. A variety of factors mean that TCP is not suitable for the
+low power lossy networks (LLNs) of the IoT, instead we choose to use UDP,
+handling link reliability in a higher layer.
 
 \subsection{Layer 7 - The Application Layer}
 The application layer is probably the widest layer, since any application can
-define it's own application layer if it wishes. There are many familiar
-application layer protocols that we use on a daily basis, there include SSH,
+define an application layer if required. There are many familiar
+application layer protocols that we use on a daily basis, including SSH,
 FTP, SMTP, and DNS. 
 
 \subsubsection{HTTP} 
 With the advent of the World Wide Web (W3), it has been observed that HTTP has
-become the de facto standard for all applications. The concept of a RESTful
+become the de facto standard for applications. The concept of a RESTful
 webservice is widely applied.  
 
 \subsubsection{CoAP}
-HTTP was never designed to be a light weight protocol; instead the focus on
-human readability is one of the things that is likely to have contributed to
-the massive success it has had. For constrained devices, HTTP is simply too
-bandwidth, and thus power, intensive. The Constrained Applications Protocol
-(CoAP) is designed as a compatible subset of HTTP. It is not a naive
-compression of HTTP, but rather a completely new protocol with a stateless
-one-to-one mapping to (and from) HTTP. 
+HTTP was not designed to be lightweight; instead the focus on human readability
+is one of the things that contributed to the massive success it has had. For
+constrained devices, HTTP is simply too bandwidth, and thus power, intensive.
+The Constrained Applications Protocol (CoAP) is designed as a compatible subset
+of HTTP. It is not a naive compression of HTTP, but rather a completely new
+protocol with a stateless one-to-one mapping to (and from) HTTP. 
 
 \subsubsection{EXI}
 Efficient XML Interchange (EXI) is a binary format based on XML, that aims to
@@ -240,31 +237,31 @@ processing impossible.
 It is very difficult at this point in time to identify which protocol stack, if
 any, will become the standard for the IoT. 
 
-At present, the academic and standards communities are confident that an IP
-based IoT will become a reality very soon. If this is the case, then the
-architecture detailed in \cite{Palattella2013} is a good candidate as a
-standards protocol stack. This architecture uses 802.15.4 as the PHY and MAC
-layers; 6LoWPAN as the network layer; UDP for the transport layer; and CoAP as
-the Application layer. This architecture is a good choice because it offers
-excellent compatibility, and thus connectivity, to the traditional Internet,
-while avoiding impacting the performance of the IoT with heavy, power intensive
-protocols. 
+At present, the academic and standards communities are confident that we will
+see an IP based IoT. If this is the case, then the architecture detailed in
+\cite{Palattella2013} is a good candidate as a standard protocol stack. This
+architecture uses 802.15.4 as the PHY and MAC layers; 6LoWPAN as the network
+layer; UDP for the transport layer; and CoAP as the Application layer. This
+architecture is a good choice because it offers excellent compatibility, and
+thus connectivity, to the traditional Internet, while avoiding degradation in
+the performance of the IoT with heavy, power intensive protocols. It would also
+be possible to run a similar protocol stack with BLE at Layer 1 \& 2.  
 
-In contrast, many of the "smart" devices available to consumers do not follow
-this architecture. At the most basic end of this scale, we see home automation
-kits based on 433Hz radios, running proprietary protocols, connecting to base
-stations or mobile phones. One example of this is LightWaveRF. The most
-mainstream devices tend to use WiFi. LG and Whirlpool are both manufacturing
-appliances with WiFi connectivity. Nest, a popular manufacturer of smart
-thermostats support both WiFi and 802.15.4 on their devices.  These
-commercially available devices typically lack the high degree of
-interconnectivity required for the internet of things, and as such, in this
-paper, we shall avoid in depth discussion of this class of device.  
+In contrast, many of the ``smart'' devices available to consumers right now do
+not follow this architecture. At the most basic end of this scale, we see home
+automation kits based on simple radios (typically 433MHz), running proprietary
+protocols, connecting to base stations or mobile phones. Examples of this
+include LightWaveRF and Insteon. Presently, home automation is targeted mostly
+at enthusiasts who are willing to build systems themselves using Raspberry Pi
+and Arduino.  
 
-There also appears to be a small community of hobbyist home automation fanatics
-making use of Arduino, RaspberryPi and ZigBee. Although this is more similar to
-the IoT vision, in this paper we treat it more as a stepping stone than and end
-goal, and refrain from analysis of the security issues.
+Many mainstream devices use WiFi or Bluetooth Classic. LG and Whirlpool are
+both manufacturing ranges of appliances with WiFi connectivity. Nest, a popular
+manufacturer of smart thermostats -- now owned by Google -- support both WiFi
+and 802.15.4 on their devices. The Fitbit and Nike Fuel band both connect to
+smart phones over Bluetooth. These commercially available devices often lack
+the always-on,  global connectivity envisioned in the IoT, instead connecting
+to a single device which is used as an application layer proxy.
 
 \section{Security Goals}
 The internet is, for many, no longer a luxury, but a lifeline. Many of our
@@ -285,9 +282,9 @@ A confidential message should only be readable by its intended recipients.
 Mechanisms are needed to ensure that attackers are not able to intercept and
 understand any messages that are transmitted. The level of confidentiality
 required varies depending on the use case: for example, a temperature sensor in
-a public place probably doesn't convey any information that an attacker
-couldn't collect for themselves; whereas a medical sensor for a potentially
-embarrassing medical condition will probably have quite high confidentiality
+a public place probably does not convey any information that an attacker could
+not collect for themselves; whereas a medical sensor for a potentially
+embarrassing medical condition will have much higher confidentiality
 requirements. Wireless communication is particularly susceptible to
 interception, this should not reduce the confidentiality of the messages.  
 
@@ -297,37 +294,38 @@ received as it was when it was sent. Mechanisms are required to ensure that a
 message does not change during transmission, if the message does change in
 transit, it should be either automatically corrected, or discarded. A message
 could be altered accidentally, through some error in the transmission process,
-or it could be altered maliciously by an attacker. As the IoT will likely rely
-mainly on wireless communications, both malicious and accidental changes are likely. 
+or it could be altered maliciously by an attacker. As the IoT will rely mainly
+on wireless communications, both malicious and accidental changes are likely. 
 
 \subsection{Availability}
 Availability refers to the ability to make use of a service when it is needed.
 On the regular Internet we are familiar with Denial of Service (DoS) attacks,
-which render websites or networks completely unusable. The same kind of attacks
-would be possible both against, and from the thing of the internet of things.
-In early 2014, Proofpoint found that many low power devices, including one
-smart refrigerator were being used to send spam \cite{Proofpoint2014}, a
-Distributed DoS attack could be launched in a similar fashion.  
+which render websites or networks completely unusable. The IoT needs mechanisms
+that both prevent it from being the target of an availability reduction attack
+and from being used as the source of DoS attacks.
 
 \subsection{Non-repudiation}
 Non-repudiation mechanisms ensure that if an action was performed by somebody,
 then it is impossible for them to claim that they had not performed the action.
-(Right now I can't think of any reason this would actually be needed in the
-IoT) 
+This security goal seems to be less relevant to the IoT than the others. 
 
 \subsection{Authenticity}
-Authenticity is assuring that a message has been sent by the party that it
-claims to have been sent by. In the IoT protocols should provide a way of
+Authenticity is assuring that a message has been sent by the party from which
+it claims to have been sent. In the IoT protocols should provide a way of
 preventing attackers, for example, from pretending to be sensor nodes, and
-submitting bogus readings, that could lead to undesired actions.  
+submitting bogus readings, that could lead to undesired actions. It may be
+helpful in the IoT to extend authenticity to provenance, recording a complete
+history behind the origin of data.  
 
 \subsection{Authorization}
-Authorization is ensuring that the party sending a command is actually allowed
+Authorization ensures that the party sending a command is actually allowed
 to make the request that they have made. Presently, we often see WiFi routers
-and other embedded devices that ship with well known standard default usernames
+and other embedded devices that ship with well known default usernames
 and password. This makes it very easy for an attacker to guess the login
 credentials. If things do not change, then we are likely to see the same
-phenomenon in the IoT. 
+phenomenon in the IoT. In early 2014, Proofpoint found that many low power
+devices, including one smart refrigerator, were being used to send spam emails
+\cite{Proofpoint2014}.
 
 
 \section{Security Threats \footnote{I may merge this section back into the one above} }
@@ -335,10 +333,11 @@ It is difficult to develop a strategy of prevention and mitigation without
 first understanding some of the potential attacks that should be defended
 against.  
 
+\subsection{Attack Types}
 H. Ning et al \cite{Ning2013} divide the types of attack into the following
 four broad categories:
 
-\subsection{Gathering}
+\subsubsection{Gathering}
 Gathering attacks involve collecting information by eavesdropping on
 communications channels, or gaining access to storage areas. As a result of the
 Snowden leaks in 2013, it was revealed that the US government has been
@@ -348,22 +347,57 @@ from metadata alone \cite{Guardian2013}.
 
 Gathering attacks are a breach of confidentiality. 
 
-\subsection{Imitation}
+\subsubsection{Imitation}
 Pretending to be someone (or something) you are not, in order to gain access to
 a resource that you are not authorised to gain access to. A classic attack is
 MAC address spoofing which can be used to perform a variety of attacks. Replay
 attacks are also a form of imitation that must be defended against. 
 
-\subsection{Blocking}
+\subsubsection{Blocking}
 Blocking refers to reducing the availability of a service. Blocking can be
 achieved at almost any layer of the network. At the physical layer, radio
 frequencies can be jammed; at the application layer, resources can be consumed
 unnecessarily by an attacker.  
 
-\subsection{Privacy}
-Privacy attacks seek to deprive victims of their privacy\footnote{I'm not sure
-how this differs from Gathering.}.
+\subsubsection{Privacy}
+Privacy attacks seek to deprive victims of their privacy. One of major concerns
+is of the identification of people in public places, based on the devices that
+they are carrying. In 2006 security researchers at the Black Hat conference
+\cite{Flexilis2006} expressed concerns that a side channel attack on the
+proposed US e-passports could be used to identify travellers as American
+citizens while they were travelling abroad, exposing them to unnecessary risk.
 
+The privacy of a users geographic location, is also a strong concern as an
+increasing number of devices contain GPS modules. 
+
+\subsection{Attack Levels}
+In \cite{Elkhodr2013} the types of attack are separated into five different
+levels of attack. These attacks refer mostly to Privacy issues in the IoT.
+
+\subsubsection{First-Hand Attack}
+In a first hand attack, a user inadvertently divulges some information that
+they did not intend to. Either through misconfigured privacy settings, or
+through the breach of a vulnerable security protocol, an attacker can gain
+valuable information about a human being, that would otherwise have been
+secret.  
+
+\subsubsection{Gossip Attack}
+A gossip attack is one where the attacker gains some information by
+compromising a node that does not directly interact with the victim. 
+
+\subsubsection{Observation Attack}
+An observation attack makes use of sensors placed (or compromised) by an attack
+with the intent of gaining information about their victims.
+
+\subsubsection{Inference Attack}
+Inference attacks exploit the huge body of data that will be collected in the
+IoT, linking the data in unexpected ways to obtain (or gain a strong suspicion
+of) sensitive information that was not revealed by the possession of a single
+data source. 
+
+\subsubsection{Automated Invasion Attack}
+A sophisticated attacker may be able to mechanise the process of performing
+attacks, making them possible on an extreme scale. 
 
 \section{Prevention and Mitigation}
 With such a large number of potential attacks, all with the ability to do huge
@@ -408,13 +442,19 @@ weaknesses.
 \end{itemize}
 
 \subsection{End-to-end Encryption}
-The inherent problem with hop-by-hop encryption is that each node on the path between the sender and receiver.   
+The inherent problem with hop-by-hop encryption is that each node on the path
+between the sender and receiver.   
 
 \begin{itemize}
 \item DTLS
 \item IPSec
 \end{itemize}
 
+
+\subsection{Architectural Decisions}
+Need to make sure that the architecture we settle on makes it difficult to do an attack. 
+
+Do we allow end-to-end addressability?
 
 \section{Future Work}
 What things are still open research problems. 
@@ -478,6 +518,12 @@ Palattella, M. R., Accettura, N., Vilajosana, X., Watteyne, T., Grieco, L. A., B
 
 \bibitem{Ning2013}
 Ning, H., Liu, H., \& Yang, L. T. (2013). Cyberentity Security in the Internet of Things. Computer, 46(4), 46–53. 
+
+\bibitem{Flexilis2006}
+Flexilis Inc. (2006). United States e-Passport Shield Failure Vulnerability. Black Hat Conference
+
+\bibitem{Elkhodr2013}
+Elkhodr, M., Shahrestani, S., \& Cheung, H. (2013). The Internet of Things: Vision \& challenges. In IEEE 2013 Tencon - Spring (pp. 218–222). IEEE. doi:10.1109/TENCONSpring.2013.6584443
 
 \bibitem{Proofpoint2014}
 Proofpoint. (2014). Proofpoint Uncovers Internet of Things (IoT) Cyberattack. http://www.proofpoint.com/about-us/press-releases/01162014.php
