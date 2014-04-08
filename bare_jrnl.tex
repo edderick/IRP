@@ -18,7 +18,7 @@
 As the number and types of devices in the modern home grows, so does the
 possibility for attack. The Internet of Things generation network technology
 must be designed with security and privacy considerations in mind from the
-start. In this paper, a thorough review of the protocold stack, security
+start. In this paper, a thorough review of the protocol stack, security
 consideration and prevention mechanisms is given. 
 \end{abstract}
 
@@ -125,7 +125,7 @@ constrained devices in the IoT.
 \subsubsection{Bluetooth}
 Bluetooth is a wireless communication technology used in Personal Area Networks
 (PANs), intended as a wireless replacement for RS-232 serial cables. It
-operates in the Industrial, Scientific and Industrial (ISM) band, and is used
+operates in the Industrial, Scientific and Medical (ISM) band, and is used
 primarily for connecting mobile phones to headsets. Bluetooth has a lower
 bandwidth and energy usage than WiFi, so is more suitable for connecting
 constrained devices than WiFi. Unlike WiFi, Bluetooth also defines the higher
@@ -245,7 +245,7 @@ layer; UDP for the transport layer; and CoAP as the Application layer. This
 architecture is a good choice because it offers excellent compatibility, and
 thus connectivity, to the traditional Internet, while avoiding degradation in
 the performance of the IoT with heavy, power intensive protocols. It would also
-be possible to run a similar protocol stack with BLE at Layer 1 \& 2.  
+be possible to run a similar protocol stack with BLE at Layer 1.  
 
 In contrast, many of the ``smart'' devices available to consumers right now do
 not follow this architecture. At the most basic end of this scale, we see home
@@ -275,7 +275,7 @@ As we transition from an Internet containing only virtual entities to an
 Internet consisting of real world objects as well, the damages that will be
 possible through attack or data leak will increase. There are a number of
 security and privacy goals that must be met for users to be able to place trust
-in the Internet of Things.
+in the IoT.
 
 \subsection{Confidentiality}
 A confidential message should only be readable by its intended recipients.
@@ -425,30 +425,47 @@ some level of encryption on their link.
 \subsubsection{WiFi Security}
 In terms of security, WiFi has has a shaky past. The first security protocol
 for WiFi, Wired Equivalency Protocol (WEP) had serious issues leaving it
-completely insecure\footnote{{\tt aircrack-ng} can crack WEP keys in a
-matter of seconds.}. Another extension, WiFi Protected Setup (WPS) also
-contained a serious vulnerability\footnote{{\tt reaver-wps} can be retrieve
-WPS PINs in under 24 hours.}. As far as we know, the current security
-standard for WiFi, WiFi Protected Access II (WPA2) is secure, when used
-with a suitably long preshared key (PSK). 
+completely insecure. Using the software package {\tt aircrack-ng} an
+unskilled attacker can crack WEP keys in a matter of seconds. Another
+extension, WiFi Protected Setup (WPS) also contained a serious
+vulnerability, {\tt reaver-wps} is a tool that can be used to retrieve any
+WPS PIN in under 24 hours. As far as we know, the current security standard
+for WiFi, WiFi Protected Access II (WPA2) is secure, when used with a
+suitably long preshared key (PSK). 
 
 \subsubsection{Bluetooth Security}
-The security used in Bluetooth uses Linear Feedback Shift Registers (LFSRs) to
-generate a pseudorandom keystream, so may well have serious security
-weaknesses.
+The security used in Bluetooth is known as the E0 encyrption engine, which uses
+Linear Feedback Shift Registers (LFSRs) to generate a pseudorandom keystream,
+so may well have serious security weaknesses.
 
-\begin{itemize}
-\item Bluetooth: E0 Encryption Algorithm
-\end{itemize}
+
+In A Review of Internet Security, a wide range of potential attack on Bluetooth
+are presented. These include Bluejacking, a simple attack in which a user sends
+bogus data to... 
+
 
 \subsection{End-to-end Encryption}
 The inherent problem with hop-by-hop encryption is that each node on the path
 between the sender and receiver.   
 
-\begin{itemize}
-\item DTLS
-\item IPSec
-\end{itemize}
+\subsubsection{DTLS}
+When browsing the Web today, most users are familiar with the padlock symbol in
+the corner of the browser, although few know what it actually means. It
+indicates that communications to the web server are being secured with
+Transport Layer Security (TLS). As it is likely that the IoT will use UDP
+rather than TCP, TLS cannot be used, instead Datagram TLS (DTLS) will need to
+be used. DTLS is very similar to TLS, allowing communications to be encrypted
+using a wide variety of encryption algorithms.  
+
+In February 2014, researchers at RHUL discovered a vulnerability in the
+protocol, when Cipher Block Chaining (CBC) is used as the mode for the
+encryption. 
+
+
+\subsubsection{IPSec}
+
+
+\subsubsection{Diet HIP}
 
 
 \subsection{Architectural Decisions}
@@ -472,8 +489,7 @@ A summary and evaluation of the findings presented in the paper.
 
 
 \section*{Acknowledgment}
-The authors would like to thank Edward Snowden, because he has an excellent
-first name, and perfect initials.
+The author would like to thank 
 
 
 % references section
