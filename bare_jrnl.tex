@@ -463,10 +463,18 @@ encryption.
 
 
 \subsubsection{IPSec}
-
+IPSec is the security extensions for IP. It offers the ability to authenticate
+and encrypt IP packets. In early specifications for IPv6, IPSec was mandatory,
+if one did not require security they could set the methods to NULL -- RFC6463
+reduced the requirement to a recommendation. There has been a small amount
+of work evaluating the feasibility of IPSec on constrained devices, that
+has shown that it would be possible. 
 
 \subsubsection{Diet HIP}
-
+The Host Identity Protocol (HIP) can be used to decouple the secure
+identification of a host from its location, and allow authenticated
+communications. Diet HIP is a cut back version of HIP that can be used on
+constrained devices. 
 
 \subsection{Architectural Decisions}
 Need to make sure that the architecture we settle on makes it difficult to do an attack. 
