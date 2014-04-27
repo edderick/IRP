@@ -16,10 +16,10 @@
 
 \begin{abstract}
 As the number and types of devices in the modern home grows, so does the
-possibility for attack. The Internet of Things generation network technology
+possibility for attack. The network technology powering the Internet of Things
 must be designed with security and privacy considerations in mind from the
 start. In this paper, a thorough review of the protocol stack, security
-consideration and prevention mechanisms is given. 
+considerations and prevention mechanisms is given. 
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -29,28 +29,28 @@ Internet of Things, Security, IETF.
 \IEEEpeerreviewmaketitle
 
 \section{Introduction}
-\IEEEPARstart{T}{he} ``Internet of Things'' (IoT) has become a common buzzword
-recently; the term is thrown around liberally, but there is no single accepted
-definition of the concept. The earliest use of the expression was by Kevin
-Ashton in 1999, to describe the use of RFID tags and the Internet in monitoring
-the supply chain at Procter \& Gamble \cite{Ashton2009}. 
+\IEEEPARstart{T}{he} ``Internet of Things'' (IoT) has become a common buzzword;
+the term is thrown around liberally, without a single accepted definition
+of the concept. The earliest use of the expression was by Kevin Ashton in 1999,
+when describing the combination of RFID tags and the Internet to monitor the
+supply chain at Procter \& Gamble \cite{Ashton2009}. 
 
 A few years later, in 2005, the ITU published a report titled ``The Internet of
 Things'' \cite{ITU_IoT}, which discussed how RFID could be used to give objects
 from the real world a presence on the Internet. The report added a new
 dimension to the Internet, suggesting that in the future connectivity would be
-available at ``anytime'', at ``any place'', and to ``anything''.
+available at ``anytime'', in ``any place'', and to ``anything''.
 
 More recent definitions of the IoT have shied away from limiting themselves to
-RFID, favouring more feature rich protocols, such as 802.14.5 and Bluetooth Low
-Energy (BLE). The one core theme that all definitions agree on, is that as the
-IoT enters the mainstream, the number of devices connected to the Internet will
-will skyrocket -- Gartner predicts that by 2020, there will be over 26 billion
-devices connected to the Internet \cite{Gartner2014}. 
+RFID, favouring more feature rich protocols, such as 802.14.5, Bluetooth Low
+Energy (BLE) and even WiFi. The one core theme that all definitions agree on,
+is that as the IoT enters the mainstream, the number of devices connected to
+the Internet will skyrocket -- Gartner predicts that by 2020, there will
+be over 26 billion devices connected to the Internet \cite{Gartner2014}. 
 
 In this paper, the IoT is taken to refer to the massive increase in
 connectivity that we have already started to see in the past few years. This
-conjunction of the traditional internet, and the emerging IoT, has been
+conjunction of the traditional Internet, and the emerging IoT, has been
 referred to as ``the Internet of Everything'' \cite{CiscoEverything}; it is
 important not to neglect the increasing presence of more traditional devices on
 the Internet. 
@@ -60,8 +60,8 @@ concern. With more devices, falling into a wider range of device classes, the
 number of attack surfaces grows. The first generation Internet took a lax
 approach to security, focusing first on achieving functionality. This has lead
 to an Internet (specifically the World Wide Web) that is insecure by default;
-only recently have larger websites begun to use encrypted sessions (through the
-use of TLS) to secure communications with their users. 
+only recently have larger websites begun to use encrypted sessions (by
+deploying TLS) to secure communications with their users. 
 
 There has been a large amount of attention recently placed on the IoT in a
 business and industrial context. Discussions of wireless sensor networks (WSN)
@@ -88,26 +88,26 @@ In the early days of the Internet, there was a wide range of competing
 standards: DECnet, TCP/IP, AppleTalk, OSI and many others. Eventually TCP/IP
 came out on top and now is a common standard used around the world. Similarly,
 there are many competing technology stacks for the IoT. There are advantages
-and disadvantages to each potential architecture, but very few exists within a
+and disadvantages to each potential architecture, but few exists within a
 vacuum -- each draws inspiration from the others. 
 
 As with the Internet, it is convenient to think about the IoT in terms of the 7
 layer OSI model\footnote{Although the TCP/IP model won the battle, the
-numberings from the OSI model are still commonly used in industry}.  The TCP/IP
+numberings from the OSI model are still widely used in industry}.  The TCP/IP
 model is built around a narrow waist of IP (either IPv4 or IPv6), with multiple
 choices of protocol sitting above and below the IP layer. This has been a key
 feature to the success of TCP/IP as it allows applications to be agnostic of
-the lower layers, and the lower layers, in turn, agnostics of the applications
+the lower layers, and the lower layers, in turn, agnostic of the applications
 running above them. 
 
 \subsection{Layers 1 \& 2 -- The Physical and Link Layers}
 \label{layer_1_2}
 The physical layer (PHY) defines the physical medium used for the transmission
 of messages. Traditional networks made use of wired connections (such as
-Ethernet) for this purpose. However, due to the expense and inconvenience, we
-have seen a transition away from wired networks to wireless, radio based
-technologies. The link layer is used to control access to the PHY layer by
-devices wishing to communicate.
+Ethernet) for this purpose. However, due to the expense and inconvenience of
+installing wired networks, we have seen a transition towards wireless, radio
+based technologies. The link layer is used to control access to the PHY layer
+by devices wishing to communicate.
 
 \subsubsection{WiFi}
 IEEE 802.11 is the set of specifications defining WiFi. WiFi is probably the
@@ -140,7 +140,8 @@ Classic.
 
 One of the main advantages of BLE is that is can share the same antenna as
 Bluetooth Classic, making it cheap for hardware manufactures to implement. We
-have already seen a number of smart phones, most notably the Apple iPhone 4S.
+have already seen a number of smart phones with support for BLE, most notably
+the Apple iPhone 4S.
 
 \subsubsection{RFID}
 Much of the early work on the IoT focused on Radio-frequency Identification
@@ -179,12 +180,12 @@ in the future we will be forced to use IPv6.
 
 IP is an important protocol as it is used almost universally by machines
 connected to the Internet. An IP network does not need to know about the higher
-level protocols to carry IP traffic, an IP packet is also no concerned about
-the lower levels that are carrying it. 
+level protocols to carry IP traffic, similarly, an IP packet is also not
+concerned about the lower levels that carry it. 
 
 \subsubsection{6LoWPAN}
 Unfortunately IP was not designed with constrained devices in mind, as a
-result, it is too resource intensive to run on many "things". 6LoWPAN is a
+result, it is too resource intensive to run on many ``things''. 6LoWPAN is a
 protocol that is designed to work around this problem by providing a
 minimalistic subset of IPv6. It includes features such as header compression
 and packet fragmentation. 6LoWPAN can be statelessly translated into IPv6 via
@@ -204,7 +205,7 @@ industrial automation.
 The transport layer runs on top of the network layer and provides multiplexing
 for applications; optionally it also provides retransmission controls in the
 form of TCP. A variety of factors mean that TCP is not suitable for the
-low power lossy networks (LLNs) of the IoT, instead we choose to use UDP,
+low power lossy networks (LLNs) of the IoT, instead we must use UDP,
 handling link reliability in a higher layer.
 
 \subsection{Layer 7 - The Application Layer}
@@ -268,8 +269,8 @@ The internet is, for many, no longer a luxury, but a lifeline. Many of our
 everyday tasks have been greatly simplified by the internet. The IoT will only
 exaggerate this effect, increasing our reliance on technology. The devices that
 make up the IoT that reside in our homes are likely to collect huge amounts of
-sensitive information -- it is paramount that we avoid anything happening to
-this data, as the consequences could be significant. 
+sensitive information -- it is paramount that we avoid anything bad happening to
+this data, as the consequences could be catastrophic. 
 
 As we transition from an Internet containing only virtual entities to an
 Internet consisting of real world objects as well, the damages that will be
