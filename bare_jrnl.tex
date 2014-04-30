@@ -540,10 +540,19 @@ communication path. All of the  protocols mentioned in Section \ref{layer_1_2}, 
 some level of encryption on their link. 
 
 \subsubsection{WiFi Security}
-In terms of security, WiFi has has a shaky past. The first security protocol
-for WiFi, Wired Equivalency Protocol (WEP) had serious issues leaving it
-completely insecure. Using the software package {\tt aircrack-ng} an
-unskilled attacker can crack WEP keys in a matter of seconds. Another
+In terms of security, WiFi has had a shaky past. The first security protocol
+for WiFi, Wired Equivalency Protocol (WEP) had serious issues that left it
+completely insecure. WEP made use of the RC4 stream cipher, which itself is
+still considered secure -- as a stream cipher, it is important that the
+same key is never used twice. The way that WEP added this randomness to the
+key stream was through the use of 24 bit initialisation vectors (IV). It
+turns out that because of the Birthday Paradox, only around 5000
+\footnote{$ \sqrt[2]{2^24} $} IVs are needed before the probability of a
+collision exceeds 50\%. Using the software package {\tt aircrack-ng} an
+unskilled attacker can crack WEP keys in a matter of seconds. 
+
+
+Another
 extension, WiFi Protected Setup (WPS) also contained a serious
 vulnerability, {\tt reaver-wps} is a tool that can be used to retrieve any
 WPS PIN in under 24 hours. As far as we know, the current security standard
@@ -551,13 +560,18 @@ for WiFi, WiFi Protected Access II (WPA2) is secure, when used with a
 suitably long preshared key (PSK). 
 
 \subsubsection{Bluetooth Security}
-The security used in Bluetooth is known as the E0 encyrption engine, which uses
-Linear Feedback Shift Registers (LFSRs) to generate a pseudorandom keystream,
-so may well have serious security weaknesses.
+The security used in Bluetooth is known as the E0 encryption engine. 
 
-In A Review of Internet Security, a wide range of potential attack on Bluetooth
-are presented. These include Bluejacking, a simple attack in which a user sends
-bogus data to... 
+In A Review of WPAN Security\cite{Kennedy2008}, a dizzying number of potential
+attacks on Bluetooth, each with well fitting names, are presented. These include: 
+\begin{itemize}
+\item Bluejacking, a simple attack in which a user sends bogus data to...
+\item BlueSnarf
+\item BlueBump
+\item BlueSmack
+\item BlueDump
+\item Bloover
+\end{itemize}
 
 
 \subsection{End-to-end Encryption}
@@ -698,6 +712,8 @@ Narayanan, A., \& Shmatikov, V. (2008). Robust De-anonymization of Large Dataset
 \bibitem{McAfee2011}
 http://blogs.mcafee.com/consumer/family-safety/7-types-of-hacker-motivations
 
+\bibitem{Kennedy2008}
+Kennedy, T., \& Hunt, R. (2008). A review of WPAN security. In Proceedings of the International Conference on Mobile Technology, Applications, and Systems - Mobility ’08 (p. 1).
 \end{thebibliography}
 
 
