@@ -9,7 +9,7 @@
 \begin{document}
 
 \title{Security of the Internet of Things in the Home}
-\author{Edward~Seabrook }
+\author{Edward~Seabrook, University~of~Southampton }
 
 \maketitle
 
@@ -335,7 +335,7 @@ phenomenon in the IoT. In early 2014, Proofpoint found that many low power
 devices, including one smart refrigerator, were being used to send spam emails
 \cite{Proofpoint2014}.
 
-\subsection{Usability}
+\subsection{Usability \& Accessibility}
 Although not strictly a security goal, when designing systems, it is of
 adamant importance that usability is considered. For a security system to be
 successful, the target audience must not struggle to use it -- if the end
@@ -348,6 +348,13 @@ that they are using, they also often do not have the time or the will to learn.
 As such, the actions required to enable security should be as simple as
 possible. One way of achieving this may be to hide as much of the underlying
 cryptographic mechanism as possible from the end user.
+
+In the past, accessibility has often been ignored all together when designing
+secure systems -- WiFi passwords are typically printed in tiny writing on the
+underside of routers, making the task of discovering WiFi passwords difficult
+even for able bodies people. For many of the goals of the IoT to be reached,
+especially with regards to devices designed to help people with disabilities,
+accessibility needs to be made a priority.  
 
 \section{Security Threats}
 It is difficult to develop a strategy of prevention and mitigation without
@@ -542,22 +549,35 @@ some level of encryption on their link.
 \subsubsection{WiFi Security}
 In terms of security, WiFi has had a shaky past. The first security protocol
 for WiFi, Wired Equivalency Protocol (WEP) had serious issues that left it
-completely insecure. WEP made use of the RC4 stream cipher, which itself is
-still considered secure -- as a stream cipher, it is important that the
-same key is never used twice. The way that WEP added this randomness to the
-key stream was through the use of 24 bit initialisation vectors (IV). It
-turns out that because of the Birthday Paradox, only around 5000
-\footnote{$ \sqrt[2]{2^24} $} IVs are needed before the probability of a
-collision exceeds 50\%. Using the software package {\tt aircrack-ng} an
-unskilled attacker can crack WEP keys in a matter of seconds. 
+completely insecure. WEP made use of the RC4 stream cipher -- which itself
+is still considered secure -- however, as a stream cipher, it is important
+that the same key is never used twice. The way that WEP added this
+uniqueness to the key stream was through the use of 24-bit initialisation
+vectors (IV). Because of the Birthday Problem, only around 5000
+\footnote{Calculated by $\sqrt[]{\frac{pi}{2} 2^{24}} $} IVs need to be
+collected before the probability of collision exceeds 50\%.  The attack to
+exploit this is known as the Fluhrer, Mantin and Shamir attack. Using the
+software package {\tt aircrack-ng} an unskilled attacker can crack WEP keys
+in a matter of seconds. Once a WEP network has been cracked, an attacker
+can read all of the traffic that is sent to the compromised access point.
+WEP has, for the most part, been phased out of common use.
 
+WEP was replaced with Wifi Protected Access (WPA). There have been two
+revisions of WPA: WPA and WPA2 -- WPA was designed as a stop-gap measure that
+was deployable to the same hardware as WEP, requiring only a firmware upgrade;
+WPA2 on the other hand was proposed as a long term solution, and uses the
+Advanced Encryption Standard (AES). The only widely known WPA2 vulnerability is
+the dictionary attack; as long as users chose suitably long
+passwords\footnote{When operated in Preshared Key Mode(PSK)}, along with a
+random SSID, this should not be a problem. 
 
-Another
-extension, WiFi Protected Setup (WPS) also contained a serious
-vulnerability, {\tt reaver-wps} is a tool that can be used to retrieve any
-WPS PIN in under 24 hours. As far as we know, the current security standard
-for WiFi, WiFi Protected Access II (WPA2) is secure, when used with a
-suitably long preshared key (PSK). 
+Another extension, WiFi Protected Setup (WPS), which was designed to increase
+the ease of setting up WiFi networks, also contained a serious vulnerability.
+The flaw was a result of the way that PINs were authorised: a eight digit PIN
+was used, but was processed in two rounds resulting in a keyspace of only
+11,000. {\tt reaver-wps} is a tool that can be used to retrieve any WPS PIN in
+under 24 hours. Some modern routers ship with extra precautions, such as
+turning off WPS after several failed attempts, but many do not. 
 
 \subsubsection{Bluetooth Security}
 The security used in Bluetooth is known as the E0 encryption engine. 
@@ -565,18 +585,26 @@ The security used in Bluetooth is known as the E0 encryption engine.
 In A Review of WPAN Security\cite{Kennedy2008}, a dizzying number of potential
 attacks on Bluetooth, each with well fitting names, are presented. These include: 
 \begin{itemize}
-\item Bluejacking, a simple attack in which a user sends bogus data to...
-\item BlueSnarf
-\item BlueBump
-\item BlueSmack
-\item BlueDump
-\item Bloover
+\item BlueJacking: a simple attack in which the attacker sends unexpected
+messages to a victim in an attempt to get them to reply with login details. 
+\item BlueSnarf: an attack that exploits the Object Exchange Push service to
+gain unauthorised access to a mobile phones address book. 
+\item BlueBump: exploits the fact that link keys may be used after a session
+has terminated. 
+\item BlueSmack: allows an attacker to perform a simple DoS attack by
+exploiting the L2CAP layer.
+\item BlueDump: can be used to cause a device to dump its link key if the
+Bluetooth Address of the device is known. 
+\item BlueChop: by confusing the master node of a piconet, a DoS attack can be
+performed. 
 \end{itemize}
-
 
 \subsection{End-to-end Encryption}
 The inherent problem with hop-by-hop encryption is that each node on the path
-between the sender and receiver.   
+between the sender and receiver is able to read the data, as it is decrypted
+before being forwarded.   If a path contains nodes that are not trusted by the
+sender, end-to-end encryption can be used to prevent the data being observed or
+tampered with by a middle man. 
 
 \subsubsection{DTLS}
 When browsing the Web today, most users are familiar with the padlock symbol in
@@ -591,6 +619,15 @@ In February 2014, researchers at RHUL discovered a vulnerability in the
 protocol, when Cipher Block Chaining (CBC) is used as the mode for the
 encryption. 
 
+It is also worth noting that there have been a number of serious flaws in
+implementation of the SSL protocol. Firstly infamous 'goto fail' in an Apple
+implementation of SSL, in which a repeated statement resulted in the incorrect
+checking of SSL headers. And more recently the OpenSSL HeartBleed bug, in
+which the heart beat extensions to SSL were incorrectly implemented. A lack of
+bounds checking, allowed any user to request a large chunk of memory to be
+return; by analysing the returned data within the constraints of x.509 headers,
+researchers at Google were able to retrieve private keys for servers running
+this implementation. 
 
 \subsubsection{IPSec}
 IPSec is the security extensions for IP. It offers the ability to authenticate
@@ -599,6 +636,9 @@ if one did not require security they could set the methods to NULL -- RFC6463
 reduced the requirement to a recommendation. There has been a small amount
 of work evaluating the feasibility of IPSec on constrained devices, that
 has shown that it would be possible. 
+
+IPSec can be operated in a number of different modes: Authentication Header
+(AH), Encapsulating Security Payload (ESP), and Security Associations (SA).
 
 \subsubsection{Diet HIP}
 The Host Identity Protocol (HIP) can be used to decouple the secure
@@ -610,39 +650,97 @@ constrained devices.
 Service discovery, Router advertisements, etc.
 
 \section{Proposed Security Architecture}
-Formerly known as "Architectural Decisions". Need to make sure that the
-architecture we settle on makes it difficult to do an attack. 
+There are many design decisions that still need to be made when deploying the
+IoT in the home. Although other factors, such as usability must not been over
+looked, security, must be among the top priorities when making these decisions.
+The design of home networks should make it as difficult as possible for an
+attacker to perform a highly damaging attack. 
 
+\subsection{End-to-end Addressability}
+One of the biggest architectural arguments to have arisen with the introduction
+of IPv6, is should we allow transparent, end-to-end addressability of devices.
+With IPv4, the address space was so small that we had no choice, and were
+forced to use Network Address Translation (NAT), which had the side effect of
+removing end-to-end addressability. Although this breaks the end-to-end
+principle, many users feel comfort in the fact that the devices inside their
+network are not addressable from the outside.  
+
+Many argue that NAT doesn't provide any security benefit over a well configured
+firewall; reachability does not have to exist just because addressability does.
+One counter argument to this is the number of bugs and vulnerabilities that
+exist in the implementation of software, is it worth exposing the network to
+risks of imperfection in software.
+
+\subsection{Use of Application Layer Proxies}
+Many of todays products do not allow for external addressing of sensors or
+actuators, instead they act as application layer proxies for these devices.  
+
+\subsection{Increased Host Security}
+When the internet was first envisioned, each host was responsible for accepting
+and rejecting traffic based on whether it was deemed to be genuine or not. With
+the popularisation of networks in corporate setting, to increase the ease of
+administration and to enforce company policy on employees, network filtering
+was shifted to the network edge.
+
+The nodes of the IoT are likely to be highly constrained in terms of processing
+power. 
+
+\subsection{Use Cases}
 Consider some major use cases of the network.
-
-Do we allow end-to-end addressability?
-
-What is filtered at the network edge?
-
-Increased host security
-
 How do these relate back to the security goals and identified threats?
 
 
 \section{Future Work}
-What things are still open research problems. 
+Despite the large body of work that has already been done into the security
+considerations for the IoT in domestic networks, there are still many
+unanswered questions. 
 
-\begin{itemize}
-\item How do we force vendors to ship devices with secure password?
-\item How do we educate users?
-\item Will we be able to outsource security?
-\item How does ``The Cloud'' relate to all of this?
-\item Will Information Centric Networking be the next big thing? How about LISP then?
-\end{itemize}
+\subsection{Secure by Default}
+One major challenge is ensuring that device vendors pick the correct security
+protocols for their devices, and adhere to the specifications. It would also be
+helpful to methods of encouraging product manufacturers to ship their products
+with secure, randomly generated, user names and passwords in order to reduce
+the number of attacks that are made of devices that have never been configured
+away from their defaults.
+
+\subsection{User Education}
+Research must be done on how to teach users an effective mental model for security in their home.
+
+\subsection{Outsourcing Security}
+Although it sounds like a nightmare scenario to the more paranoid and/or
+technically inclined. Many users may benefit from the relocation of the
+security maintenance of their home network form inside the home, to a third
+party, such as their ISP. 
+
+\subsection{The Cloud of Things}
+Cloud computing has been one of the largest advances in technology over the
+past decade. Users are placing more and more of their data outside of their
+personal machines. As the cloud collides with the IoT, more and more sensitive
+data will find itself in the cloud. How can users protect themselves from their
+service providers? And should the cloud provider be held responsible if data is
+lost?
+
+\subsection{Novel Network Paradigms}
+There are a number of novel network paradigms that have been proposed as a
+replacement of TCP/IP. Information Centric Networking (ICN), aims to replace IP
+with a naming system that is based on the content of the data being requested,
+rather than the logial location of the data. Does this kind of architecture
+need to be considered, and how can it be made secure?
 
 
 \section{Conclusion}
 A summary and evaluation of the findings presented in the paper.
 
+\begin{itemize}
+\item A lot of products don't actually follow the academic research
+\item A lot of the academic research is very hand wavy
+\end{itemize}
+
 
 
 \section*{Acknowledgment}
-The author would like to thank 
+The author would like to thank Dr Tim Chown for his help, support and guidance
+throughout this project. 
 
 
 % references section
