@@ -3441,13 +3441,13 @@ between column types.}%
 \def\@maketitle{\newpage
 \begin{center}%
 \ifCLASSOPTIONtechnote% technotes
-   {\bfseries\large\@IEEEcompsoconly{\sffamily}\@title\par}\vskip 1.3em{\lineskip .5em\@IEEEcompsoconly{\sffamily}\@author
-   \@IEEEspecialpapernotice\par{\@IEEEcompsoconly{\vskip 1.5em\relax
+   {\bfseries\large\@IEEEcompsoconly{\sffamily}\@title\par}\vskip 1em{\lineskip .5em\@IEEEcompsoconly{\sffamily}\@author
+   \@IEEEspecialpapernotice\par{\@IEEEcompsoconly{\vskip 1em\relax
    \@IEEEcompsoctitleabstractindextextbox{\@IEEEcompsoctitleabstractindextext}\par
    \hfill\@IEEEcompsocdiamondline\hfill\hbox{}\par}}}\relax
 \else% not a technote
    \vskip0.2em{\Huge\@IEEEcompsoconly{\sffamily}\@IEEEcompsocconfonly{\normalfont\normalsize\vskip 2\@IEEEnormalsizeunitybaselineskip
-   \bfseries\Large}\@title\par}\vskip1.0em\par%
+   \bfseries\Large}\@title\par}\vskip1em\par%
    % V1.6 handle \author differently if in conference mode
    \ifCLASSOPTIONconference%
       {\@IEEEspecialpapernotice\mbox{}\vskip\@IEEEauthorblockconfadjspace%
@@ -3457,14 +3457,13 @@ between column types.}%
          % peerreviewca handles author names just like conference mode
          {\@IEEEcompsoconly{\sffamily}\@IEEEspecialpapernotice\mbox{}\vskip\@IEEEauthorblockconfadjspace%
           \mbox{}\hfill\begin{@IEEEauthorhalign}\@author\end{@IEEEauthorhalign}\hfill\mbox{}\par
-          {\@IEEEcompsoconly{\vskip 1.5em\relax
+          {\@IEEEcompsoconly{\vskip 1em\relax
            \@IEEEcompsoctitleabstractindextextbox{\@IEEEcompsoctitleabstractindextext}\par\hfill
            \@IEEEcompsocdiamondline\hfill\hbox{}\par}}}\relax
       \else% journal or peerreview
-         {\lineskip.5em\@IEEEcompsoconly{\sffamily}\sublargesize\@author\@IEEEspecialpapernotice\par
-          {\@IEEEcompsoconly{\vskip 1.5em\relax
-           \@IEEEcompsoctitleabstractindextextbox{\@IEEEcompsoctitleabstractindextext}\par\hfill
-           \@IEEEcompsocdiamondline\hfill\hbox{}\par}}}\relax
+         {\@IEEEcompsoconly{\sffamily}\sublargesize\@author\par\vskip 0.5em
+\@IEEEcompsocdiamondline
+          }\relax
       \fi
    \fi
 \fi\end{center}}
