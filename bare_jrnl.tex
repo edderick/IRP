@@ -613,7 +613,10 @@ routers ship with extra precautions, such as turning off WPS after several
 failed attempts. 
 
 \subsubsection{Bluetooth Security}
-The security layer used in Bluetooth is known as the E0 encryption engine. 
+The Bluetooth specification defines a stream cipher known as E0. The design is
+optimised for implementation in hardware, using multiple Linear Feedback Shift
+Registers (LFSRs) and a simple state machine to generate a pseudorandom
+keystream. 
 
 In A Review of WPAN Security\cite{Kennedy2008}, a dizzying number of potential
 attacks on Bluetooth, each with well fitting names, are presented. These include: 
@@ -631,6 +634,16 @@ exploiting the L2CAP layer.
 \item {\bf BlueChop:} by confusing the master node of a piconet, a DoS attack can be
 performed. 
 \end{itemize}
+
+\subsubsection{IEEE 802.15.4 Security}
+IEEE 802.15.4 includes an extensive security specification, offering several
+modes of operation: no security, encryption only, authentication only, and
+encryption and authentication. 
+
+The encryption engine used is AES, with Message Authentication Codes (MAC) used
+for Authentication. The protocols are no perfect though, in 2004 Sastry et al
+\cite{Sastry2004} outlined some of the major problems that existed.  
+
 
 \subsection{End-to-end Encryption}
 The inherent problem with hop-by-hop encryption is that each node on the path
@@ -908,6 +921,9 @@ Bhimani, A. (1996). Securing the commercial Internet. Communications of the ACM,
 
 \bibitem{embedded}
 http://www.embedded.com/electronics-blogs/cole-bin/4229531/UDP---the-embedded-wireless--Internet-of-Things-
+
+\bibitem{Sastry2004}
+Sastry, N., \& Wagner, D. (2004). Security considerations for IEEE 802.15.4 networks. In Proceedings of the 2004 ACM workshop on Wireless security - WiSe ’04 (p. 32)
 
 \end{thebibliography}
 
