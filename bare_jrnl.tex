@@ -560,66 +560,64 @@ operations carried out by governments around the world.
 
 
 \section{Prevention and Mitigation}
-With such a large number of potential attacks, many with the potential to be
-incredibly damaging, mechanisms and policies are required to reduce harm that
-can be done by an attack. 
+The large number of potential attacks, many with the potential to cause massive
+amounts of damage, means mechanisms and policies are required to reduce harm an
+attack can cause. 
 
 \subsection{Legal Frameworks}
-Legal frameworks should not be overlooked as an effective measure against cyber
+Legal action should not be overlooked as an effective measure against cyber
 criminals. It is commonly accepted that perfect security does not exists
-\cite{ThereMustBeA}, implementers of secure products of any reasonable
-complexity, are almost certain to make some mistakes. This lack of undeniable
-security leads us to require laws to act as a safety net, deterring criminals
-from committing computer crimes, and compensating victims attacks. An overview
-of some of the relevant law can be found in \cite{Weber2010}. 
+\cite{ThereMustBeA}. Products of any reasonable complexity, are almost certain
+to contain flaws. This leads to the requirement of laws to act as a safety net.
+Laws aim to deter criminals from committing computer crimes, and compensate the
+victims. An overview of some of the relevant law can be found in
+\cite{Weber2010}. 
 
-It may also be helpful to put in place regulations to force hardware and
-software vendors to ship products in a secure state, and to place
-strong recommendations on the minimum levels of testing required. 
+Regulations making vendors accountable for defects in their products may help
+persuade them to ship devices in a secure state, and ensure testing is
+thorough. 
 
 \subsection{Hop-by-hop Encryption}
-Hop-by-hop encryption is the encryption of messages between two directly
-connected nodes. All of the  protocols mentioned in Section \ref{layer_1_2},
-offer some form of encryption on their link. 
+Hop-by-hop encryption exists between two directly connected nodes. All of the
+protocols mentioned in Section \ref{layer_1_2}, offer some form of link layer
+encryption. 
 
 \subsubsection{WiFi Security}
 WiFi security has a shaky past. The first WiFi security protocol, Wired
 Equivalency Protocol (WEP) was completely insecure. As WEP uses a stream cipher
 (RC4), it is vital that keys are never reused. WEP uses 24-bit initialisation
-vectors (IV) to add uniqueness to the key stream. The Birthday Problem means
+vectors (IV) to add uniqueness to the traffic keys. The Birthday Problem means
 once ~5000 IVs\footnote{Calculated by $\sqrt[]{\frac{pi}{2} 2^{24}} $} have
 been collected, the probability of a collision exceeds 50\%.  Once a collision
 is found the Fluhrer, Mantin and Shamir attack can be used.  Using {\tt
-aircrack-ng} any WEP key can be retrieved in a matter of seconds, with zero
-understanding of the flaw. Once a WEP network has been cracked, all traffic to
-and from the compromised access point can be deciphered.  Fortunately, WEP is
-rarely used anymore.
+aircrack-ng} any WEP key can be retrieved in a matter of seconds. Once a WEP
+network has been cracked, all traffic to and from the compromised access point
+can be deciphered. Fortunately, WEP is rarely used anymore.
 
-WEP was replaced with Wifi Protected Access (WPA). There have been two versions
-of WPA: WPA and WPA2. WPA was designed as a stop-gap measure only requiring a
-firmware upgrade; whereas WPA2 is a long term solution requiring new hardware,
-and uses the Advanced Encryption Standard (AES). WPA has several modes, with
-Preshared Key (PSK) being the most common among home users. The only known
-WPA-PSK vulnerabilities are dictionary attacks, and the ability to build
-rainbow tables; as long as users chose suitably strong passwords, along with a
-random SSID, this is not be a problem. 
+WEP was replaced with WiFi Protected Access (WPA). There are two versions of
+WPA: WPA and WPA2. WPA was designed as a stop-gap measure only requiring a
+firmware upgrade; whereas WPA2 is a long term solution, requiring new hardware,
+using the Advanced Encryption Standard (AES). WPA has several modes, Pre-shared
+Key (PSK) is the most common among home users. The only known WPA-PSK
+vulnerabilities are dictionary attacks, and rainbow tables; as long as users
+chose suitably strong passwords, along with a random SSID, this is not a
+problem. 
 
-WiFi Protected Setup (WPS), was designed to increase the ease of setting up
-WiFi networks, but also contained a serious vulnerability.  The flaw was a
-result of the way that PINs were authorised: a eight digit PIN was used, but
-was processed in two rounds resulting in a keyspace of only 11,000. {\tt
-reaver-wps} can be used to retrieve any WPS PIN in under 24 hours. Some modern
-routers ship with extra precautions, such as turning off WPS after several
-failed attempts. 
+WiFi Protected Setup (WPS), designed to increase the ease of setting up WiFi
+networks, also contained a serious vulnerability.  The flaw was a result of how
+PINs were authenticated: an eight digit PIN was used, but as it was processed
+in two rounds, the keyspace was only 11,000. {\tt reaver-wps} can be used to
+retrieve any WPS PIN in under 24 hours. Some modern routers have extra
+precautions, such as disabling WPS after multiple failed attempts. 
 
 \subsubsection{Bluetooth Security}
-The Bluetooth specification defines a stream cipher known as E0. The design is
-optimised for implementation in hardware, using multiple Linear Feedback Shift
-Registers (LFSRs) and a simple state machine to generate a pseudorandom
+The Bluetooth specification \cite{BTSpec} defines a stream cipher called E0.
+It is optimised for  hardware implementation, using multiple Linear Feedback
+Shift Registers (LFSRs) and a simple state machine to generate a pseudorandom
 keystream. 
 
-In A Review of WPAN Security\cite{Kennedy2008}, a dizzying number of potential
-attacks on Bluetooth, each with well fitting names, are presented. These include: 
+In A Review of WPAN Security \cite{Kennedy2008}, a dizzying number of potential
+attacks on Bluetooth, each with fitting names, are presented. These include: 
 \begin{itemize}[$\bullet$]
 \item {\bf BlueJacking:} unexpected messages are sent to the victim hoping they
 will reply with login details. 
@@ -641,72 +639,77 @@ modes of operation: no security, encryption only, authentication only, and
 encryption and authentication. 
 
 The encryption engine used is AES, with Message Authentication Codes (MAC) used
-for Authentication. The protocols are no perfect though, in 2004 Sastry et al
+for Authentication. The protocols are not perfect though, in 2004 Sastry et al
 \cite{Sastry2004} outlined some of the major problems that existed.  
 
 
 \subsection{End-to-end Encryption}
-The inherent problem with hop-by-hop encryption is that each node on the path
-between the sender and receiver is able to read the data, as it is decrypted
-before being forwarded.   If a path contains nodes that are not trusted by the
-sender, end-to-end encryption can be used to prevent the data being observed or
-tampered with by a middle man. 
+A limitation of hop-by-hop encryption is that each node on the path between the
+sender and receiver can read the message, as it is decrypted before being
+forwarded. If a path contains untrusted nodes, end-to-end encryption can be
+used to prevent the data being read or changed by a middle person. 
 
 \subsubsection{DTLS}
-When browsing the Web today, most users are familiar with the padlock symbol in
-the corner of the browser, although few know what it actually means. It
-indicates that communications to the web server are being secured with
-Transport Layer Security (TLS). As it is likely that the IoT will use UDP
-rather than TCP, TLS cannot be used, instead Datagram TLS (DTLS) will need to
-be used. DTLS is very similar to TLS, allowing communications to be encrypted
-using a wide variety of encryption algorithms.  
+Transport Layer Security (TLS) is a security protocol that runs over TCP. It is
+widely used for securing communications between web servers and their users --
+most modern browsers indicate when it is active by showing a padlock icon. As
+the IoT is likely use UDP rather than TCP, regular TLS cannot be used, instead
+Datagram TLS (DTLS) will need to be used. DTLS is very similar to TLS,
+providing mechanisms for key negotiation, and encrypted communication using a
+wide variety of encryption algorithms.  
 
-In February 2014, researchers at RHUL discovered a vulnerability in the
-protocol, when Cipher Block Chaining (CBC) is used as the mode for the
-encryption. 
+In February 2014, researchers discovered a plaintext recovery vulnerability in
+the protocol, when Cipher Block Chaining (CBC) encryption mode is used
+\cite{AlFardan2012}. 
 
-It is also worth noting that there have been a number of serious flaws in
-implementation of the SSL protocol. Firstly infamous 'goto fail' in an Apple
-implementation of SSL, in which a repeated statement resulted in the incorrect
-checking of SSL headers. And more recently the OpenSSL HeartBleed bug, in
-which the heart beat extensions to SSL were incorrectly implemented. A lack of
-bounds checking, allowed any user to request a large chunk of memory to be
-return; by analysing the returned data within the constraints of x.509 headers,
-researchers at Google were able to retrieve private keys for servers running
-this implementation. 
+Coincidentally, serious flaws in the implementations of TLS have been in the
+news recently. In February 2014 Apple published a security update to fix the
+'goto fail' their implementation of TLS.  This was caused by a repeated
+statement that resulted in incorrect verification of TLS headers. In April 2014
+the OpenSSL HeartBleed bug was disclosed. The bug results from incorrect bounds
+checking in the heart beat extension to TLS. This enabled a buffer overrun
+attack, allowing users to retrieve large chunks of memory. After the
+disclosure, CloudFlare launched a challenge for attackers to exploit an
+experimental server running the vulnerable version-- within days, researchers
+had retrieved private keys from the machine.
 
 \subsubsection{IPSec}
-IPSec is the security extensions for IP. It offers the ability to authenticate
-and encrypt IP packets. In early specifications for IPv6, IPSec was mandatory,
-if one did not require security they could set the methods to NULL -- RFC6463
-reduced the requirement to a recommendation. There has been a small amount
-of work evaluating the feasibility of IPSec on constrained devices, that
-has shown that it would be possible. 
+IPSec is the security extension for IP. It offers the ability to authenticate
+and encrypt IP packets. In early specifications of IPv6, IPSec was mandatory,
+if security was not required, it could be effectively disabled by using the
+NULL method. In RFC6463 the requirement was reduced to a recommendation. 
 
 IPSec can be operated in a number of different modes: Authentication Header
-(AH), Encapsulating Security Payload (ESP), and Security Associations (SA).
-In AH mode, an authentication header is added to to IP packets, to help
-maintain the authenticity of the IP traffic. A counter also helps to prevent
-against replay attacks. 
+(AH), Encapsulating Security Payload (ESP), and Security Associations (SA).  In
+AH mode, an authentication header is added to to IP packets, to help maintain
+the authenticity of the IP traffic. A counter helps to prevent against replay
+attacks. ESP, actually encrypts the payload of the packet, providing
+confidentiallity. SA is used for key distribution. It has been shown that IPSec
+can be modified to run within the constraints of IoT devices
+\cite{Rubertis2013}.  
 
 \subsubsection{Diet HIP}
-The Host Identity Protocol (HIP) can be used to decouple the secure
-identification of a host from its location, and allow authenticated
-communications. Diet HIP is a cut back version of HIP that can be used on
-constrained devices. 
+The Host Identity Protocol (HIP) is used to decouple the identification of a
+host from its location. HIP Base Exchange is used to bootstrap authenticated
+communications. HIP Diet Exchange (DEX) is a cut back version of BEX for use on
+constrained devices that removes many of the heavyweight cryptographic
+primitives used in BEX.  Light weight implementations of DEX, have be produced
+and concluded to be suitable for the IoT \cite{Meca2013}.DEX can be used for
+key negotiation, producing a session key that can be used with IPSec or DTLS. 
 
 \subsection{Jamming}
-In `Defend Your Home!' \cite{Brown2013}, a novel mechanism is described for
-improving the functionality of simplistic home automation hardware. A
-centralised controller, attached to bridges for all the radio protocols used by
-home automation devices in the home, is used to control appliances over the
-internet. The  controller acts as a proxy for all of these devices, and exposes
-them to the internet in some way. The controller  enhances security by
-listening for any outside requests that could be interpreted by devices in the
-home, and if they are not considered to be authentic, jamming signals are
-generated to prevent the commands from having an effect. This mechanism can be
-used to defend against accidental attack by a neighbour, or against simplistic
-malicious attacks. 
+Brown et al \cite{Brown2013} present a novel mechanism for improving the
+functionality and security of primitive home automation hardware. A centralised
+controller is used to control the appliances. The controller has bridges
+attached for each the home automation protocols used in the home. The
+controller acts as a proxy for all of these devices, allowing the user to
+control the devices over the Internet. 
+
+The controller enhances security by listening for unauthorised command signals
+could be interpreted by devices in the home, and emitting jamming signals to
+prevent them from having an effect. This mechanism can be used to defend
+against accidental attack by a neighbour, or against simplistic malicious
+attacks. 
 
 \subsection{Service Level Security}
 Many of the services provided by the network infrastructure may be vulnerable
@@ -924,6 +927,15 @@ http://www.embedded.com/electronics-blogs/cole-bin/4229531/UDP---the-embedded-wi
 
 \bibitem{Sastry2004}
 Sastry, N., \& Wagner, D. (2004). Security considerations for IEEE 802.15.4 networks. In Proceedings of the 2004 ACM workshop on Wireless security - WiSe ’04 (p. 32)
+
+\bibitem{BTSpec}
+I cite the bluetooth spec because I have actually read it.
+ 
+\bibitem{Rubertis2013}
+Rubertis, A. De, Mainetti, L., Mighali, V., Patrono, L., Sergi, I., Stefanizzi, M. L., \& Pascali, S. (2013). Performance Evaluation of end-to-end security protocols in an Internet of Things. In Software, Telecommunications and Computer Networks (SoftCOM), 2013 21st International Conference on (pp. 1–6). 
+
+\bibitem{Meca2013}
+Meca, F. V., Ziegeldorf, J. H., Sanchez, P. M., Morchon, O. G., Kumar, S. S., \& Keoh, S. L. (2013). HIP Security Architecture for the IP-Based Internet of Things. In 2013 27th International Conference on Advanced Information Networking and Applications Workshops (pp. 1331–1336). IEEE. 
 
 \end{thebibliography}
 
