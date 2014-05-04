@@ -228,7 +228,7 @@ application layer protocols that we use on a daily basis, including SSH,
 FTP, XMPP, and SMTP. 
 
 \subsubsection{HTTP} 
-Thanks to the huge popularity of the World Wide Web (W3), RESTful webservices
+Thanks to the huge popularity of the World Wide Web (W3), RESTful web services
 have become very common, making HTTP a de facto standard for inter-application
 communication. HTTP is a text based protocol that uses verbs such as `GET' and
 `POST', to interact with a web server.  
@@ -259,24 +259,24 @@ discover the existence of one another. For example, a network connected light
 switch may need to locate all the lightbulbs that it is responsible for. There
 are a number of service discovery protocols for traditional IP networks,
 including UPnP and mDNS (Apple Bonjour). There are implementations of mDNS
-that can run on 6LoWPANs. It is also possible that we will see new service
+that can run on 6LoWPAN. It is also possible that we will see new service
 discovery protocols used on the IoT; one example is TRENDY \cite{Butt2013}. 
 
 \subsubsection{Routing}
 Under some circumstances it is necessary to route network traffic over
 constrained device networks. Traditional routing protocols such as The Routing
 Information Protocol (RIP) and Open Shortest Path First (OSPF), are far too
-heavy weight to run on most devices. As such the IETFRouting Over Low-power
+heavyweight to run on most devices. As such the IETF Routing Over Low-power
 Lossy networks (ROLL) working group has been chartered, and have developed RPL:
 IPv6 Routing Protocol for Low-Power and Lossy Networks.  
 
-\subsubsection{Auto-configuration}
+\subsubsection{Autoconfiguration}
 To remove the need for home users to manually configure their networks, a number of
 technologies have been developed to automatically configure the hosts.
-Stateless Address Auto-configuration (SLAAC) is part of IPv6 and is used to
+Stateless Address Autoconfiguration (SLAAC) is part of IPv6 and is used to
 generate host IP addresses based on information included in Router
 Advertisements, which are flooded to the subnet by routers as part of the
-Neighbour Discover Protocol (NPD). 
+Neighbour Discovery Protocol (NDP). 
 
 \subsection{Overall Architecture}
 It is very difficult right now to identify which set of protocols will dominate
@@ -308,20 +308,13 @@ to a single device which is used as an application layer proxy.
 
 
 \section{Security Goals}
-For many the Internet is no longer a luxury but a lifeline. Many everyday tasks
-have been greatly simplified by the Internet. The IoT will exaggerate this
-effect, increasing our reliance on technology. Interconnected `things' in our
-homes will collect huge amounts of sensitive information, and will control
-almost everything we own -- it is paramount that we avoid anything bad
-happening to these devices, the consequences could be catastrophic.
-
-As we transition from an Internet containing only virtual entities to an
-Internet that includes real world objects, the damages that will be possible
-through attack or data leak are increasing. There are many security and privacy
-goals that must be met for users to be confident placing trust in the IoT.
+As we transition from an Internet containing only virtual entities to one that
+includes real world objects as well, cyber attack and data leakage become an
+increasingly serious threat. There is a number of security and privacy goals that
+must be met before users can be confident placing trust in the IoT.
 
 \subsection{Confidentiality}
-A confidential message should be readable only by the intended recipient(s).
+A confidential message is readable only by the intended recipient(s).
 Mechanisms are needed to ensure that attackers can not intercept and understand
 any messages that are transmitted. The level of confidentiality required varies
 depending on the use case. For example, a temperature sensor in a public place
@@ -351,11 +344,6 @@ affected by availability reduction attacks, and from being used as the source of
 attacks. Although it would be beneficial to connect many critical systems to
 the IoT, until availability can be guaranteed, this should not be done.
 
-\subsection{Non-repudiation}
-Non-repudiation mechanisms ensure that an action performed by somebody, cannot
-later be denied. There does not currently appear to be any uses for
-non-repdudiation in the IoT. 
-
 \subsection{Authenticity}
 An authentic message is one that was sent by the party from which it claims to
 have been sent. In the IoT protocols should provide a way of preventing
@@ -368,7 +356,7 @@ of data.
 Authorisation ensures that the party sending a command is allowed
 to make a given request. Presently, we often see WiFi routers
 and other embedded devices that ship with well known default usernames
-and password. This makes it very easy for an attacker to guess the login
+and passwords. This makes it very easy for an attacker to guess the login
 credentials. If things do not change, then we are likely to see the same
 phenomenon in the IoT. In early 2014, Proofpoint found that many low power
 devices, including one smart refrigerator, were being used to send spam emails
@@ -376,28 +364,26 @@ devices, including one smart refrigerator, were being used to send spam emails
 
 Authorisation is a very important security goal. Theoretical horror stories
 include the ability for attackers to unlock doors, or gain access to personal
-webcameras.  
+webcams.  
 
 \subsection{Usability \& Accessibility}
-Although not strictly a security goal, when designing systems, it is of
-adamant importance that usability is considered. For a secure system to be
-successful, the target audience must not struggle to use it -- if the end
-user is unable to configure devices in a secure manner, then there may as well
-be no security at all.
+Although not strictly a security goal, usability is a key aspect of system
+design. For a secure system to be successful, the target audience must not
+struggle to use it -- if the end user is unable to configure a device securely,
+then it effectively has no security at all.
 
-It is important to remember that not only do the majority of home users of the
-IoT lack a deep technical understanding of the hardware and software that they
-are using, they also often do not have the time or the will to learn.  As such,
-the workflow of enabling security should be as simple as possible. One way of
-achieving this may be to hide as much of the underlying cryptographic mechanism
-as possible from the end user.
+It is important to remember that the majority of users of the IoT in the home
+lack a technical understanding of the hardware and software they use; and are
+often too busy to learn. As such, the workflow of enabling security should be
+as simple as possible. One way of achieving this is to hide as much of the
+underlying cryptographic mechanism as possible from the end user.
 
-In the past, accessibility has often been ignored all together when designing
-secure systems -- WiFi passwords are typically printed in tiny writing on the
-underside of routers, making the task of discovering WiFi passwords difficult
-even for able bodies people. For many goals of the IoT to be reached,
-especially with regards to devices designed to help people with disabilities,
-accessibility needs to be made a priority.  
+In the past, accessibility has often been ignored in the design of secure
+systems -- WiFi passwords are typically printed in tiny writing on the
+underside of the router, making the task of joining the network difficult even
+for able bodied people. To be successful, especially with regards to devices
+designed to help people with disabilities, accessibility must be a priority in
+the design of the IoT.  
 
 
 \section{Security Threats}
@@ -414,7 +400,7 @@ Gathering attacks involve collecting information by eavesdropping on
 communications channels, or gaining access to storage areas. As a result of the
 Snowden leaks in 2013, it was revealed that the US government has been
 collecting metadata on the communications of civilians around the world. In
-response the Guardian published an article detailing the extend of the
+response the Guardian published an article detailing the extent of the
 information that can be inferred from metadata alone \cite{Guardian2013}.
 Gathering attacks are a breach of confidentiality. 
 
@@ -484,7 +470,7 @@ IoT. Data can be linked in unexpected ways, in order to obtain sensitive
 information that was not revealed by any data source alone. Understanding
 privacy in anonymised datasets is an active research area. Large amounts of
 work are being done on differential privacy and similar concepts. In 2007
-Netflix launched a competition to improve their user ratings of filmsr. Soon
+Netflix launched a competition to improve their user ratings of films. Soon
 after the competition was launched, two researchers from the University of
 Texas announced they were able to identify individual users by correlating the
 data with the Internet Movie Database (IMDB) \cite{Narayanan2008}.
@@ -497,52 +483,28 @@ that were previously unexpected. There is also the possibility of software
 written to perform these attacks being sold on to less competent `hackers'. 
 
 \subsection{Potential Attackers}
-In order to prepare effective prevention mechanisms, the parties that are
-likely to perform attacks should be well understood. McAfee identify the
-following classes of attacker \cite{McAfee2011}.  
+To prepare effective prevention mechanisms, the types of attacker should be
+identified. McAfee list the following classes of attacker \cite{McAfee2011}:
+white hat hackers, black hat hackers, script kiddies, hacktivists, cyber
+terrorists, state sponsored hackers, and spy hackers. 
 
-\subsubsection{White Hat Hackers}
-White Hat Hackers do not intend to cause harm, or profit from the losses of
-others. Penetration testers are professionals hired to ensure systems and
-products are resilient to attack. Thorough penetration testing results in more
-secure products for end users. Computer forensics experts, uncover digital
-evidence in order to help convict criminals. Unfortunately it is possible for
-legitimate tools to be used with malicious intent.
+There is a great variety in the motives and abilities of these attackers. On
+the lowest end of the ability scale is script kiddies, who make use of
+scripts\footnote{e.g. Low Orbit Ion Cannon (LOIC), used to perform DoS
+attacks.} created by more experienced hackers to carry out their attacks. 
 
-\subsubsection{Black Hat Hackers}
-Black Hat Hackers are malicious attackers. In the past, they were typically
-individuals performing attacks recreationally to satisfy curiosity. More
-recently however, organised criminals with the intention of profiting from
-cyber attacks have emerged. As consumers entrust the Internet with more
-personal information, and perform more sensitive actions online, the value to
-these criminals increases. This has spurred higher volumes of increasingly
-sophisticated attacks. Organised crime poses a serious risk to residential
-users of the IoT. 
+In order to increase the impact of their attacks, experienced hackers often
+instruct Script kiddies to run scripts posted on message boards. This
+technique has been used by the hacker group Anonymous. Due to the low barrier
+of entry, script kiddies pose a great risk to home networks -- it is
+relatively easy for a trusted friend or family member to carry out this kind
+of attack. 
 
-\subsubsection{Script Kiddies}
-A ``Script Kiddie'' is an attacker with limited technical skill -- they
-rely on scripts produced by more experienced attackers. The low barrier of
-entry makes this kind of attacker very common. The infamous hacker group
-Anonymous makes heavy use of script kiddies. A small number of highly competent
-individuals issue commands to a large mass of far less competent people, by
-posting scripts on message boards such as 4chan. 
+Organised crime has become a large player in cyber attacks. As more sensitive
+transactions are carried out online, the Internet becomes a more appealing to
+groups of criminals. Organised criminals are typically able to perform more
+sophisticated attacks than individuals, and usually have a financial motive. 
 
-This class of attacker is probably the most likely to attack a home network;
-the low barrier of entry means attacks may be originated from within the
-network by a friend of family member who was believed to be trusted.  
-
-\subsubsection{Hacktivists \& Cyber Terrorists}
-Hacktivists and Cyber Terrorists usually claim there is higher motive behind
-their attacks. They typically search for vulnerable systems with the aim of
-producing as much havoc as possible. If they are able to cause severe
-disruption, they will be eager to claim that their attack went exactly as
-planned. 
-
-It is possible that attackers of the future will find vulnerabilities in common
-IoT devices. Cyber Terrorists may then exploit the vulnerability to raise
-awareness of their cause, along with massive amounts of grief to home users. 
-
-\subsubsection{State Sponsored Hackers}
 State sponsored hackers are teams of highly skilled, government funded
 professionals. As a result of their expertise and funding, their attacks are
 the most sophisticated, frequently utilising several zero-day vulnerabilities.
@@ -551,13 +513,15 @@ Threats (APT) facing many governments and companies; and the Stuxnet worm
 that targeted Iranian Nuclear Power Facilities, stifling the country's nuclear
 program. Home users are not a typical target of state sponsored attack. 
 
-\subsubsection{Spy Hackers}
-Corporate and governmental espionage has existed throughout history. As the
-world has gone digital, so have spies. Cracking systems to uncover their
-adversaries' secrets is now common practice. One of the largest threats to
-residential users is breaches of privacy resulting from mass surveillance
-operations carried out by governments around the world.  
+Although not hackers by traditional definitions, mass surveillance operations
+operated by major national governments are a concern to home users. When
+dealing with an adversary this powerful, it is difficult to win.  
 
+To help ensure their systems and products are secure, companies frequently
+employ a type of whitehat hacker known as a penetration tester. These security
+professional will attempt to break into the systems to show where weaknesses
+are. Thorough penetration testing results in more secure products for end
+users.
 
 \section{Prevention and Mitigation}
 The large number of potential attacks, many with the potential to cause massive
@@ -595,7 +559,7 @@ network has been cracked, all traffic to and from the compromised access point
 can be deciphered. Fortunately, WEP is rarely used anymore.
 
 WEP was replaced with WiFi Protected Access (WPA). There are two versions of
-WPA: WPA and WPA2. WPA was designed as a stop-gap measure only requiring a
+WPA: WPA and WPA2. WPA was designed as a stopgap measure only requiring a
 firmware upgrade; whereas WPA2 is a long term solution, requiring new hardware,
 using the Advanced Encryption Standard (AES). WPA has several modes, Pre-shared
 Key (PSK) is the most common among home users. The only known WPA-PSK
@@ -684,7 +648,7 @@ IPSec can be operated in a number of different modes: Authentication Header
 AH mode, an authentication header is added to to IP packets, to help maintain
 the authenticity of the IP traffic. A counter helps to prevent against replay
 attacks. ESP, actually encrypts the payload of the packet, providing
-confidentiallity. SA is used for key distribution. It has been shown that IPSec
+confidentiality. SA is used for key distribution. It has been shown that IPSec
 can be modified to run within the constraints of IoT devices
 \cite{Rubertis2013}.  
 
@@ -693,7 +657,7 @@ The Host Identity Protocol (HIP) is used to decouple the identification of a
 host from its location. HIP Base Exchange is used to bootstrap authenticated
 communications. HIP Diet Exchange (DEX) is a cut back version of BEX for use on
 constrained devices that removes many of the heavyweight cryptographic
-primitives used in BEX.  Light weight implementations of DEX, have be produced
+primitives used in BEX.  Lightweight implementations of DEX, have be produced
 and concluded to be suitable for the IoT \cite{Meca2013}.DEX can be used for
 key negotiation, producing a session key that can be used with IPSec or DTLS. 
 
@@ -775,7 +739,7 @@ unanswered questions.
 One major challenge is ensuring that device vendors pick the correct security
 protocols for their devices, and adhere to the specifications. It would also be
 helpful to develop methods of encouraging product manufacturers to ship their
-products with secure, randomly generated, user names and passwords in order to
+products with secure, randomly generated, usernames and passwords in order to
 reduce the number of attacks that are made of devices that have never been
 configured away from their defaults.
 
@@ -805,7 +769,7 @@ lost?
 There are a number of novel network paradigms that have been proposed as a
 replacement of TCP/IP. One example, Information Centric Networking (ICN), aims
 to replace IP with a naming system that is based on the content of the data
-being requested, rather than the logial location of the data. Does this kind of
+being requested, rather than the logical location of the data. Does this kind of
 architecture need to be considered, and how can it be made secure?
 
 
@@ -815,7 +779,7 @@ technology consumes more and more of people's lives, it is essential that the
 correct trade-offs are made from a security standpoint. 
 
 So far, we have seen a large number of standards emerge, each attempting to
-solve many of the problems that appear when connecting every day objects to the
+solve many of the problems that appear when connecting everyday objects to the
 Internet. At present it is less than obvious which protocols will succeed, and
 which will fade into obscurity. Many of the products currently marketed to
 consumers under the umbrella of 'The Internet of Things' do not fit with the
@@ -830,7 +794,7 @@ holds a huge amount of potential -- both for greatness and disaster.
 \section*{Acknowledgment}
 I would like to thank Dr Tim Chown for his help, support and guidance
 throughout this project. I would also like to mention the Gigaom and FarStuff
-IoT podcasts for providing interesting background information on consumer
+IoT podcasts as they provided interesting background information on consumer
 electronics in the IoT space. 
 
 
