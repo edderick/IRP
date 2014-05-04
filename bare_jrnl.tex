@@ -95,7 +95,7 @@ difficulty of configuring the network must be very low.
 
 \section{Technologies}
 In the early days of the Internet, there were many competing standards: DECnet,
-TCP/IP, AppleTalk, OSI, x.25 and many more. Eventually TCP/IP was accepted as
+TCP/IP, AppleTalk, OSI, x.25 and many more \cite{Cerf1993}. Eventually TCP/IP was accepted as
 the main protocol suite, and is now used almost exclusively. Similarly, there
 are many competing technology stacks for the IoT. There are advantages and
 disadvantages to each potential architecture, and few exist within a vacuum --
@@ -676,18 +676,36 @@ against accidental attack by a neighbour, or against simplistic malicious
 attacks. 
 
 \subsection{Service Level Security}
-Many of the services provided by the network infrastructure may be vulnerable
-to exploitation. SLAAC could be exploited by the spoofing of Router
-Advertisements, causing a `thing' to connect to an unauthorised DNS server.
-From here, the attacker could reply to DNS requests with the IP addresses of
-machines owned by the attacker. The attack could then exfiltrate data or
-possibly control the `thing'.
+There are many potential security issues with the protocols that are used to
+reduce the administration burden of the network. 
 
-Service discovery poses similar threats if left insecure, a malicious actor may
-be able to advertise a host that they control, tricking devices to pair with
-it.
+\subsubsection{Service Discovery}
+Service discovery may allow a malicious actor to advertise services on a host
+that they control, tricking devices into pair with it, this is known as an mDNS
+poisoning attack. IPSec or DNSSEC can be used to ensure that advertisements
+only come from trusted parties \cite{Cheshire2013}. 
 
-There are also routing protocol security questions. There is an RFC on this.  
+The other major concern with service discovery protocols such as mDNS (also
+known as Bonjour) is that when attached to public networks, they can inform
+attackers that the device is present on the network. An attacker may also be
+able to work out what the devices is and if it has any known vulnerabilities.
+The NSA, and Apple both recommend turning off mDNS when connected to a public
+network \cite{NSAMacHardening} \cite{MacConfig}. The usability of this solution
+on constrained devices, needs to be evaluated. 
+
+\subsubsection{Routing}
+There are also routing protocol security questions. There is an RFC on this
+\cite{Tsao2014}.  
+
+\subsubsection{Host Autoconfiguration}
+SLAAC could be exploited Router Advertisement spoofing, causing a `thing' to
+connect to an unauthorised DNS server. From here, the attacker could reply to
+DNS requests with the IP addresses of machines owned by the attacker, rather
+that the legitimate services. The attacker could then exfiltrate data or
+attempt to control the `thing'. Snooping techniques such as DHCP Guard and {\tt
+ramond} can be used to prevent false router information from having an effect
+on the network hosts.  
+
 
 \section{Proposed Security Architecture}
 There are many design decisions that still need to be made when deploying the
@@ -713,7 +731,10 @@ risks of imperfection in software?
 
 \subsection{Use of Application Layer Proxies}
 Many of today's products do not allow for external addressing of sensors or
-actuators, instead they act as application layer proxies for these devices.  
+actuators, instead they act as application layer proxies for these devices.
+This could have security benefits, as direct access to the nodes is not
+available. The proxy is likely to be a far more powerful device, and has the
+potential to control policy centrally. 
 
 \subsection{Increased Host Security}
 When the internet was first envisioned, each host was responsible for accepting
@@ -724,10 +745,6 @@ was shifted to the network edge.
 
 The nodes of the IoT are likely to be highly constrained in terms of processing
 power. 
-
-\subsection{Use Cases}
-Consider some major use cases of the network.
-How do these relate back to the security goals and identified threats?
 
 
 \section{Future Work}
@@ -900,6 +917,24 @@ Rubertis, A. De, Mainetti, L., Mighali, V., Patrono, L., Sergi, I., Stefanizzi, 
 
 \bibitem{Meca2013}
 Meca, F. V., Ziegeldorf, J. H., Sanchez, P. M., Morchon, O. G., Kumar, S. S., \& Keoh, S. L. (2013). HIP Security Architecture for the IP-Based Internet of Things. In 2013 27th International Conference on Advanced Information Networking and Applications Workshops (pp. 1331–1336). IEEE. 
+
+\bibitem{Tsao2014}
+draft-ietf-roll-security-threats-06
+
+\bibitem{Cheshire2013}.
+Request for Comments: 6762
+
+\bibitem{NSAMacHardening} 
+Hardening Tips for Mac OS X 10.6 "Snow Leopard"
+
+\bibitem{MacConfig}
+Mac OS X: Security Configuration (For Mac OS X Version 10.6 Snow Leopard)
+
+\bibitem{AlFardan2012}
+AlFardan, N., \& Paterson, K. (2012). Plaintext-recovery attacks against datagram TLS. Network and Distributed System …. 
+
+\bibitem{Cerf1993}
+Cerf, V., \& Aboba, B. (1993). How the Internet came to be. In The On-line User’s Encyclopedia. Addison-Wesley. 
 
 \end{thebibliography}
 
