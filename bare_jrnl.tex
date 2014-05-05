@@ -14,9 +14,9 @@
 %% Revert \subparagraph to the llncs definition
 \let\subparagraph\llncssubparagraph
 
-\titlespacing{\section}{0pt}{1ex}{0.25ex}
-\titlespacing{\subsection}{0pt}{1ex}{0.2ex}
-\titlespacing{\subsubsection}{0pt}{1ex}{0.2ex}
+\titlespacing{\section}{0pt}{0.8ex}{0.2ex}
+\titlespacing{\subsection}{0pt}{0.8ex}{0.15ex}
+\titlespacing{\subsubsection}{0pt}{0.8ex}{0.15ex}
 
 
 \begin{document}
@@ -62,44 +62,101 @@ will skyrocket -- Gartner predicts that by 2020, there will be over 26 billion
 devices connected to the Internet \cite{Gartner2014}. 
 
 Although ``things'' tend to steal the limelight, it is important not to neglect
-the increasing presence of more traditional devices on the Internet. This
+the increasing presence of traditional computers on the Internet. This
 conjunction of the traditional Internet, and the emerging IoT, has been
 referred to as ``the Internet of Everything'' \cite{CiscoEverything}. 
 
-As we enter this increasingly connected age, security becomes a growing
-concern. With more devices and greater heterogeneity, the number of attack
-surfaces grows. The first generation Internet took a lax approach to security,
-focusing first on achieving functionality \cite{Bhimani1996}. This has lead to
-an Internet that is insecure by default. Only recently have larger websites
-begun using encrypted sessions to secure communications with their users -- it
-was not until July 2013 that Facebook offered Transport Layer Security (TLS) as
-the default \cite{Facebook2013}. 
+Increasing connectivity means security is a growing concern. With more devices
+and greater heterogeneity, the number of attack surfaces grows. The first
+generation Internet took a lax approach to security, focusing first on
+achieving functionality \cite{Bhimani1996}, this has lead to an Internet that
+is insecure by default. Only recently have larger websites offered encrypted
+sessions to secure communications with users -- it was not until July 2013 that
+Facebook provided Transport Layer Security (TLS) as the default
+\cite{Facebook2013}. 
 
-There has been a large amount of attention recently placed on the IoT in a
-business and industrial context. Discussions of wireless sensor networks (WSN)
-used to monitor manufacturing and agriculture, ensuring optimal production
-capacity, along with proposals of complex policy management frameworks, are
-common place. Interesting work has also been done in the area of vehicle
-networks: at Def Con 21, a horrifying demonstration showed it was possible to
-take control of some modern cars putting the passengers in potentially
-fatal danger \cite{Illera2014}. There are clearly important security issues in
-these areas, especially with respect to critical infrastructure.  However, this
-paper chooses to focus on the deployment of the IoT in a residential setting. 
+There has been much attention placed on the IoT in business and industry.
+Discussions of wireless sensor networks (WSN) to monitor manufacture and
+agriculture, ensuring optimal production capacity, are common. Vehicle networks
+are also of great interest: at Def Con 21, researchers demonstrated taking
+control of a modern car. This proof of concept showed how attackers could put
+the passengers lives at risk \cite{Illera2014}. Zanella et al discussed the
+idea of building `smart' cities \cite{Zanella2014}. There are important
+security issues in these areas, especially with critical infrastructure,
+however, this paper focuses only on the deployment of the IoT in a residential
+setting. 
 
-Home networks offer a unique challenge: they are rarely serviced by a competent,
-professional systems administrator, and  contain an increasing range of
-intimate devices and appliances from a variety of inexpensive vendors
+Home networks offer a unique challenge: they are rarely serviced by a
+competent, professional systems administrator, and contain an increasing range
+of intimate devices and appliances from a variety of inexpensive vendors
 \cite{ACM_ModHome}. As such, security requirements are high, while the
 difficulty of configuring the network must be very low. 
 
+\section{Use Cases}
+To secure the IoT, it is helpful to build an understanding of the kinds of
+devices that are emerging, and the ways they will be used. As `the IoT' is a
+fairly vague term, there is a huge range in the products available.
 
-\section{Technologies}
+\subsection{Home Automation}
+Home automation involves placing sensors and actuators throughout the home.
+Machine-to-machine (M2M) communication allows events detected by sensors
+trigger actuator responses, without human intervention. 
+
+Many types of sensors can be deployed. Some check the health of the building:
+these include temperature sensors, humidity sensors, and water leak detectors.
+Nest has popularised Internet connected temperature sensors, and was recently
+purchased by Google. Motion detectors can control the home based on
+room occupancy; combined with sensors to detect open doors and windows,
+sophisticated intrusion detection systems can be built. Some unusual but useful
+sensor include baby monitors, created by Mimobaby. And doorbells, included in
+the NinjaBlocks kit. 
+
+For actuators, mechanical motors or servos can be embedded in everyday objects.
+One interesting use is remote controlled radiator values, used to control the
+temperature of an individual radiator. Another example is automatic garage door
+openers. Electrical relays can be used to turn devices on and off remotely.
+Belkin WeMo is an example of this technology.
+
+Many existing home automation systems provide a smartphone app allowing
+monitoring and control of devices from anywhere in the world. 
+
+\subsection{Lighting}
+Lighting is a very active area of the IoT. There many companies developing
+smart lighting products. Older lighting control tended to replace light
+switches with radio controlled module -- similar to `The Clapper' which was
+activated by sound.  Lifx and Philips Hue however both provide smart LED light
+bulbs, removing the need for switches altogether. These bulbs also
+differentiate themselves by the ability to select the colour of light they
+produce.  
+
+\subsection{The Smart Grid}
+The `Smart Grid' consists of `smart meters' deployed in households.  Smart
+meters are network connected electricity monitors. They can help homeowners
+understand their energy usage. They also feedback electricity consumption data
+to the supplier allowing real-time billing. The initiative hopes to help smooth
+out energy consumption spikes at peak times, and conserve energy overall.
+AlertMe is a non-intrusive smart meter available to consumers today. 
+
+\subsection{Body Area Networks}
+Body Area Networks (BANs) contain devices kept in close proximity to a human.
+They can monitor medical conditions, for example a glucose monitor with an
+insulin pump or a heart monitor with a pacemaker; or to measure fitness and
+track activity, like the FitBit and Nike Fuelband. 
+
+\subsection{Appliance Networks} 
+Appliance networks consist of household appliances with microprocessors and
+Internet connections. LG is producing a range known as ThinQ, and Whirlpool
+also have a line of smart appliances. Devices include fridges, washing
+machines, dishwashers and ovens. These products all allow remote monitoring and
+control using a mobile app. 
+
+\section{Network Technologies}
 In the early days of the Internet, there were many competing standards: DECnet,
-TCP/IP, AppleTalk, OSI, x.25 and many more \cite{Cerf1993}. Eventually TCP/IP was accepted as
-the main protocol suite, and is now used almost exclusively. Similarly, there
-are many competing technology stacks for the IoT. There are advantages and
-disadvantages to each potential architecture, and few exist within a vacuum --
-each draws inspiration from the rest. 
+TCP/IP, AppleTalk, OSI, x.25 and many more \cite{Cerf1993}. Eventually TCP/IP
+was accepted as the main protocol suite, and is now used almost exclusively.
+Similarly, there are many competing technology stacks for the IoT. There are
+advantages and disadvantages to each potential architecture, and few exist
+within a vacuum -- each draws inspiration from the rest. 
 
 As with the Internet, it is convenient to think about the IoT in terms of the
 seven layer OSI model\footnote{Although TCP/IP won the battle, the numberings
@@ -268,7 +325,8 @@ constrained device networks. Traditional routing protocols such as The Routing
 Information Protocol (RIP) and Open Shortest Path First (OSPF), are far too
 heavyweight to run on most devices. As such the IETF Routing Over Low-power
 Lossy networks (ROLL) working group has been chartered, and have developed RPL:
-IPv6 Routing Protocol for Low-Power and Lossy Networks.  
+IPv6 Routing Protocol for Low-Power and Lossy Networks. RPL is a distance
+vector routing protocol.   
 
 \subsubsection{Autoconfiguration}
 To remove the need for home users to manually configure their networks, a number of
@@ -345,21 +403,20 @@ attacks. Although it would be beneficial to connect many critical systems to
 the IoT, until availability can be guaranteed, this should not be done.
 
 \subsection{Authenticity}
-An authentic message is one that was sent by the party from which it claims to
-have been sent. In the IoT protocols should provide a way of preventing
-attackers, for example, from pretending to be sensor nodes, and submitting
-bogus readings, leading to undesired actions. It may be helpful in the IoT to
-extend authenticity to provenance, recording a complete history of the origin
-of data.  
+An authentic message was sent by the party it claims to have been sent by. In
+the IoT protocols should provide a way of preventing attackers from, for
+example, pretending to be sensor nodes, and submitting bogus readings. It may
+be helpful in the IoT to extend authenticity to provenance, recording a
+complete history of the origin of data.  
 
 \subsection{Authorisation}
-Authorisation ensures that the party sending a command is allowed
-to make a given request. Presently, we often see WiFi routers
-and other embedded devices that ship with well known default usernames
+Authorisation, also known as Access Control, ensures that the party sending a
+command is allowed to make a given request. Presently, we often see WiFi
+routers and other embedded devices that ship with well known default usernames
 and passwords. This makes it very easy for an attacker to guess the login
 credentials. If things do not change, then we are likely to see the same
 phenomenon in the IoT. In early 2014, Proofpoint found that many low power
-devices, including one smart refrigerator, were being used to send spam emails
+devices, including one smart fridge, were being used to send spam emails
 \cite{Proofpoint2014}.
 
 Authorisation is a very important security goal. Theoretical horror stories
@@ -483,22 +540,20 @@ that were previously unexpected. There is also the possibility of software
 written to perform these attacks being sold on to less competent `hackers'. 
 
 \subsection{Potential Attackers}
-To prepare effective prevention mechanisms, the types of attacker should be
-identified. McAfee list the following classes of attacker \cite{McAfee2011}:
+To prepare effective prevention mechanisms, potential attackers should be
+identified. McAfee list these classes of attacker \cite{McAfee2011}:
 white hat hackers, black hat hackers, script kiddies, hacktivists, cyber
 terrorists, state sponsored hackers, and spy hackers. 
 
 There is a great variety in the motives and abilities of these attackers. On
-the lowest end of the ability scale is script kiddies, who make use of
-scripts\footnote{e.g. Low Orbit Ion Cannon (LOIC), used to perform DoS
-attacks.} created by more experienced hackers to carry out their attacks. 
-
-In order to increase the impact of their attacks, experienced hackers often
-instruct Script kiddies to run scripts posted on message boards. This
-technique has been used by the hacker group Anonymous. Due to the low barrier
-of entry, script kiddies pose a great risk to home networks -- it is
-relatively easy for a trusted friend or family member to carry out this kind
-of attack. 
+the lowest end of the ability scale is script kiddies, who carry out attacks
+using scripts\footnote{e.g. Low Orbit Ion Cannon (LOIC), used to perform DoS
+attacks.} created by more experienced hackers. To increase the impact of their
+attacks, experienced hackers often instruct Script kiddies to run scripts
+posted on message boards. This technique is used by the hacker group Anonymous.
+Due to the low barrier of entry, script kiddies threaten home networks -- it is
+relatively easy for a trusted friend or family member to carry out this kind of
+attack. 
 
 Organised crime has become a large player in cyber attacks. As more sensitive
 transactions are carried out online, the Internet becomes a more appealing to
@@ -506,26 +561,23 @@ groups of criminals. Organised criminals are typically able to perform more
 sophisticated attacks than individuals, and usually have a financial motive. 
 
 State sponsored hackers are teams of highly skilled, government funded
-professionals. As a result of their expertise and funding, their attacks are
-the most sophisticated, frequently utilising several zero-day vulnerabilities.
-Examples of suspected state sponsored attacks are the Advanced Persistent
-Threats (APT) facing many governments and companies; and the Stuxnet worm
-that targeted Iranian Nuclear Power Facilities, stifling the country's nuclear
-program. Home users are not a typical target of state sponsored attack. 
+professionals. Their attacks tend to be the most sophisticated, often using
+zero-day vulnerabilities.  Examples of suspected state sponsored attacks are
+the Advanced Persistent Threats (APT) facing many governments and companies;
+and the Stuxnet worm that targeted Iranian Nuclear Power Facilities, stifling
+the country's nuclear program. Home users are not typically a target of state
+sponsored attack. Although they are not hackers by traditional definitions, the
+mass surveillance operations of major national governments are a concern to
+home users.  
 
-Although not hackers by traditional definitions, mass surveillance operations
-operated by major national governments are a concern to home users. When
-dealing with an adversary this powerful, it is difficult to win.  
-
-To help ensure their systems and products are secure, companies frequently
-employ a type of whitehat hacker known as a penetration tester. These security
-professional will attempt to break into the systems to show where weaknesses
-are. Thorough penetration testing results in more secure products for end
-users.
+To ensure their systems and products are secure, companies often employ
+whitehat hackers known as a penetration testers. These security professionals
+attempt to break into the systems to show where weaknesses lie. Thorough
+penetration testing results in more secure products for end users.
 
 \section{Prevention and Mitigation}
-The large number of potential attacks, many with the potential to cause massive
-amounts of damage, means mechanisms and policies are required to reduce harm an
+Large numbers of potential attacks, many with potential to cause massive
+amounts of damage, mean mechanisms and policies are required to reduce harm an
 attack can cause. 
 
 \subsection{Legal Frameworks}
@@ -694,8 +746,13 @@ network \cite{NSAMacHardening} \cite{MacConfig}. The usability of this solution
 on constrained devices, needs to be evaluated. 
 
 \subsubsection{Routing}
-There are also routing protocol security questions. There is an RFC on this
-\cite{Tsao2014}.  
+Security considerations for routing over low-power and lossy networks are
+outlined in a current Internet draft \cite{Tsao2014}. The threats mentioned
+result mainly from constraints in the hardware, they include: node
+impersonation, routing information exposure, routing information modification,
+availability reduction attacks and node resource exhaustion. The draft also
+details counter measures, these include adding encryption to the protocol and
+communicating with peers over multiple hops.
 
 \subsubsection{Host Autoconfiguration}
 SLAAC could be exploited Router Advertisement spoofing, causing a `thing' to
@@ -706,15 +763,14 @@ attempt to control the `thing'. Snooping techniques such as DHCP Guard and {\tt
 ramond} can be used to prevent false router information from having an effect
 on the network hosts.  
 
-
-\section{Proposed Security Architecture}
+\subsection{Architectural Decisions}
 There are many design decisions that still need to be made when deploying the
 IoT in the home. Although other factors, such as usability must not be
 overlooked, security, must be among the top priorities when making these
 decisions.  The design of home networks should make it as difficult as possible
 for an attacker to perform a highly damaging attack. 
 
-\subsection{End-to-end Addressability}
+\subsubsection{End-to-end Addressability}
 One of the biggest architectural arguments to have arisen with the introduction
 of IPv6, is should we allow transparent, end-to-end addressability of devices.
 With IPv4, the address space was so small that we had no choice, and were
@@ -729,14 +785,14 @@ One counter argument to this is the number of bugs and vulnerabilities that
 exist in the implementation of software, is it worth exposing the network to
 risks of imperfection in software?
 
-\subsection{Use of Application Layer Proxies}
+\subsubsection{Use of Application Layer Proxies}
 Many of today's products do not allow for external addressing of sensors or
 actuators, instead they act as application layer proxies for these devices.
 This could have security benefits, as direct access to the nodes is not
 available. The proxy is likely to be a far more powerful device, and has the
 potential to control policy centrally. 
 
-\subsection{Increased Host Security}
+\subsubsection{Increased Host Security}
 When the internet was first envisioned, each host was responsible for accepting
 and rejecting traffic based on whether it was deemed to be genuine or not. With
 the popularisation of networks in corporate setting, to increase the ease of
@@ -935,6 +991,9 @@ AlFardan, N., \& Paterson, K. (2012). Plaintext-recovery attacks against datagra
 
 \bibitem{Cerf1993}
 Cerf, V., \& Aboba, B. (1993). How the Internet came to be. In The On-line User’s Encyclopedia. Addison-Wesley. 
+
+\bibitem{Zanella2014}
+Zanella, A., Bui, N., Castellani, A., Vangelista, L., \& Zorzi, M. (2014). Internet of Things for Smart Cities. IEEE Internet of Things Journal, 4662(c), 1–11. 
 
 \end{thebibliography}
 
