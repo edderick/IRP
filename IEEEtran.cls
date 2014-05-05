@@ -3461,8 +3461,8 @@ between column types.}%
            \@IEEEcompsoctitleabstractindextextbox{\@IEEEcompsoctitleabstractindextext}\par\hfill
            \@IEEEcompsocdiamondline\hfill\hbox{}\par}}}\relax
       \else% journal or peerreview
-         {\@IEEEcompsoconly{\sffamily}\sublargesize\@author\par\vskip 0.5em
-\@IEEEcompsocdiamondline
+         {\@IEEEcompsoconly{\sffamily}\sublargesize\@author
+
           }\relax
       \fi
    \fi
