@@ -3,3 +3,7 @@
 *.pdf
 .DS_Store
 .*.swp
+*.bbl
+*.blg
+*.dvi
+*.out
