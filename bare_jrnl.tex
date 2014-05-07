@@ -21,7 +21,7 @@
 \titlespacing{\subsection}{0pt}{0.8ex}{0.15ex}
 \titlespacing{\subsubsection}{0pt}{0.8ex}{0.15ex}
 
-\linespread{0.97}
+\linespread{1}
 
 \begin{document}
 
@@ -496,25 +496,24 @@ whitehat hackers known as penetration testers. These security professionals
 attempt to break into the systems to show where weaknesses lie. Thorough
 penetration testing results in more secure products for end users.
 
-\section{Prevention and Mitigation}
-Large numbers of potential attacks, many with the ability to cause massive
-amounts of damage, mean mechanisms and policies are required to reduce harm
-that an attack can cause. 
+\section{Prevention and Mitigation} 
+There is a large number of potential attacks that can cause severe damage.
+Mechanisms and policies are required to reduce the harm an attack can cause. 
 
 \subsection{Legal Frameworks}
 Legal action should not be overlooked as an effective measure against cyber
-criminals. It is commonly accepted that perfect security does not exist
-\cite{ThereMustBeA}. Products of any reasonable complexity are almost certain
-to contain flaws. Because of this, laws must act as a safety net, by deterring
-criminals from committing computer crime, and compensating victims. An overview
-of the relevant law can be found in \cite{Weber2010}.  Regulations making
-vendors accountable for defects in their products may help persuade them to
-ship devices in a secure state, and ensure testing is thorough. 
+crime. Perfect security does not exist \cite{ThereMustBeA} -- products of any
+reasonable complexity are almost certain to contain flaws. Because of this,
+laws must act as a safety net by deterring criminals from committing computer
+crime, and compensating victims. An overview of relevant law can be found in
+\cite{Weber2010}. Regulations to hold vendors accountable for defects in their
+products may help persuade them to ship devices in a secure state, and
+encourage thorough testing. 
 
-\subsection{Hop-by-hop Encryption}
-Hop-by-hop encryption exists between two directly connected nodes. All of the
-protocols mentioned in Section \ref{layer_1_2}, offer some form of link layer
-encryption. 
+\subsection{Hop-by-hop Security}
+Hop-by-hop security exists between two directly connected nodes. All of the
+protocols mentioned in Section \ref{layer_1_2}, offer per hop encryption at the
+link layer. 
 
 \subsubsection{WiFi Security}
 WiFi security has a troubled past. The first WiFi security protocol, Wired
@@ -523,25 +522,26 @@ Equivalency Protocol (WEP) was completely insecure. As WEP used a stream cipher
 vectors (IV) to add uniqueness to the traffic keys. The Birthday Problem meant
 that once ~5000 IVs\footnote{Calculated by $\sqrt[]{\frac{pi}{2} 2^{24}} $}
 have been collected, the probability of a collision exceeded 50\%. Once a
-collision was found the Fluhrer, Mantin and Shamir attack could be used. Using
-{\tt aircrack-ng} any WEP key could be retrieved in seconds. Once a WEP network
-was cracked, all traffic to and from the compromised access point could be
-read. Fortunately, WEP is rarely used anymore.
+collision was found the Fluhrer, Mantin and Shamir attack could be used
+\cite{Fluhrer2001}. Using {\tt aircrack-ng} any WEP key could be retrieved in
+seconds. Once a WEP network was cracked, all traffic to and from the
+compromised access point could be read. Fortunately, WEP is rarely used
+anymore.
 
-WEP was replaced with WiFi Protected Access (WPA), there are two versions: WPA
-and WPA2. WPA was designed as a stopgap measure only requiring a firmware
-upgrade; whereas WPA2 is a long term solution, requiring new hardware, and uses
-the Advanced Encryption Standard (AES). WPA has several modes, Pre-shared Key
-(PSK) is most common among home users. The only known WPA-PSK vulnerabilities
-are dictionary attacks, and rainbow tables; as long as users chose strong
-passwords, along with a random SSID, this is not a problem. 
+WEP was replaced by WiFi Protected Access (WPA). The original WPA was designed
+as a stopgap measure requiring only a firmware upgrade. The successor WPA2 is a
+long term solution that requires new hardware, and uses the Advanced Encryption
+Standard (AES). WPA has several modes, Pre-shared Key (PSK) is most common
+among home users. The only known WPA-PSK vulnerabilities are dictionary
+attacks, and rainbow tables; preventable with strong passwords, and random
+SSIDs. 
 
-WiFi Protected Setup (WPS), designed to simplify setting up WiFi networks, also
-contained a serious vulnerability. The flaw was in the PINs authentication: an
-eight digit PIN was used, but as it was processed in two rounds, the keyspace
-was only 11,000. {\tt reaver-wps} can be used to retrieve any WPS PIN in under
-24 hours. Some modern routers have extra precautions, such as disabling WPS
-after multiple failures. 
+WiFi Protected Setup (WPS), designed to simplify the setup of WiFi networks,
+also contained a serious vulnerability \cite{Viehbock2011}. The flaw was in the
+PINs authentication: an 8-digit PIN was used, but as it was processed in two
+rounds and the last digit is a checksum, the keyspace was only 11,000. {\tt
+reaver-wps} can be used to retrieve any WPS PIN in under 24 hours. Some modern
+routers have extra precautions, such as disabling WPS after multiple failures. 
 
 \subsubsection{Bluetooth Security}
 The Bluetooth specification \cite{BTSpec} defines a stream cipher called E0.
@@ -569,136 +569,125 @@ performed.
 \subsubsection{IEEE 802.15.4 Security}
 IEEE 802.15.4 includes an extensive security specification, offering several
 modes of operation: no security, encryption only, authentication only, and
-encryption and authentication. 
+encryption and authentication. AES is used for encryption, with Message
+Authentication Codes (MAC) used for Authentication. The protocols are not
+perfect though, in 2004 Sastry et al.  \cite{Sastry2004} outlined some of the
+major problems that existed.  
 
-The encryption engine used is AES, with Message Authentication Codes (MAC) used
-for Authentication. The protocols are not perfect though, in 2004 Sastry et al.
-\cite{Sastry2004} outlined some of the major problems that existed.  
 
-
-\subsection{End-to-end Encryption}
-A limitation of hop-by-hop encryption is that each node on the path between the
+\subsection{End-to-end Security}
+A limitation of hop-by-hop encryption is that all nodes on the path between
 sender and receiver can read the message, as it is decrypted before being
 forwarded. If a path contains untrusted nodes, end-to-end encryption can be
-used to prevent the data being read or changed by a middle person. 
+used to prevent data being read or changed by a middle person. 
 
-\subsubsection{DTLS}
-Transport Layer Security (TLS) is a security protocol that runs over TCP. It is
-widely used for securing communications between web servers and their users --
-most modern browsers indicate when it is active by showing a padlock icon. As
-the IoT is likely use UDP rather than TCP, regular TLS cannot be used, instead
-Datagram TLS (DTLS) will need to be used. DTLS is very similar to TLS,
-providing mechanisms for key negotiation, and encrypted communication using a
-wide variety of encryption algorithms.  
+\subsubsection{DTLS -- Datagram Transport Layer Security}
+Datagram TLS (DTLS) is a datagram security protocol based on Transport Layer
+Security (TLS), the protocol that is used to secure HTTP sessions. Because the
+IoT is likely to use UDP rather than TCP, DTLS must be used in place of TLS.
+DTLS is very similar to TLS, providing mechanisms for key negotiation,
+encrypted communication, and MAC generation.  
 
-In February 2014, researchers discovered a plaintext recovery vulnerability in
-the protocol, when Cipher Block Chaining (CBC) encryption mode is used
-\cite{AlFardan2012}. 
-
-Coincidentally, serious flaws in the implementations of TLS have been in the
-news recently. In February 2014 Apple published a security update to fix the
-'goto fail' in their implementation of TLS.  This was caused by a repeated
-statement that resulted in an incorrect verification of TLS headers. In April 2014
-the OpenSSL HeartBleed bug was disclosed. The bug results from incorrect bounds
-checking in the heart beat extension to TLS. This enabled a buffer overrun
-attack, allowing users to retrieve large chunks of memory. After the
-disclosure, CloudFlare launched a challenge for attackers to exploit an
-experimental server running the vulnerable version-- within days, researchers
-had retrieved private keys from the machine.
+Serious flaws in TLS implementations have been in the news recently. In
+February 2014 Apple published a security update to fix the 'goto fail' in their
+implementation of TLS. In this bug a repeated statement resulted in an
+incorrect verification of TLS headers. In April 2014 the OpenSSL HeartBleed bug
+was disclosed. Incorrect bounds checking in the TLS Heartbeat Extension enabled
+a buffer overrun attack, allowing users to retrieve large chunks of memory.
+CloudFlare challenged attackers to exploit an experimental server running the
+vulnerable software -- within days, researchers had retrieved private keys from
+the machine \cite{CloudFlare2014}.
 
 \subsubsection{IPSec}
-IPSec is the security extension for IP. It offers the ability to authenticate
-and encrypt IP packets. In early specifications of IPv6, IPSec was mandatory,
-if security was not required, it could be effectively disabled by using the
+IPSec adds security extensions to IP, offering the ability to authenticate and
+encrypt IP packets. It was introduced with IPv6, and initially was mandatory.
+When security was not required, it could be effectively disabled by using the
 NULL method. In RFC6463 the requirement was reduced to a recommendation. 
 
-IPSec can be operated in a number of different modes: Authentication Header
-(AH), Encapsulating Security Payload (ESP), and Security Associations (SA).  In
-AH mode, an authentication header is added to to IP packets, to help maintain
-the authenticity of the IP traffic. A counter helps to prevent against replay
-attacks. ESP, actually encrypts the payload of the packet, providing
-confidentiality. SA is used for key distribution. It has been shown that IPSec
-can be modified to run within the constraints of IoT devices
+IPSec has several modes of operation: Authentication Header (AH), Encapsulating
+Security Payload (ESP), and Security Associations (SA). In AH mode,
+authentication is added to packets to ensure authenticity of the IP traffic. A
+counter prevents replay attacks. ESP, encrypts the payload of the packet,
+providing confidentiality. And SA is used for key distribution. It has been
+demonstrated that IPSec can be implemented to run on constrained IoT devices
 \cite{Rubertis2013}.  
 
 \subsubsection{Diet HIP}
-The Host Identity Protocol (HIP) is used to decouple the identification of a
-host from its location. HIP Base Exchange is used to bootstrap authenticated
-communications. HIP Diet Exchange (DEX) is a cut back version of BEX for use on
-constrained devices that removes many of the heavyweight cryptographic
-primitives used in BEX.  Lightweight implementations of DEX have be produced
-and shown to be suitable for the IoT \cite{Meca2013}. DEX can be used for
-key negotiation, producing a session key that can be used with IPSec or DTLS. 
+The Host Identity Protocol (HIP) decouples identification of a host from
+location. HIP Base Exchange (BEX) can bootstrap authenticated communications.
+HIP Diet Exchange (DEX) is a cut back version of BEX for constrained devices
+that replaces the heavyweight cryptographic primitives used in BEX. Lightweight
+implementations of DEX have be produced that are suitable for the IoT
+\cite{Meca2013}. DEX can be used for key negotiation, producing a session key
+that can be used with IPSec or DTLS. 
 
 \subsection{Jamming}
 Brown et al. \cite{Brown2013} present a novel mechanism for improving the
 functionality and security of primitive home automation hardware. A centralised
-controller is used to control the appliances. The controller has bridges
-attached for each the home automation protocols used in the home. The
-controller acts as a proxy for all of these devices, allowing the user to
-control the devices over the Internet. 
+controller is used to control the appliances, attached are bridges for each
+home automation protocol deployed in the home. The controller acts as a proxy
+for all of these devices, allowing the user to control the devices over the
+Internet. 
 
 The controller enhances security by listening for unauthorised command signals
-could be interpreted by devices in the home, and emitting jamming signals to
-prevent them from having an effect. This mechanism can be used to defend
-against accidental attack by a neighbour, or against simplistic malicious
+which could be interpreted by devices in the home, and emitting jamming signals
+to prevent them from having an effect. This mechanism can be used to defend
+against accidental attack by a neighbour, and against simplistic malicious
 attacks. 
 
 \subsection{Service Level Security}
-There are many potential security issues with the protocols that are used to
-reduce the administration burden of the network. 
+Security issues also exist with the protocols that are used to reduce the
+administration burden of the network. 
 
 \subsubsection{Service Discovery}
-Service discovery may allow a malicious actor to advertise services on a host
-that they control, tricking devices into pair with it, this is known as an mDNS
-poisoning attack. IPSec or DNSSEC can be used to ensure that advertisements
-only come from trusted parties \cite{Cheshire2013}. 
+Service Discovery may allow a malicious actor to advertise services on a host
+that they control, tricking devices into accessing it from here malware may be
+injected into the device. For mDNS this is known as an mDNS poisoning attack --
+IPSec or DNSSEC allow devices to only accept advertisements from trusted
+parties \cite{Cheshire2013}. 
 
-The other major concern with service discovery protocols, such as mDNS, is that
-when attached to public networks, they can inform attackers that the device is
-present on the network. An attacker may also be able to work out what the
-device is and if it has any known vulnerabilities.  The NSA, and Apple both
+The other major concern with service discovery protocols is that when attached
+to public networks, the presence of the device on the network is advertised to
+attackers. An attacker may also be able to identify the type of device and if
+known vulnerabilities exist. Both the National Security Agency (NSA) and Apple
 recommend turning off mDNS when connected to a public network
-\cite{NSAMacHardening} \cite{MacConfig}. The usability of this solution on
-constrained devices, needs to be evaluated. 
+\cite{NSAMacHardening} \cite{MacConfig}. This solution may not be usable on
+constrained devices.
 
 \subsubsection{Routing}
-Security considerations for routing over low-power and lossy networks are
-outlined in a current Internet draft \cite{Tsao2014}. The threats mentioned
-result mainly from constraints in the hardware. They include: node
-impersonation, routing information exposure, routing information modification,
-availability reduction attacks and node resource exhaustion. The draft also
-details countermeasures, such as adding encryption to the protocol and
-communicating with peers over multiple hops.
+Security considerations for routing over LLNs are outlined in a current
+Internet draft \cite{Tsao2014}. The threats mentioned result mainly from
+hardware constraints. They include: node impersonation, routing information
+exposure, routing information modification, availability reduction attacks and
+node resource exhaustion. The draft details countermeasures, such as adding
+encryption to the protocol and negotiating with peers over multiple hops.
 
 \subsubsection{Host Autoconfiguration}
-SLAAC can be exploited by Router Advertisement spoofing. This may causing a
-`thing' to connect to an unauthorised DNS server; from here, the attacker could
-forge DNS responses pointing to a machine owned by the attacker, rather that
-the legitimate address. The attacker could then exfiltrate data or attempt to
-control the `thing'. Snooping techniques such as DHCP Guard and {\tt ramond}
+SLAAC can be exploited by Router Advertisement spoofing. `Things' can be
+convinced to connect to an unauthorised DNS server; from here, the attacker
+could forge DNS responses pointing to a machine owned by the attacker, rather
+than legitimate addresses. The attacker could then exfiltrate data or attempt
+to control the `thing'. Snooping techniques such as DHCP Guard and {\tt ramond}
 can be used to prevent false router information from having an effect on the
-network hosts.  
+network hosts.
 
 \subsection{Architectural Decisions}
 Many architectural design decisions for the IoT in the home exist. Although
-usability must not be overlooked, security is the top priority, when making
-architectural choices. Every network is different, but best practices are
-universal. 
+every network is different, best practices are universal. 
 
 \subsubsection{End-to-end Addressability}
 The huge address space of IPv6 allows assignment of global IP addresses to
 endpoints, removing the need for Network Address Translation (NAT). Allowing
-this end-to-end addressability has benefits, primarily network complexity is
+this end-to-end addressability has benefits. Primarily, network complexity is
 reduced by the removal of NAT and port mapping. External hosts are also now
 able to initiate communications with home devices.
 
 NAT proponents claim it improves security by restricting external
-addressability. This is simply security through obscurity, NAT offers no
-increase in security over a firewall. Ideally `things' deployed in home
-networks should have global IP addresses to allow them to be controlled from
-anywhere -- there should be strict access control mechanisms, but NAT is not
-the correct way to achieve this. 
+addressability. This is security through obscurity, NAT offers no increase in
+security over a firewall. Ideally `things' deployed in home networks should
+have global IP addresses to allow them to be controlled remotely -- there
+should be strict access control mechanisms, but NAT is not the correct way to
+achieve this. 
 
 \subsubsection{Application Layer Proxies}
 Many currently available `things' do not implement IP themselves. Instead they
@@ -712,18 +701,19 @@ from an always-on connection.
 
 \subsubsection{Internal Subnetworks}
 It is strongly recommended that future home networks are divided into multiple
-subnets, for example smart grid, lighting control and home entertainment. This
-is an operational requirement as it prevents high bandwidth devices
-overwhelming low bandwidth devices. But also has security benefits -- filtering
-can be done at the subnet borders. High-end home routers already offer this
-functionality with 'guest' networks isolated from the main network.  
+subnets, for example separate networks for smart grid, lighting control and
+home entertainment. This is an operational requirement as it prevents high
+bandwidth devices overwhelming low bandwidth devices. It also has security
+benefits -- filtering can be done at the subnet borders. High-end home routers
+already offer this functionality with 'guest' networks isolated from the main
+network.
 
 \subsubsection{Increased Host Security}
 With the popularity of network edge firewalls and NAT, the security on end-user
 devices was not considered a priority. However, given that firewalls are rarely
 impenetrable, and the risk of internal attack, endpoints should be designed to
 thrive in a hostile environment. `Things' must be careful when deciding which
-packets to process.  
+packets to process.
 
 
 \section{Future Work}
@@ -731,40 +721,47 @@ Despite the large body of work that exists on the security considerations for
 the IoT in domestic networks, there are still many unanswered questions. 
 
 \subsection{Secure by Default}
-One challenge is ensuring that device vendors pick the correct security
-protocols for their devices, and adhere to the specifications. It would also be
-helpful to develop methods of encouraging product manufacturers to ship their
-products with secure, randomly generated, usernames and passwords in order to
-reduce the number of attacks that are made of devices that have never been
-configured away from their defaults.
+One challenge is ensuring device vendors pick the correct security protocols
+for their devices, and adhere to the specifications. It would also be helpful
+to develop methods of encouraging product manufacturers to ship their products
+with secure, randomly generated, usernames and passwords in order to reduce the
+number of attacks that are made on devices that have not been configured away
+from the defaults.
 
 \subsection{User Education}
-Research must be done on how to teach users an effective mental model for
-security in their home. The negative implications of uneducated users is two
-fold: firstly, they are at risk of falling victim to an attack; secondly, by
-running an insecure network, they may facilitate criminals in attacking others
--- vulnerable things could become part of a botnet of things. As well as user
-education, usability of device configuration must be improved. 
+Research must be done on how to teach users about security in their home. The
+negative implications of uneducated users is two fold: firstly, they are at
+risk of falling victim to an attack; secondly, by running an insecure network,
+they can help criminals attack others -- vulnerable `things' could become part
+of a `botnet of things'. G. Korteum et al. have presented their findings from
+running an Open University Module on the IoT, but their focus is not on
+security \cite{Kortuem2013}. As well as user education, usability of device
+configuration must be improved. 
 
 \subsection{Outsourcing Security}
-Although the more technically inclined are likely to be strongly against it, many
-users may benefit from the relocation of the security maintenance of their home
-network from inside the home, to a third party, such as their ISP. 
+Many home users would benefit from the relocation of the security provisions of
+their network from inside the home, to a third party, such as their ISP
+\cite{Kritzinger2013}. This could be achieved using programmable switches and
+virtualised network devices, and would require users develop strong trust
+relationships with their security providers. New privacy issues would need to
+be addressed. Increased bandwidth consumption may also be an issue. Technically
+inclined users are likely to be strongly against this, so the service should
+be strictly optional.
 
 \subsection{The Cloud of Things}
-Cloud computing has been one of the largest advances in technology over the
-past decade. Users are placing more and more of their data outside of their
-personal machines. As the cloud merges with the IoT, more and more sensitive
-data will find itself in the cloud. How can users protect themselves from their
-service providers? And should the cloud provider be held responsible if data is
-lost?
+Cloud computing has become very popular lately -- many users store all of their
+data outside their personal machines, and many software packages are now
+available `as a service'. As the cloud merges with the IoT, even more sensitive
+data will find itself in the cloud. Privacy and accountability questions must
+be answered for consumers to be safe.
 
 \subsection{Novel Network Paradigms}
 There are a number of novel network paradigms that have been proposed as a
 replacement of TCP/IP. One example, Information Centric Networking (ICN), aims
 to replace IP with a naming system that is based on the content of the data
-being requested, rather than the logical location of the data. Does this kind of
-architecture need to be considered, and how can it be made secure?
+being requested, rather than the logical location of the data. Research into
+new paradigms would help to evaluate their efficacy and determine whether we
+need to rethink the Internet to accommodate the IoT. 
 
 
 \section{Conclusion}
@@ -772,17 +769,13 @@ It is clear that security is an important goal for the design of the IoT. As
 technology consumes more and more of people's lives, it is essential that the
 correct trade-offs are made from a security standpoint. 
 
-So far, we have seen a large number of standards emerge, each attempting to
-solve many of the problems that appear when connecting everyday objects to the
-Internet. At present it is less than obvious which protocols will succeed, and
-which will fade into obscurity. Many of the products currently marketed to
-consumers under the umbrella of 'The Internet of Things' do not fit with the
-academic models of the IoT, instead opting for moderate energy protocols that
-are more familiar to consumers. 
+A large number of standards have emerged, each attempting to solve many of the
+problems with connecting everyday objects to the Internet. Presently it is not
+obvious which protocols will succeed, and which will fade into obscurity. The
+most benefits appear to lie within an IPv6 based IoT, as this instantly
+provides a robust infrastructure and a number of services, along with strong
+future proofing.  
 
-Whether consumer electronics eventually catches up with the academic
-literature, or simply continues to evolve in a different direction, the IoT
-holds a huge amount of potential -- both for greatness and disaster.  
 
 % references section
 
