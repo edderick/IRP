@@ -5,7 +5,7 @@
 \usepackage[stable]{footmisc}
 \hyphenation{op-tical net-works semi-conduc-tor}
 
-\usepackage{hyperref}
+\PassOptionsToPackage{hyphens}{url}\usepackage{hyperref}
 \hypersetup{colorlinks=false, pdfborder={0 0 0}, }
 
 %% Save the class definition of \subparagraph
@@ -794,6 +794,7 @@ future proofing.
 % set second argument of \begin to the number of references
 % (used to reserve space for the reference number labels box)
 
+\sloppy
 \bibliography{bare_jrnl}{}
 \bibliographystyle{ieeetr}
 
