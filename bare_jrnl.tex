@@ -34,7 +34,7 @@
 As the number and types of devices in the modern home grows, so does the
 possibility for malicious actors to exploit them. The network technology
 powering the Internet of Things must be designed with security and privacy
-considerations in mind from the start. In this paper, a thorough review of the
+considerations in mind from the start. In this paper a thorough review of the
 protocol stack, security considerations and prevention mechanisms is given. 
 \end{abstract}
 
@@ -43,8 +43,8 @@ protocol stack, security considerations and prevention mechanisms is given.
 \section{Introduction}
 \IEEEPARstart{T}{he} ``Internet of Things'' (IoT) has become a popular
 buzzword, and despite lacking an agreed definition, is used liberally. Kevin
-Ashton was first to use the phrase in 1999, when describing the combination of
-Radio Frequency ID (RFID) tags and the Internet for supply chain monitoring at
+Ashton coined the phrase in 1999, when describing the combination of Radio
+Frequency ID (RFID) tags and the Internet for supply chain monitoring at
 Procter \& Gamble \cite{Ashton2009}. 
 
 In 2005, the ITU published a report titled ``The Internet of Things''
@@ -53,7 +53,7 @@ presence. The ideas presented added a new dimension to the Internet,
 envisioning a future where Internet connectivity would be available at
 ``anytime'', in ``any place'', and to ``anything''.
 
-Recent IoT definitions have not been limited to RFID, including protocols such
+Recent IoT definitions have not been limited to RFID but include protocols such
 as IEEE 802.14.5 and Bluetooth Low Energy (BLE). They all agree that the IoT
 will result in astronomical increases in the number of devices online --
 Gartner predicts that by 2020, over 26 billion devices will be connected to the
@@ -136,7 +136,7 @@ app.
 \section{Network Technologies}
 The early Internet, offered many competing standards: DECnet, TCP/IP,
 AppleTalk, OSI, x.25, and many more \cite{Cerf1993}. Eventually TCP/IP was
-accepted as the main protocol suite, and is now used almost exclusively.
+accepted as the main protocol suite and is now used almost exclusively.
 Similarly, there are many competing technologies for the IoT. Each has
 advantages and disadvantages, but few exist within a vacuum -- each draws
 inspiration from the rest. 
@@ -173,8 +173,9 @@ it unsuitable for constrained devices.
 Bluetooth is used in in Wireless Personal Area Networks (WPANs). It is a
 wireless replacement for RS-232 serial cables. It is commonly used for
 connecting mobile phones to headsets. Bluetooth has a lower bandwidth and
-energy usage than WiFi, so is more suitable for connecting constrained devices
-than WiFi. Unlike WiFi, Bluetooth also defines the higher network layers. 
+energy usage than WiFi, so is more suitable for connecting devices constrained
+in terms of battery life and processing power. Unlike WiFi, Bluetooth also
+defines the higher network layers. 
 
 Bluetooth Classic is not suitable for ultra-low power devices. Bluetooth Low
 Energy (BLE), originally named Wibree and now marketed as Bluetooth Smart, is a
@@ -185,10 +186,10 @@ iPhone 4S in 2011 \cite{Engadget2011}, many smartphones with support for BLE
 have been released.
 
 \subsubsection{RFID -- Radio Frequency Identification}
-The early IoT focused on RFID. There are two basic types of RFID "tag": active
-tags, powered by the reader; and passive tags, with their own power source.
+The early IoT focused on RFID. There are two basic types of RFID "tag": passive
+tags, powered by the reader; and active tags, with their own power source.
 Passive RFID tags can be created very cheaply -- costing as little as
-$\sim$\pounds0.05.  Expensive active RFID tags can have similar functionality
+$\sim$\pounds0.05. Expensive active RFID tags can have similar functionality
 to the other PHY layer standards. 
 
 \subsubsection{IEEE 802.15.4}
@@ -208,10 +209,10 @@ The network layer is the narrow waist of the TCP/IP stack. It handles
 addressing and forwarding of Internet traffic. 
 
 \subsubsection{IP -- The Internet Protocol}
-IP is used by all machines connected to the Internet. IP has two major
+IP is used by all machines connected to the Internet. It has two major
 versions: IPv4 and IPv6. Most networks today use IPv4. In 2011 the Internet
-Assigned Numbers Authority (IANA) ran out of IPv4 addresses \cite{Potaroo},
-resulting in a slow transition to IPv6 which has a far bigger address space.
+Assigned Numbers Authority (IANA) ran out of IPv4 addresses \cite{Potaroo}
+resulting in a slow transition to IPv6, which has a far bigger address space.
 
 \subsubsection{6LoWPAN -- IPv6 over Low Power WPANs}
 IP was not designed for constrained devices -- it is too resource intensive to
@@ -226,19 +227,20 @@ ZigBee is a wireless mesh networking protocols suite that runs over IEEE
 low power usage, and need little bandwidth. ZigBee defines the network and
 application layers, along with software abstractions. Classic ZigBee was not
 compatible with IP, so integration with the Internet was difficult. An IPv6
-based version of ZigBee now exists.
+based version of ZigBee now exists to compete with 6LoWPAN.
 
 \subsection{Layer 4 - The Transport Layer}
 The Transport Layer primarily provides multiplexing for applications. There are
 two major protocols:  UDP and TCP. The User Datagram Protocol (UDP) is
 connectionless, providing no guarantee of message delivery. The Transmission
-Control Protocol (TCP), on the other hand, is connection-oriented, and by
-retransmitting failed messaged offers a reliable service. Overheads relating to
-retransmission and maintaining connections, make TCP unsuitable for the low power
-lossy networks (LLNs) of the IoT \cite{embedded}. Instead UDP is used --
+Control Protocol (TCP), on the other hand, is connection-oriented. By
+retransmitting failed messages it offers a reliable service. Overheads relating
+to retransmission and maintaining connections make TCP unsuitable for the low
+power lossy networks (LLNs) of the IoT \cite{embedded}. Instead UDP is used --
 reliability is handled in a higher layer.
 
 \subsection{Layer 7 - The Application Layer}
+Layers 5 and 6 are the session and presentation layers, but are rarely used.
 The application layer contains a wide range of protocols. The IoT  makes use of
 some existing layer 7 protocols, but others are too heavyweight so must be
 redefined. 
@@ -246,7 +248,7 @@ redefined.
 \subsubsection{HTTP} Due to the popularity of the World Wide Web (W3), RESTful
 web services have become very common. HTTP is a de facto standard for
 application communication. HTTP is a text based protocol that uses verbs such
-as `GET' and `POST', to interact with a web server.  
+as `GET' and `POST' to interact with a web server.  
 
 \subsubsection{CoAP}
 HTTP was not designed to be lightweight, instead it focuses on human
@@ -269,10 +271,11 @@ to simplify the development of applications for the IoT.
 For objects to interact seamlessly, they require mechanisms for discovering one
 another. For example, a network connected light switch needs to locate light
 bulbs it is responsible for. There are several existing service discovery
-protocols, including Universal Plug and Play (UPnP) and multicast DNS (mDNS),
-also known as Apple Bonjour. There are implementations of mDNS that can run on
-6LoWPAN. It is also possible that we will see new service discovery protocols
-used on the IoT; one example is TRENDY \cite{Butt2013}. 
+protocols, including Universal Plug and Play (UPnP) and multicast
+DNS\footnote{Also known as Apple Bonjour.} (mDNS). There are implementations of
+mDNS that can run on 6LoWPAN. It is also possible that we will see new service
+discovery protocols used on the IoT; one example is TRENDY a RESTful service
+discovery protocol \cite{Butt2013}. 
 
 \subsubsection{Routing}
 Sometimes it is necessary to route IP traffic over constrained device networks.
@@ -306,14 +309,14 @@ not follow this architecture. At the most basic end of the scale, we see home
 automation kits based on simple radios (typically 433MHz), running proprietary
 protocols, connecting to base stations or mobile phones. Examples of this
 include LightWaveRF and Insteon. Home automation is currently targeted mostly
-at enthusiasts who are willing to build systems themselves using Raspberry Pi
-and Arduino.
+at enthusiasts who are willing to build systems themselves using Raspberry Pis
+and Arduinos.
 
 Many `things' already on the market use WiFi or Bluetooth Classic. LG and
 Whirlpool appliances use WiFi.  Nest thermostats support both WiFi and
 802.15.4. The Fitbit and Nike+ Fuel band both connect to smart phones over
 Bluetooth. These commercially available devices often lack the always-on,
-global connectivity envisioned in the IoT,
+global connectivity envisioned in the IoT.
 
 
 \section{Security Goals}
@@ -327,8 +330,8 @@ A confidential message is readable only by the intended recipient(s).
 Attackers must not be able to intercept and interpret messages. The level of
 confidentiality required depends on the use case. For example, a temperature
 sensor in a public place transmits no information an attacker could not collect
-themself. Conversely, a sensor to monitor a medical condition, required much
-higher confidentiality. 
+themself. Conversely, a sensor to monitor a medical condition requires much
+more confidentiality. 
 
 \subsection{Integrity}
 Integrity is the concept that a message is received identical to when sent.
@@ -341,14 +344,14 @@ process, or it could be tampered with maliciously by an attacker.
 Availability refers to the ability to use a service when needed.  Denial of
 Service (DoS) attacks are common place, and without suitable provisions can
 render websites and networks completely unusable. The IoT needs ways to both
-prevent `things' from being affected by DoS attacks, and from being to
+prevent `things' from being affected by DoS attacks, and from being used to
 originate them.
 
 \subsection{Authenticity}
 An authentic message is one where the sending party can be validated. In the
-IoT, there should be ways to prevent attackers from pretending to be sensor
-nodes, and submitting bogus readings. It may be helpful in the IoT to extend
-authenticity to provenance, recording the history of the origin of data.
+IoT there should be ways to prevent attackers from pretending to be sensor
+nodes and submitting bogus readings. It may be helpful in the IoT to extend
+authenticity to provenance, recording the history of the data.
 
 \subsection{Authorisation}
 Authorisation (or Access Control) ensures the requesting party is allowed to
@@ -356,7 +359,7 @@ perform a requested action. Many devices, notably Wifi routers, use well known
 default usernames and passwords. This makes it trivial for an attacker to guess
 login credentials. Unless vendors take security more seriously, the same thing
 will happen in the IoT. In early 2014, Proofpoint found many embedded devices,
-including one smart fridge, being used to send spam emails
+including one smart fridge, were being used to send spam emails
 \cite{Proofpoint2014}. 
 
 \subsection{Usability \& Accessibility}
@@ -394,7 +397,7 @@ possibly confidentiality.
 Pretending to be someone (or something) you are not, in order to gain access to
 a resource that you are not authorised to access. MAC address spoofing can used
 to perform a variety of attacks. Replay attacks are also a form of imitation
-that must be defended against. Man-in-the-middle attacks are and imitation
+that must be defended against. Man-in-the-middle attacks are an imitation
 attack whereby an attacker intercepts all communications between two parties.
 They then relay all communications, fooling the end points into believing they
 are communicating directly. 
@@ -408,7 +411,7 @@ prevent access to a device.
 
 \subsubsection{Privacy}
 Privacy attacks seek to deprive victims of their privacy. A major concerns is
-the identification of people in public places, based on devices that they are
+the identification of people in public places based on the devices they are
 carrying. At the Black Hat USA conference in 2006 \cite{Flexilis2006}
 researchers expressed concerns that side channel attacks on the proposed US
 e-passports could identify travellers as American citizens while abroad,
@@ -504,24 +507,24 @@ Mechanisms and policies are required to reduce the harm an attack can cause.
 Legal action should not be overlooked as an effective measure against cyber
 crime. Perfect security does not exist \cite{ThereMustBeA} -- products of any
 reasonable complexity are almost certain to contain flaws. Because of this,
-laws must act as a safety net by deterring criminals from committing computer
-crime, and compensating victims. An overview of relevant law can be found in
-\cite{Weber2010}. Regulations to hold vendors accountable for defects in their
-products may help persuade them to ship devices in a secure state, and
-encourage thorough testing. 
+laws are needed to act as a safety net by deterring criminals from committing
+computer crime. An overview of relevant law can be found in \cite{Weber2010}.
+Regulations to hold vendors accountable for defects in their products may help
+persuade them to ship devices in a secure state, and encourage thorough
+testing. 
 
 \subsection{Hop-by-hop Security}
 Hop-by-hop security exists between two directly connected nodes. All of the
-protocols mentioned in Section \ref{layer_1_2}, offer per hop encryption at the
+protocols mentioned in Section \ref{layer_1_2} offer per hop encryption at the
 link layer. 
 
 \subsubsection{WiFi Security}
 WiFi security has a troubled past. The first WiFi security protocol, Wired
-Equivalency Protocol (WEP) was completely insecure. As WEP used a stream cipher
+Equivalent Protocol (WEP), was completely insecure. As WEP used a stream cipher
 (RC4), it was vital that keys were never reused. WEP used 24-bit initialisation
 vectors (IV) to add uniqueness to the traffic keys. The Birthday Problem meant
 that once ~5000 IVs\footnote{Calculated by $\sqrt[]{\frac{pi}{2} 2^{24}} $}
-have been collected, the probability of a collision exceeded 50\%. Once a
+had been collected, the probability of a collision exceeded 50\%. Once a
 collision was found the Fluhrer, Mantin and Shamir attack could be used
 \cite{Fluhrer2001}. Using {\tt aircrack-ng} any WEP key could be retrieved in
 seconds. Once a WEP network was cracked, all traffic to and from the
@@ -571,7 +574,7 @@ IEEE 802.15.4 includes an extensive security specification, offering several
 modes of operation: no security, encryption only, authentication only, and
 encryption and authentication. AES is used for encryption, with Message
 Authentication Codes (MAC) used for Authentication. The protocols are not
-perfect though, in 2004 Sastry et al.  \cite{Sastry2004} outlined some of the
+perfect though; in 2004 Sastry et al. \cite{Sastry2004} outlined some of the
 major problems that existed.  
 
 
@@ -663,13 +666,12 @@ node resource exhaustion. The draft details countermeasures, such as adding
 encryption to the protocol and negotiating with peers over multiple hops.
 
 \subsubsection{Host Autoconfiguration}
-SLAAC can be exploited by Router Advertisement spoofing. `Things' can be
-convinced to connect to an unauthorised DNS server; from here, the attacker
-could forge DNS responses pointing to a machine owned by the attacker, rather
-than legitimate addresses. The attacker could then exfiltrate data or attempt
-to control the `thing'. Snooping techniques such as DHCP Guard and {\tt ramond}
-can be used to prevent false router information from having an effect on the
-network hosts.
+SLAAC can be exploited by Router Advertisement spoofing. If `things' can be
+convinced to connect to an unauthorised DNS server, then by forging DNS
+responses pointing to a machine owned by the attacker, rather than legitimate
+addresses, the attacker could attempt exfiltrate data or control the `thing'.
+Snooping techniques such as DHCP Guard and {\tt ramond} can be used to prevent
+false router information from having an effect on the network hosts.
 
 \subsection{Architectural Decisions}
 Many architectural design decisions for the IoT in the home exist. Although
@@ -686,7 +688,7 @@ NAT proponents claim it improves security by restricting external
 addressability. This is security through obscurity, NAT offers no increase in
 security over a firewall. Ideally `things' deployed in home networks should
 have global IP addresses to allow them to be controlled remotely -- there
-should be strict access control mechanisms, but NAT is not the correct way to
+should be strict access control mechanisms, but NAT is not the best way to
 achieve this. 
 
 \subsubsection{Application Layer Proxies}
@@ -740,7 +742,7 @@ configuration must be improved.
 
 \subsection{Outsourcing Security}
 Many home users would benefit from the relocation of the security provisions of
-their network from inside the home, to a third party, such as their ISP
+their network from inside the home to a third party, such as their ISP
 \cite{Kritzinger2013}. This could be achieved using programmable switches and
 virtualised network devices, and would require users develop strong trust
 relationships with their security providers. New privacy issues would need to
