@@ -21,7 +21,7 @@
 \titlespacing{\subsection}{0pt}{0.8ex}{0.15ex}
 \titlespacing{\subsubsection}{0pt}{0.8ex}{0.15ex}
 
-\linespread{1}
+\linespread{0.95}
 
 \begin{document}
 
@@ -417,8 +417,14 @@ researchers expressed concerns that side channel attacks on the proposed US
 e-passports could identify travellers as American citizens while abroad,
 exposing them to unnecessary risk.
 
-As more devices contain Global Positioning System (GPS) modules, the privacy of
-a user's geographic location is also a strong concern.
+Surveillance is a breach of privacy; since the Snowden leaks, the extent to
+which governments are monitoring the online activities of citizens have come to
+light. The ubiquity of the IoT makes it a very useful tool, if not controlled,
+for collecting information on peoples activity\cite{Schneier2014}. This data
+could be collected both by governments to control the populace; or by companies
+to improve advertising efficacy. As more devices contain Global Positioning
+System (GPS) modules, the privacy of a user's geographic location is a strong
+concern.
 
 \subsection{Attack Levels}
 In \cite{Elkhodr2013} the types of attack are separated into five levels. These
@@ -512,6 +518,15 @@ computer crime. An overview of relevant law can be found in \cite{Weber2010}.
 Regulations to hold vendors accountable for defects in their products may help
 persuade them to ship devices in a secure state, and encourage thorough
 testing. 
+
+\subsection{Encryption}
+Encryption algorithms fall into two broad classes: symmetric key, and public
+key. The constraints of IoT devices makes public key cryptography unfeasible.
+In the new environment of the IoT, we have seen suggestions for new lightweight
+encryption algorithms proposed, for example Hummingbird \cite{Sion2010}.
+However, as these algorithms have not received the same level of public
+scrutiny of the AES and RSA, it is safer to stick with these cryptographic
+standards\footnote{"Nobody ever got fired for buying IBM equipment."}. 
 
 \subsection{Hop-by-hop Security}
 Hop-by-hop security exists between two directly connected nodes. All of the
@@ -767,16 +782,25 @@ need to rethink the Internet to accommodate the IoT.
 
 
 \section{Conclusion}
-It is clear that security is an important goal for the design of the IoT. As
-technology consumes more and more of people's lives, it is essential that the
-correct trade-offs are made from a security standpoint. 
+The IoT is going to have a huge impact on daily life, completely changing how
+we think of computers. Clearly security is an important goal
+for the IoT. As technology consumes an increasing amount of people's lives, it
+is essential that the correct trade-offs are made from a security standpoint. 
 
 A large number of standards have emerged, each attempting to solve many of the
-problems with connecting everyday objects to the Internet. Presently it is not
-obvious which protocols will succeed, and which will fade into obscurity. The
-most benefits appear to lie within an IPv6 based IoT, as this instantly
-provides a robust infrastructure and a number of services, along with strong
-future proofing.  
+problems with giving connectivity to everyday objects. Currently it is not
+clear which protocols will succeed, and which will fade into obscurity. The
+most benefits appear to lie within an IPv6 based IoT as this provides a robust
+infrastructure, a wealth of services, and is future proof.  
+
+The IoT has to contend with many of the same security challenges as the
+previous generations of Internet, along with new challenges that result from
+the nature of the devices. The computers embedded in `things' are low power,
+and constrained in terms of processing power meaning many solutions from
+traditional computing cannot be applied. The heterogeneity of Internet
+connected devices in the early IoT has the potential to create security
+problems. And the ubiquity of smart `things', if not controlled, will destroy
+privacy. 
 
 
 % references section
