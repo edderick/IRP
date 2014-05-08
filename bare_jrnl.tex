@@ -26,7 +26,7 @@
 \begin{document}
 
 \title{Security of the Internet of Things in the Home}
-\author{Edward~Seabrook, University~of~Southampton \\ ejfs1g10@ecs.soton.ac.uk}
+\author{Edward~Seabrook, University~of~Southampton \\ \href{mailto:ejfs1g10@ecs.soton.ac.uk}{ejfs1g10@ecs.soton.ac.uk}}
 
 \maketitle
 
@@ -37,12 +37,15 @@ powering the Internet of Things must be designed with security and privacy
 considerations in mind from the start. In this paper a thorough review of the
 protocol stack, security considerations and prevention mechanisms is given. 
 \end{abstract}
+\begin{IEEEkeywords}
+Internet of Things, Security, Home Networking
+\end{IEEEkeywords}
 
 \IEEEpeerreviewmaketitle
 
 \section{Introduction}
 \IEEEPARstart{T}{he} ``Internet of Things'' (IoT) has become a popular
-buzzword, and despite lacking an agreed definition, is used liberally. Kevin
+buzzword and is used liberally, despite lacking an agreed definition. Kevin
 Ashton coined the phrase in 1999, when describing the combination of Radio
 Frequency ID (RFID) tags and the Internet for supply chain monitoring at
 Procter \& Gamble \cite{Ashton2009}. 
@@ -53,21 +56,20 @@ presence. The ideas presented added a new dimension to the Internet,
 envisioning a future where Internet connectivity would be available at
 ``anytime'', in ``any place'', and to ``anything''.
 
-Recent IoT definitions have not been limited to RFID but include protocols such
-as IEEE 802.14.5 and Bluetooth Low Energy (BLE). They all agree that the IoT
+Recent IoT definitions have not been limited to RFID, adding protocols such
+as IEEE 802.14.5 and Bluetooth Low Energy (BLE). All agree that the IoT
 will result in astronomical increases in the number of devices online --
 Gartner predicts that by 2020, over 26 billion devices will be connected to the
 Internet \cite{Gartner2014}. 
 
 Increasing connectivity means security is a growing concern. More devices and
-greater heterogeneity, introduces new attack surfaces. The Internet had a lax
-approach to security, focusing first on achieving functionality
-\cite{Bhimani1996}. As such the Internet is not secure by default.
-Until recently few websites offered secure sessions -- it was not until July
-2013 that Facebook provided Transport Layer Security (TLS) as the default
-\cite{Facebook2013}. 
+greater heterogeneity, introduce new attack surfaces. The Internet grew up with
+lax approach to security, focusing first on achieving functionality
+\cite{Bhimani1996}. As such it is not secure by default. Until recently few
+websites offered secure sessions -- it was not until July 2013 that Facebook
+provided Transport Layer Security (TLS) as the default \cite{Facebook2013}. 
 
-Much research has focused on the IoT in business and industry, including
+Copious research has focused on the IoT in business and industry, including
 discussions of wireless sensor networks (WSNs) to monitor manufacture and
 agriculture. Vehicle networks are also interesting: at Def Con 21, researchers
 demonstrated taking control of a modern car, showing how attackers could put
@@ -78,9 +80,8 @@ however, this is beyond the scope of this project.
 
 Home networks offer a unique challenge: they are rarely serviced by a competent
 system administrator, and contain an range of increasingly personal devices and
-appliances from a variety of inexpensive vendors \cite{Denning2013}. As such,
-security requirements are high, while the difficulty of configuring the network
-must be very low. 
+appliances from a variety of inexpensive vendors \cite{Denning2013}. As a
+result highly usable security is required.  
 
 \section{Use Cases}
 To secure the IoT, it is helpful to build an understanding of the types and
@@ -96,8 +97,8 @@ Many types of sensors exist. To check the health of the building there are
 temperature and humidity sensors, and water leak detectors. Nest has
 popularised Internet connected thermostats. Motion detectors can control the
 home based on room occupancy; and combined with sensors to detect open doors
-and windows, sophisticated intrusion detection systems can be built. Unusual,
-but useful, sensors include Mimobaby baby monitors, and the NinjaBlocks
+and windows, sophisticated intrusion detection systems can be built. Unusual
+but useful sensors include Mimobaby baby monitors, and the NinjaBlocks
 doorbell.
 
 Mechanical motors and servos can be embedded in everyday objects. When fitted
@@ -108,15 +109,16 @@ control devices from anywhere in the world.
 
 \subsection{Lighting}
 Smart lighting is an active area of the IoT, with many companies involved.
-Older lighting control replaced light switches with radio controlled module.
-Lifx and Philips Hue have developed smart LED light bulbs, removing the need
-for switches altogether. These bulbs can also produce many colours of light. 
+Older automated lighting controls replaced light switches with radio controlled
+modules.  Lifx and Philips Hue have developed smart LED light bulbs, removing
+the need for switches altogether. These bulbs can also produce many colours of
+light. 
 
 \subsection{The Smart Grid}
 The `Smart Grid' contains many `Smart Meters': network connected electricity
-monitors deployed in consumers houses. They aim to help consumers understand
+monitors deployed in consumer's households. They aim to help consumers understand
 and reduce their energy usage.  Some can feedback electricity consumption data
-to the supplier for real-time billing.  AlertMe is a non-intrusive smart meter
+to the supplier for real-time billing. AlertMe is a non-intrusive smart meter
 available to consumers today. 
 
 \subsection{Body Area Networks}
@@ -141,19 +143,19 @@ Similarly, there are many competing technologies for the IoT. Each has
 advantages and disadvantages, but few exist within a vacuum -- each draws
 inspiration from the rest. 
 
-As with the Internet, the IoT can be split into seven layer OSI
+Like the Internet, the IoT can be split into the seven layer OSI
 model\footnote{Although TCP/IP won the battle, the numberings from the OSI
-model are still widely used in industry}. The TCP/IP model is designed with a
+model are still commonly used in industry}. The TCP/IP model is designed with a
 narrow waist at the Network (IP) Layer, with many choices of protocol sitting
 above and below it. This has been key to the success of TCP/IP as it
-provides strong decoupling of applications from the network hardware.
+provides strong decoupling of applications from network hardware.
 
 \subsection{Layers 1 \& 2 -- The Physical and Link Layers}
 \label{layer_1_2}
 The Physical Layer (PHY) defines the hardware used for the transmission of
 messages. The Link Layer, also referred to as the Medium Access Control (MAC)
 Layer, defines how the PHY Layer is accessed. Traditional networks made use of
-wired connections (such as Ethernet over Cat 5 cabling) for this purpose.
+wired connections (such as Ethernet over Cat 5 cables) for this purpose.
 However, due to the expense and inconvenience of installing wired networks,
 consumers have transitioned towards wireless technologies. 
 
@@ -165,13 +167,13 @@ maximum throughput of 6.77Gbit/s.
 
 WiFi is common as a wireless alternative to Ethernet, used to connect devices
 to wireless local area networks (WLANs). WiFi is a sensible choice when mains
-electricity or large batteries are available, where cost is not a major
-factor, and where high bandwidth is required. However, high power usage makes
-it unsuitable for constrained devices.
+electricity or large batteries are available, where cost is not a major factor,
+and where high bandwidth is required. High power usage makes WiFi unsuitable
+for many embedded devices.
 
 \subsubsection{Bluetooth \& Bluetooth Low Energy}
-Bluetooth is used in in Wireless Personal Area Networks (WPANs). It is a
-wireless replacement for RS-232 serial cables. It is commonly used for
+Bluetooth is used in Wireless Personal Area Networks (WPANs). It is a
+wireless replacement for RS-232 serial cables, and is commonly used for
 connecting mobile phones to headsets. Bluetooth has a lower bandwidth and
 energy usage than WiFi, so is more suitable for connecting devices constrained
 in terms of battery life and processing power. Unlike WiFi, Bluetooth also
@@ -194,30 +196,32 @@ to the other PHY layer standards.
 
 \subsubsection{IEEE 802.15.4}
 IEEE 802.15.4 is a PHY layer technology designed for the IoT. It has very low
-energy usage and bandwidth. This makes 802.15.4 ideal for Wireless Sensor
-Networks (WSNs) where batteries cannot be replaced regularly. 
+energy use and bandwidth. This makes 802.15.4 ideal for Wireless Sensor
+Networks (WSNs) where batteries cannot be replaced regularly. Sensor nodes have
+been created with IEEE 802.15.4 radios that claim to have several years battery
+life.  
 
 \subsubsection{Mobile Standards}
 3G and 4G Long Term Evolution (LTE) are the standards used in most smartphones.
 In developing countries without much traditional network infrastructure, we are
 already seeing consumers jump straight to mobile broadband without ever using
-cable/broadband Internet \cite{Kritzinger2013}. For many `things', mobile
+wired broadband Internet \cite{Kritzinger2013}. For many `things', mobile
 broadband may be an effective way of providing connectivity.  
 
 \subsection{Layer 3 - The Network Layer}
 The network layer is the narrow waist of the TCP/IP stack. It handles
-addressing and forwarding of Internet traffic. 
+the addressing and forwarding of Internet traffic. 
 
 \subsubsection{IP -- The Internet Protocol}
-IP is used by all machines connected to the Internet. It has two major
+IP is used by all machines connected to the Internet. There are two major
 versions: IPv4 and IPv6. Most networks today use IPv4. In 2011 the Internet
 Assigned Numbers Authority (IANA) ran out of IPv4 addresses \cite{Potaroo}
-resulting in a slow transition to IPv6, which has a far bigger address space.
+prompting a slow transition to IPv6, which has a far bigger address space.
 
 \subsubsection{6LoWPAN -- IPv6 over Low Power WPANs}
 IP was not designed for constrained devices -- it is too resource intensive to
 run on many `things'. 6LoWPAN is a minimalistic subset of IPv6 that can run
-over IEEE 802.15.4\footnote{Work has also begun to port 6LoWPAN to BLE.}. It
+over IEEE 802.15.4\footnote{draft-ietf-6lo-btle-01 proposes a port of 6LoWPAN to BLE.}. It
 offers header compression and packet fragmentation.  6LoWPAN can be statelessly
 translated into IPv6 via an inexpensive bridge or gateway. 
 
@@ -468,7 +472,7 @@ data with the Internet Movie Database (IMDB) \cite{Narayanan2008}.
 A sophisticated attacker can mechanise the process of performing attacks,
 making them possible on an extremely large scale. By exploiting the
 pervasiveness of sensors in the IoT, an attacker may be able to infer
-unexpected, and sensitive, things. Software written to perform these attacks
+unexpected, and sensitive, facts. Software written to perform these attacks
 may also be sold on to less competent individuals. 
 
 \subsection{Potential Attackers}
@@ -477,7 +481,7 @@ list these classes of attacker \cite{McAfee2011}: white hat hackers, black hat
 hackers, script kiddies, hacktivists, cyber terrorists, state sponsored
 hackers, and spy hackers. 
 
-There is much variety in the motives and abilities of attackers. At
+There is great variety in the motives and abilities of attackers. At
 the lowest end of the ability scale are script kiddies, who carry out attacks
 using scripts\footnote{e.g. Low Orbit Ion Cannon (LOIC), used to perform DoS
 attacks.} created by more experienced hackers. For maximum impact, experienced
@@ -521,9 +525,10 @@ testing.
 
 \subsection{Encryption}
 Encryption algorithms fall into two broad classes: symmetric key, and public
-key. The constraints of IoT devices makes public key cryptography unfeasible.
+key. Many IoT devices do not have the compute power required for public key
+cryptography, as such other mechanisms for key distribution must be used.
 There are  suggestions for new lightweight encryption algorithms to run on
-constrained devices, for example Hummingbird \cite{Sion2010}.  However, as
+constrained devices, an example is Hummingbird \cite{Sion2010}.  However, as
 these algorithms have not received the same level of public scrutiny of AES and
 RSA, it is safer to stick with these main cryptographic
 standards\footnote{"Nobody ever got fired for buying IBM equipment."}. 
@@ -710,7 +715,7 @@ achieve this.
 Many currently available `things' do not implement IP themselves. Instead they
 use a smartphone as an application layer proxy. For devices that do not require
 constant connectivity, this can have security benefits: no security is required
-on the thing beyond hop-by-hop encryption to the base station.  Designers no
+on the `thing' beyond hop-by-hop encryption to the base station.  Designers no
 longer have to worry about security when designing constrained devices, and
 users can manage the security policy from one place. There are of course
 disadvantages, this arrangement is not suitable for devices that would benefit
@@ -773,34 +778,43 @@ data will find itself in the cloud. Privacy and accountability questions must
 be answered for consumers to be safe.
 
 \subsection{Novel Network Paradigms}
-There are a number of novel network paradigms that have been proposed as a
-replacement of TCP/IP. One example, Information Centric Networking (ICN), aims
-to replace IP with a naming system that is based on the content of the data
-being requested, rather than the logical location of the data. Research into
-new paradigms would help to evaluate their efficacy and determine whether we
-need to rethink the Internet to accommodate the IoT. 
+There are many novel network paradigms proposed as a replacement for TCP/IP. One
+example, Information Centric Networking (ICN), aims to replace IP with a naming
+system that is based on the content of the data being requested, rather than
+the logical location of the data. Another paradigm is Software Defined
+Networking (SDN) in which the control plane is separated from the data place.
+Research into new paradigms would help to evaluate their efficacy and determine
+whether we need to rethink the Internet to accommodate the IoT. 
 
 
 \section{Conclusion}
-The IoT is going to have a huge impact on daily life, completely changing how
-we think of computers. Clearly security is an important goal
-for the IoT. As technology consumes an increasing amount of people's lives, it
-is essential that the correct trade-offs are made from a security standpoint. 
+The IoT will have a huge impact on daily life, dramatically changing how
+users interact with computers. As technology penetrates an increasing amount of
+people's lives, it is essential correct security trade-offs are made. 
 
-A large number of standards have emerged, each attempting to solve many of the
-problems with giving connectivity to everyday objects. Currently it is not
-clear which protocols will succeed, and which will fade into obscurity. The
-most benefits appear to lie within an IPv6 based IoT as this provides a robust
-infrastructure, a wealth of services, and is future proof.  
+A large number of standards have emerged aiming to solve the problems that
+arise when everyday objects are given Internet connectivity. Currently it is
+not clear which protocols will succeed, and which will fade into obscurity. An
+IPv6 based IoT is currently best option as there is a robust infrastructure, a
+wealth of services, and is future proof. 6LoWPAN and CoAP are good choices to
+include in the protocol stack.  
 
-The IoT has to contend with many of the same security challenges as the
-previous generations of Internet, along with new challenges that result from
-the nature of the devices. The computers embedded in `things' are low power,
-and constrained in terms of processing power meaning many solutions from
-traditional computing cannot be applied. The heterogeneity of Internet
-connected devices in the early IoT has the potential to create security
-problems. And the ubiquity of smart `things', if not controlled, will destroy
-privacy. 
+The IoT has to contend with many of the same security issues as the previous
+generation Internet, along with new challenges due to nature of the devices.
+Embedded computers are low-power, and have little processing power making many
+solutions from traditional computing unsuitable. Heterogeneity must be also
+worked around securely. The ubiquity of `things' also has the potential to
+destroy privacy if not controlled.
+
+Many protocols exist to ensure the network and host security.  Care must be
+taken in selecting these protocols. Most link layer protocols offer security on
+a per hop basis; this should be enabled to prevent geographically local
+attacks. End-to-end encryption should be used when available, unless the data
+is of exceptionally low sensitivity -- the popularity of TLS means DTLS is
+likely to be the most common end-to-end security protocol.   
+
+As long as the IoT is well secured, it has the potential to make the world a
+better place.  
 
 
 % references section
